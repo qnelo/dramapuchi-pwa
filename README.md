@@ -5,133 +5,133 @@
 [![Pure Vanilla JS](https://img.shields.io/badge/Stack-ES_Modules_•_Web_Audio_•_Canvas-blue?style=flat)](https://tama-pwa.pages.dev)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-Emulación retro 100% client-side y fiel al modelo original de **Tamagotchi (Generación 1 / 1996)**, desarrollada como una Progressive Web App (PWA) instalable en móviles y ordenadores, sin dependencias externas ni backend.
+A faithful, 100% client-side recreation of the original **1996 Generation 1 (P1) Tamagotchi**, engineered as a modern Progressive Web App (PWA) installable on mobile and desktop devices with zero external libraries or backend servers.
 
-🎮 **Probar ahora en el navegador**: [https://tama-pwa.pages.dev](https://tama-pwa.pages.dev)
-
----
-
-## ✨ Características Principales
-
-* **Pantalla LCD de Matriz de Puntos 32×16**:
-  * Emulación de la reflexión pasiva del cristal líquido monocromático STN/TN.
-  * Inercia física de transición (*ghosting* configurable de 0.35) y cuadrícula de separación física de 1px.
-  * Selector de retroiluminación: modo clásico verde oliva o modo nocturno cian electroluminiscente (*Indiglo*).
-* **Motor de Reconciliación Temporal (Delta-Time)**:
-  * Simulación determinista minuto a minuto tras inactividad o suspensión del dispositivo.
-  * Pausa metabólica automática durante el horario de sueño nocturno.
-* **Sintetizador Piezoeléctrico (Web Audio API)**:
-  * Generación de ondas cuadradas basadas en los submúltiplos enteros reales del cristal de cuarzo de **32.768 Hz** (1024 Hz, 2048 Hz, 3277 Hz, 4096 Hz) sin archivos MP3 ni librerías externas.
-* **Árbol de Evolución Canónico Generación 1 (P1)**:
-  * Eclosión desde el huevo $\to$ Babytchi $\to$ Marutchi $\to$ Tamatchi o Kuchitamatchi $\to$ 6 especies adultas (Mametchi, Ginjirotchi, Maskutchi, Kuchipatchi, Nyorotchi, Tarakotchi) $\to$ Despedida pacífica a su planeta natal (*DEPARTED*).
-* **Minijuego Clásico de Adivinanza (5 Rondas)**:
-  * Adivina hacia dónde girará la mascota (Botón A: Izquierda / Botón B: Derecha). Ganar 3 o más rondas sube la felicidad y quema peso.
-* **Mejoras Modernas de Calidad de Vida (QoL)**:
-  * 👶 **Modo Niñera (Tama Sitter)**: Congela temporalmente la degradación biológica para evitar descuidos durante horarios de trabajo.
-  * 🌙 **Retroiluminación LED**: Conmuta entre la pantalla clásica y el modo nocturno.
-  * 💾 **Exportar / Importar Partidas**: Respaldo portable en formato JSON para transferir tu partida entre dispositivos.
-  * 📖 **Manual Integrado**: Modal accesible con las reglas completas del juego.
-  * 📳 **Feedback Háptico**: Vibración física en dispositivos compatibles al presionar los botones y alertas.
+🎮 **Play Live in Browser**: [https://tama-pwa.pages.dev](https://tama-pwa.pages.dev)
 
 ---
 
-## 🎮 Controles
+## ✨ Core Features
 
-### Pantalla Táctil / Ratón
-* **Botón A** (izquierdo): Seleccionar / mover cursor / opción izquierda en minijuego.
-* **Botón B** (central): Confirmar / interactuar / opción derecha en minijuego.
-* **Botón C** (derecho): Cancelar / salir a reposo / ver reloj en tiempo real.
-
-### Teclado (en escritorio)
-* `[A]` o `[←]`: Botón A
-* `[B]`, `[Enter]` o `[Espacio]`: Botón B
-* `[C]`, `[Escape]` o `[→]`: Botón C
+* **32×16 Dot Matrix LCD Emulation**:
+  * Simulates passive STN/TN liquid crystal light decay with a **0.35 ghosting factor**.
+  * Authentic 1px physical dot pitch spacing.
+  * Switchable display modes: **Classic Olive Green** reflective LCD or **Electroluminescent Cyan** night backlight.
+* **Deterministic Delta-Time Engine**:
+  * Accurately simulates biological aging and stat changes minute-by-minute after phone lock, tab suspension, or extended absence.
+  * Automatic metabolic pause during nighttime sleep schedules.
+* **Piezoelectric Synthesizer (Web Audio API)**:
+  * Generates pure square waves matching exact integer submultiples of a **32.768 kHz** quartz crystal oscillator (`1024 Hz`, `2048 Hz`, `3277 Hz`, `4096 Hz`), eliminating external MP3/WAV files.
+* **Complete Generation 1 (P1) Evolution Tree**:
+  * Egg hatching $\to$ Babytchi $\to$ Marutchi $\to$ Tamatchi or Kuchitamatchi $\to$ 6 adult species (Mametchi, Ginjirotchi, Maskutchi, Kuchipatchi, Nyorotchi, Tarakotchi) $\to$ Peaceful departure to the home planet (*DEPARTED*).
+* **5-Round Directional Mini-Game**:
+  * Guess which direction the pet will turn (Button A: Left / Button B: Right). Winning 3 or more rounds restores happiness and burns weight.
+* **Modern Quality of Life (QoL) Enhancements**:
+  * 👶 **Tama Sitter Mode**: Temporarily freezes biological degradation to prevent neglect during work or school hours.
+  * 🌙 **LED Backlight Toggle**: Switch effortlessly between retro LCD and illuminated night mode.
+  * 💾 **Portable JSON Backup**: Export and import save files in a single click to migrate progress across devices.
+  * 📖 **In-App Manual**: Built-in modal dialog with comprehensive gameplay rules and tips.
+  * 📳 **Haptic Feedback**: Short tactile vibration bursts on supported mobile devices.
 
 ---
 
-## 📟 Los 8 Iconos de Estado
+## 🎮 Controls
 
-| Icono | Función | Descripción y Efectos |
+### Touch / Mouse (Mobile-First)
+* **Button A** (Left): Navigate / cycle through the 7 top and bottom icons / select Left in the mini-game.
+* **Button B** (Center): Confirm action / trigger happy jump in idle / select Right in the mini-game.
+* **Button C** (Right): Cancel / return to idle / check the real-time 24h clock.
+
+### Desktop Keyboard Shortcuts
+* `[A]` or `[←]`: Button A
+* `[B]`, `[Enter]` or `[Space]`: Button B
+* `[C]`, `[Escape]` or `[→]`: Button C
+
+---
+
+## 📟 The 8 Status Icons
+
+| Icon | Name | Function & Effects |
 | :---: | :--- | :--- |
-| **🍴** | **Comida** | Submenú: **Carne** (+1 hambre, +1 lb) o **Dulce** (+1 felicidad, +2 lb. El abuso de dulces provoca enfermedad). |
-| **💡** | **Luz** | Submenú ON/OFF para apagar la luz al dormir. Dormir con la luz encendida genera un descuido tras 1 hora. |
-| **⚾** | **Juego** | Minijuego de 5 rondas de adivinanza izquierda/derecha. |
-| **💉** | **Medicina** | Aplica inyecciones para curar la enfermedad cuando aparece el cráneo ☠️. |
-| **🚿** | **Higiene** | Limpia las deposiciones acumuladas con una ola de agua para evitar infecciones. |
-| **⚖️** | **Báscula** | 4 pantallas informativas: Edad/Peso, Disciplina, Corazones de Hambre y de Felicidad. |
-| **💢** | **Disciplina** | Regaña llamadas de atención caprichosas (cuando llama sin tener hambre ni estar triste). Sube +25% disciplina. |
-| **🔔** | **Atención** | Icono pasivo (LED de alerta). Se enciende y emite beeps cuando la mascota te necesita. |
+| **🍴** | **Feed** | Submenu: **Meal** (+1 hunger, +1 lb) or **Snack** (+1 happy, +2 lb). *Caution: Feeding >4 snacks in a row causes a toothache/sickness!* |
+| **💡** | **Light** | Submenu ON/OFF to turn lights off when sleeping. Sleeping with lights on counts as a Care Mistake after 1 hour. |
+| **⚾** | **Game** | 5-round heading prediction mini-game. Winning $\ge 3$ rounds awards +1 happiness and burns 1 lb. |
+| **💉** | **Medicine** | Treats illness when the skull icon appears ☠️ (may require 1–2 doses). |
+| **🚿** | **Flush** | Cleans accumulated poop with a sweeping ocean wave animation. 4 poops left uncleaned causes disease. |
+| **⚖️** | **Meter** | 4 status pages: 1) Age & Weight, 2) Discipline Bar, 3) Hunger Hearts (4 max), 4) Happiness Hearts (4 max). |
+| **💢** | **Discipline** | Scolds the pet during false calls (when calling with full meters). Grants +25% discipline. |
+| **🔔** | **Attention** | Passive alert indicator; flashes and beeps when the pet requires immediate care. |
 
 ---
 
-## 🧬 Árbol de Evolución (P1)
+## 🧬 Evolution Matrix (P1)
 
 ```
-[Huevo] ──(5 min)──> [Babytchi] ──(65 min)──> [Marutchi]
-                                                 │
-                        ┌─── (0-2 Descuidados) ──┴─── (3+ Descuidados) ───┐
-                        ▼                                                 ▼
-                   [Tamatchi]                                      [Kuchitamatchi]
-                        │                                                 │
-         ┌──────────────┼──────────────┐                   ┌──────────────┼──────────────┐
-         ▼              ▼              ▼                   ▼              ▼              ▼
-    [Mametchi]    [Ginjirotchi]   [Maskutchi]         [Kuchipatchi]   [Nyorotchi]   [Tarakotchi]
-    (0-1 err,     (2-3 err,       (4+ err o           (0-2 err,       (3-4 err)     (5+ err)
-    >=90% disc)   >=75% disc)     <50% disc)          >=50% disc)
+[Egg] ──(5 min)──> [Babytchi] ──(65 min)──> [Marutchi]
+                                               │
+                      ┌─── (0-2 Care Mistakes) ┴─── (3+ Care Mistakes) ───┐
+                      ▼                                                   ▼
+                 [Tamatchi]                                        [Kuchitamatchi]
+                      │                                                   │
+       ┌──────────────┼──────────────┐                     ┌──────────────┼──────────────┐
+       ▼              ▼              ▼                     ▼              ▼              ▼
+  [Mametchi]    [Ginjirotchi]   [Maskutchi]           [Kuchipatchi]   [Nyorotchi]   [Tarakotchi]
+  (0-1 err,     (2-3 err,       (4+ err or            (0-2 err,       (3-4 err)     (5+ err)
+  >=90% disc)   >=75% disc)     <50% disc)            >=50% disc)
 ```
 
 ---
 
-## 🛠️ Estructura del Código
+## 🛠️ Codebase Structure
 
 ```
 Tamagotchi/
 ├── config/
-│   └── petConfig.js           # Tasas metabólicas, tiempos y umbrales de muerte
+│   └── petConfig.js           # Biological stage durations, rates, and death thresholds
 ├── engine/
-│   ├── timeEngine.js          # Motor de simulación temporal minuto a minuto
-│   └── evolutionResolver.js   # Lógica del árbol evolutivo y errores de cuidado
+│   ├── timeEngine.js          # Deterministic minute-by-minute simulation engine
+│   └── evolutionResolver.js   # Gen 1 branching evolution tree logic
 ├── ui/
-│   ├── LcdMatrix.js           # Renderizador del cristal líquido 32×16 con ghosting
-│   ├── sprites.js             # Sprites binarios de mascotas, animaciones y fuente 3×5
-│   ├── StatusRenderer.js      # Métricas de estado (báscula) y reloj
-│   └── GameRenderer.js        # Orquestador visual de escenas y animaciones
+│   ├── LcdMatrix.js           # 32×16 LCD renderer with physical ghosting decay
+│   ├── sprites.js             # Pixel bitmaps for species, items, and 3×5 font
+│   ├── StatusRenderer.js      # Status meter screens (scale) and real-time clock
+│   └── GameRenderer.js        # Scene compositor for animations, idle, and mini-game
 ├── audio/
-│   └── TamagotchiAudio.js     # Sintetizador piezoeléctrico Web Audio API
+│   └── TamagotchiAudio.js     # Piezoelectric square-wave acoustic synthesizer
 ├── controllers/
-│   ├── MenuController.js      # Máquina de estados de los 3 botones (A, B, C)
-│   └── MiniGameController.js  # Minijuego de 5 rondas
+│   ├── MenuController.js      # 3-button (A, B, C) finite state machine
+│   └── MiniGameController.js  # 5-round guessing game controller
 ├── storage/
-│   └── SaveManager.js         # Persistencia en IndexedDB y exportación JSON
-├── index.html                 # Carcasa retro, pantalla LCD y modal de manual
-├── app.js                     # Ciclo principal de juego y orquestación
-├── sw.js                      # Service Worker para ejecución 100% offline
+│   └── SaveManager.js         # IndexedDB / localStorage persistence and JSON export/import
+├── index.html                 # Mobile-first shell, LCD screen, and instruction manual modal
+├── app.js                     # Main application bootstrap and 60 FPS animation loop
+├── sw.js                      # Offline-first Service Worker cache
 └── test/
-    └── suite.js               # Tests unitarios automáticos (11 baterías)
+    └── suite.js               # Automated unit test suite (11 test suites)
 ```
 
 ---
 
-## 🚀 Ejecución y Pruebas Locales
+## 🚀 Local Development & Testing
 
-No requiere compilación (`build step`). Para ejecutarlo localmente:
+No build step or bundling required. Everything runs natively as standard ES Modules:
 
-1. **Iniciar servidor estático**:
+1. **Start local static server**:
    ```bash
    python3 -m http.server 8000
-   # O con Node:
+   # Or using Node:
    # npx serve .
    ```
-2. **Abrir en el navegador**:
-   Visita `http://localhost:8000`
+2. **Open in browser**:
+   Navigate to `http://localhost:8000`
 
-3. **Ejecutar tests unitarios**:
+3. **Run unit test suite**:
    ```bash
    npm test
    ```
 
 ---
 
-## 📄 Licencia
+## 📄 License
 
-Código distribuido bajo licencia MIT. Inspirado en el juguete virtual Tamagotchi original creado por Bandai / WiZ (1996).
+Distributed under the MIT License. Inspired by the original Tamagotchi virtual pet created by Bandai / WiZ (1996).
