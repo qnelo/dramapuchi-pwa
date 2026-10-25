@@ -110,48 +110,58 @@ function setupInputListeners() {
 }
 
 function setupQolListeners() {
-  const selectLang = document.getElementById('select-lang');
-  const btnManual = document.getElementById('btn-manual');
-  const modalManual = document.getElementById('modal-manual');
-  const btnCloseModal = document.getElementById('btn-close-modal');
-  const btnSitter = document.getElementById('btn-sitter');
-  const btnBacklight = document.getElementById('btn-backlight');
-  const btnExport = document.getElementById('btn-export');
-  const btnImport = document.getElementById('btn-import');
-  const fileImport = document.getElementById('file-import');
-  const btnReset = document.getElementById('btn-reset');
-  const btnSound = document.getElementById('btn-sound');
+  const btnSettingsOpen = document.getElementById('btn-settings-open');
+  const btnCloseSettings = document.getElementById('btn-close-settings');
+  const modalSettings = document.getElementById('modal-settings');
 
-  if (selectLang) {
-    selectLang.value = currentLang;
-    selectLang.addEventListener('change', (e) => {
-      currentLang = e.target.value;
-      localStorage.setItem('tama_lang', currentLang);
-      applyTranslations(currentLang);
-      audio.playClick();
+  const btnManualOpen = document.getElementById('btn-manual-open');
+  const btnCloseManual = document.getElementById('btn-close-manual');
+  const modalManual = document.getElementById('modal-manual');
+
+  const settingLang = document.getElementById('setting-lang');
+  const settingBacklight = document.getElementById('setting-backlight');
+  const settingSound = document.getElementById('setting-sound');
+  const settingExport = document.getElementById('setting-export');
+  const settingImport = document.getElementById('setting-import');
+  const settingReset = document.getElementById('setting-reset');
+  const fileImport = document.getElementById('file-import');
+
+  // Open & Close Settings Modal
+  if (btnSettingsOpen && modalSettings) {
+    btnSettingsOpen.addEventListener('click', () => {
+      audio.init();
+      modalSettings.showModal();
+      audio.playConfirm();
+    });
+  }
+  if (btnCloseSettings && modalSettings) {
+    btnCloseSettings.addEventListener('click', () => {
+      modalSettings.close();
+      audio.playCancel();
     });
   }
 
-  if (btnManual && modalManual) {
-    btnManual.addEventListener('click', () => {
+  // Open & Close Manual Modal
+  if (btnManualOpen && modalManual) {
+    btnManualOpen.addEventListener('click', () => {
       audio.init();
       modalManual.showModal();
       audio.playConfirm();
     });
   }
-
-  if (btnCloseModal && modalManual) {
-    btnCloseModal.addEventListener('click', () => {
+  if (btnCloseManual && modalManual) {
+    btnCloseManual.addEventListener('click', () => {
       modalManual.close();
       audio.playCancel();
     });
   }
 
-  // Light-dismiss fallback (close on backdrop click)
-  if (modalManual && !('closedBy' in HTMLDialogElement.prototype)) {
-    modalManual.addEventListener('click', (event) => {
-      if (event.target !== modalManual) return;
-      const rect = modalManual.getBoundingClientRect();
+  // Light-dismiss fallback for modern dialogs (click on backdrop closes modal)
+  const bindBackdropDismiss = (modalEl) => {
+    if (!modalEl || ('closedBy' in HTMLDialogElement.prototype)) return;
+    modalEl.addEventListener('click', (event) => {
+      if (event.target !== modalEl) return;
+      const rect = modalEl.getBoundingClientRect();
       const isInside = (
         rect.top <= event.clientY &&
         event.clientY <= rect.top + rect.height &&
@@ -159,39 +169,54 @@ function setupQolListeners() {
         event.clientX <= rect.left + rect.width
       );
       if (!isInside) {
-        modalManual.close();
+        modalEl.close();
         audio.playCancel();
       }
     });
-  }
+  };
+  bindBackdropDismiss(modalSettings);
+  bindBackdropDismiss(modalManual);
 
-  if (btnSitter) {
-    btnSitter.addEventListener('click', () => {
-      state.sitterModeActive = !state.sitterModeActive;
-      updateQolButtonsUI();
-      SaveManager.save(state);
+  // Language selector
+  if (settingLang) {
+    settingLang.value = currentLang;
+    settingLang.addEventListener('change', (e) => {
+      currentLang = e.target.value;
+      localStorage.setItem('tama_lang', currentLang);
+      applyTranslations(currentLang);
       audio.playClick();
     });
   }
 
-  if (btnBacklight) {
-    btnBacklight.addEventListener('click', () => {
+  // LED Backlight Toggle
+  if (settingBacklight) {
+    settingBacklight.addEventListener('click', () => {
       const nextTheme = lcd.currentTheme === 'classic' ? 'backlight' : 'classic';
       lcd.setTheme(nextTheme);
-      updateQolButtonsUI();
+      updateSettingsUI();
       audio.playClick();
     });
   }
 
-  if (btnExport) {
-    btnExport.addEventListener('click', () => {
+  // Audio Sound Mute Toggle
+  if (settingSound) {
+    settingSound.addEventListener('click', () => {
+      audio.setMute(!audio.muted);
+      updateSettingsUI();
+    });
+  }
+
+  // Export JSON Save Data
+  if (settingExport) {
+    settingExport.addEventListener('click', () => {
       SaveManager.exportToFile(state);
       audio.playConfirm();
     });
   }
 
-  if (btnImport && fileImport) {
-    btnImport.addEventListener('click', () => fileImport.click());
+  // Import JSON Save Data
+  if (settingImport && fileImport) {
+    settingImport.addEventListener('click', () => fileImport.click());
     fileImport.addEventListener('change', async (e) => {
       const file = e.target.files[0];
       if (!file) return;
@@ -199,7 +224,7 @@ function setupQolListeners() {
         const loaded = await SaveManager.importFromFile(file);
         state = loaded;
         menu = new MenuController(state, audio, () => updateIconBezel());
-        updateQolButtonsUI();
+        updateSettingsUI();
         audio.playConfirm();
       } catch (err) {
         const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
@@ -209,8 +234,9 @@ function setupQolListeners() {
     });
   }
 
-  if (btnReset) {
-    btnReset.addEventListener('click', async () => {
+  // Hatch New Egg / Reset
+  if (settingReset) {
+    settingReset.addEventListener('click', async () => {
       const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
       if (state.stage !== 'DEAD' && state.stage !== 'DEPARTED') {
         const ok = confirm(t.dialogs.confirmReset);
@@ -219,15 +245,9 @@ function setupQolListeners() {
       state = SaveManager.getInitialState();
       await SaveManager.save(state);
       menu = new MenuController(state, audio, () => updateIconBezel());
-      updateQolButtonsUI();
+      updateSettingsUI();
       audio.playEvolution();
-    });
-  }
-
-  if (btnSound) {
-    btnSound.addEventListener('click', () => {
-      audio.setMute(!audio.muted);
-      updateQolButtonsUI();
+      if (modalSettings) modalSettings.close();
     });
   }
 }
@@ -237,8 +257,31 @@ function applyTranslations(lang) {
   document.documentElement.lang = lang;
   document.title = t.title;
 
-  const selectLang = document.getElementById('select-lang');
-  if (selectLang) selectLang.value = lang;
+  const setElText = (id, text) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = text;
+  };
+
+  // Top floating buttons
+  if (t.topControls) {
+    setElText('txt-settings-open', t.topControls.settings.replace(/[^a-zA-Z\u4e00-\u9fa5\u00C0-\u017F ]/g, '').trim());
+    setElText('txt-manual-open', t.topControls.manual.replace(/[^a-zA-Z\u4e00-\u9fa5\u00C0-\u017F ]/g, '').trim());
+  }
+
+  // Settings modal labels
+  const settingLang = document.getElementById('setting-lang');
+  if (settingLang) settingLang.value = lang;
+
+  if (t.settings) {
+    setElText('settings-title', t.settings.title);
+    setElText('setting-lang-label', t.settings.langLabel);
+    setElText('setting-display-header', t.settings.displayHeader);
+    setElText('setting-audio-header', t.settings.audioHeader);
+    setElText('setting-data-header', t.settings.dataHeader);
+    setElText('setting-export', t.settings.export);
+    setElText('setting-import', t.settings.import);
+    setElText('setting-reset', t.settings.reset);
+  }
 
   // Update bezel icon tooltips/titles
   for (let i = 0; i < 8; i++) {
@@ -248,27 +291,9 @@ function applyTranslations(lang) {
     }
   }
 
-  // Update bottom toolbar buttons
-  const btnManual = document.getElementById('btn-manual');
-  if (btnManual) btnManual.textContent = t.toolbar.manual;
-
-  const btnExport = document.getElementById('btn-export');
-  if (btnExport) btnExport.textContent = t.toolbar.export;
-
-  const btnImport = document.getElementById('btn-import');
-  if (btnImport) btnImport.textContent = t.toolbar.import;
-
-  const btnReset = document.getElementById('btn-reset');
-  if (btnReset) btnReset.textContent = t.toolbar.reset;
-
-  updateQolButtonsUI();
+  updateSettingsUI();
 
   // Update instruction manual modal content
-  const setElText = (id, text) => {
-    const el = document.getElementById(id);
-    if (el) el.textContent = text;
-  };
-
   setElText('manual-title', t.manual.title);
   setElText('manual-sec-buttons-title', t.manual.buttonsHeader);
   setElText('manual-btn-a-desc', t.manual.btnA);
@@ -290,25 +315,18 @@ function applyTranslations(lang) {
   setElText('manual-sitter-desc', t.manual.sitterDesc);
 }
 
-function updateQolButtonsUI() {
+function updateSettingsUI() {
   const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
-
-  const btnSitter = document.getElementById('btn-sitter');
-  if (btnSitter && state) {
-    btnSitter.textContent = state.sitterModeActive ? t.toolbar.sitterOn : t.toolbar.sitterOff;
-    btnSitter.style.borderColor = state.sitterModeActive ? '#5bfec8' : '#444';
-  }
-
-  const btnBacklight = document.getElementById('btn-backlight');
-  if (btnBacklight && lcd) {
+  const settingBacklight = document.getElementById('setting-backlight');
+  if (settingBacklight && lcd && t.settings) {
     const isBacklight = lcd.currentTheme === 'backlight';
-    btnBacklight.textContent = isBacklight ? t.toolbar.backlightClassic : t.toolbar.backlightNight;
-    btnBacklight.style.borderColor = isBacklight ? '#5bfec8' : '#444';
+    settingBacklight.textContent = isBacklight ? t.settings.backlightClassic : t.settings.backlightNight;
+    settingBacklight.style.borderColor = isBacklight ? '#5bfec8' : '#434754';
   }
 
-  const btnSound = document.getElementById('btn-sound');
-  if (btnSound && audio) {
-    btnSound.textContent = audio.muted ? t.toolbar.soundOff : t.toolbar.soundOn;
+  const settingSound = document.getElementById('setting-sound');
+  if (settingSound && audio && t.settings) {
+    settingSound.textContent = audio.muted ? t.settings.soundOff : t.settings.soundOn;
   }
 }
 

@@ -27,10 +27,11 @@ A faithful, 100% client-side recreation of the original **1996 Generation 1 (P1)
 * **5-Round Directional Mini-Game**:
   * Guess which direction the pet will turn (Button A: Left / Button B: Right). Winning 3 or more rounds restores happiness and burns weight.
 * **Modern Quality of Life (QoL) Enhancements**:
-  * 👶 **Tama Sitter Mode**: Temporarily freezes biological degradation to prevent neglect during work or school hours.
-  * 🌙 **LED Backlight Toggle**: Switch effortlessly between retro LCD and illuminated night mode.
+  * 👶 **In-Game Tama Sitter Mode**: Built directly into the keychain buttons (Light menu option 3 or Status Meter page 5) to freeze biological degradation during work or school hours.
+  * ⚙️ **Quick Settings Modal**: Convenient top-left floating button for language switching, LED Backlight, acoustic audio mute, and JSON save export/import.
+  * 🌙 **LED Backlight Toggle**: Switch effortlessly between classic reflective STN LCD and illuminated night Indiglo mode.
   * 💾 **Portable JSON Backup**: Export and import save files in a single click to migrate progress across devices.
-  * 📖 **In-App Manual**: Built-in modal dialog with comprehensive gameplay rules and tips.
+  * 📖 **In-App Manual**: Built-in modal dialog with comprehensive gameplay rules, button orientations, and evolution tips.
   * 📳 **Haptic Feedback**: Short tactile vibration bursts on supported mobile devices.
 
 ---
@@ -54,7 +55,7 @@ A faithful, 100% client-side recreation of the original **1996 Generation 1 (P1)
 | Icon | Name | Function & Effects |
 | :---: | :--- | :--- |
 | **🍴** | **Feed** | Submenu: **Meal** (+1 hunger, +1 lb) or **Snack** (+1 happy, +2 lb). *Caution: Feeding >4 snacks in a row causes a toothache/sickness!* |
-| **💡** | **Light** | Submenu ON/OFF to turn lights off when sleeping. Sleeping with lights on counts as a Care Mistake after 1 hour. |
+| **💡** | **Light** | Submenu options: **LIGHT ON**, **LIGHT OFF**, or **SITTER** (toggles built-in Tama Sitter mode). Sleeping with lights on counts as a Care Mistake after 1 hour. |
 | **⚾** | **Game** | 5-round heading prediction mini-game. Winning $\ge 3$ rounds awards +1 happiness and burns 1 lb. |
 | **💉** | **Medicine** | Treats illness when the skull icon appears ☠️ (may require 1–2 doses). |
 | **🚿** | **Flush** | Cleans accumulated poop with a sweeping ocean wave animation. 4 poops left uncleaned causes disease. |

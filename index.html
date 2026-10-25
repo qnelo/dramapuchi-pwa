@@ -6,35 +6,81 @@
   <title>Tamagotchi PWA</title>
   <link rel="manifest" href="manifest.json">
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; user-select: none; -webkit-tap-highlight-color: transparent; }
     body {
       margin: 0;
-      background: #141416;
+      background: radial-gradient(circle at 50% 45%, #232730 0%, #111215 100%);
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
       min-height: 100dvh;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", monospace;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
       color: #eee;
       padding: 16px 12px;
       overflow-x: hidden;
+      position: relative;
     }
 
-    /* 1996 Keychain Oval Shell - Calibrated bounds */
+    /* Top-left corner floating controls */
+    .top-controls {
+      position: fixed;
+      top: 14px;
+      left: 14px;
+      display: flex;
+      gap: 10px;
+      z-index: 100;
+    }
+    .floating-btn {
+      background: rgba(26, 29, 36, 0.78);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: #f0f2f5;
+      border-radius: 20px;
+      padding: 7px 14px;
+      font-size: 13px;
+      font-weight: 500;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+      cursor: pointer;
+      touch-action: manipulation;
+      transition: background 0.15s, transform 0.1s, border-color 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .floating-btn:hover {
+      background: rgba(38, 42, 54, 0.92);
+      border-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-1px);
+    }
+    .floating-btn:active {
+      transform: translateY(1px);
+    }
+    .btn-icon {
+      font-size: 14px;
+      line-height: 1;
+    }
+
+    /* 1996 Authentic Keychain Oval Shell */
     .tama-shell {
-      width: 320px;
-      max-width: 92vw;
-      height: 410px;
-      max-height: 70vh;
-      background: radial-gradient(circle at 35% 25%, #ff5a67, #c9182b 70%, #800f1b);
-      border-radius: 50% 50% 46% 46% / 56% 56% 44% 44%;
+      width: 310px;
+      max-width: 90vw;
+      height: 405px;
+      max-height: 74vh;
+      background: radial-gradient(circle at 34% 20%, #ff5264 0%, #e8192d 38%, #b80c1d 72%, #70000d 100%);
+      border-radius: 50% 50% 46% 46% / 60% 60% 40% 40%;
+      border: 2px solid rgba(135, 0, 16, 0.75);
       box-shadow:
-        inset -8px -12px 20px rgba(0,0,0,0.45),
-        inset 6px 8px 16px rgba(255,255,255,0.35),
-        0 16px 36px rgba(0,0,0,0.7);
+        inset 7px 9px 18px rgba(255, 255, 255, 0.42),
+        inset -8px -12px 22px rgba(0, 0, 0, 0.55),
+        0 24px 48px rgba(0, 0, 0, 0.75),
+        0 6px 14px rgba(0, 0, 0, 0.45);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -43,30 +89,102 @@
       position: relative;
     }
 
-    /* Keychain top metal ring */
-    .keychain-ring {
-      width: 36px;
-      height: 22px;
-      border: 5px solid #c0c5ce;
-      border-radius: 50%;
+    /* Molded plastic lug tab at top of shell */
+    .keychain-lug {
       position: absolute;
-      top: -14px;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.5);
+      top: -15px;
+      width: 26px;
+      height: 20px;
+      background: linear-gradient(to right, #9e0a19, #ff5264 45%, #9e0a19);
+      border-radius: 8px 8px 0 0;
+      box-shadow: inset 0 2px 2px rgba(255,255,255,0.4), 0 -2px 5px rgba(0,0,0,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+    }
+    .keychain-hole {
+      width: 10px;
+      height: 10px;
+      background: radial-gradient(circle at 50% 50%, #15171d, #090a0c);
+      border-radius: 50%;
+      box-shadow: inset 0 2px 3px rgba(0,0,0,0.85);
     }
 
-    /* Sunken screen bezel - Center-fitted */
+    /* Chrome metallic split ring */
+    .keychain-ring {
+      width: 38px;
+      height: 38px;
+      border: 4px solid #d4d8e0;
+      border-radius: 50%;
+      position: absolute;
+      top: -30px;
+      z-index: 1;
+      box-shadow:
+        0 4px 10px rgba(0,0,0,0.65),
+        inset 0 1px 2px rgba(255,255,255,0.9),
+        inset 0 -2px 3px rgba(0,0,0,0.4);
+      background: transparent;
+    }
+
+    /* Molded decorative crack lines on the plastic shell */
+    .shell-grooves {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* "Tama" White Brush Logo */
+    .shell-brand {
+      position: absolute;
+      top: 36px;
+      font-family: 'Permanent Marker', cursive, sans-serif;
+      font-size: 27px;
+      color: #ffffff;
+      letter-spacing: 2.5px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.45);
+      transform: rotate(-3deg);
+      user-select: none;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    /* Recessed screen bezel */
     .screen-bezel {
-      background: #8b9574;
-      border: 5px solid #4a4e42;
-      border-radius: 14px;
+      background: #8b9776;
+      border: 5px solid #3c4233;
+      border-radius: 16px;
       padding: 6px 8px;
-      box-shadow: inset 3px 3px 6px rgba(0,0,0,0.45);
+      box-shadow:
+        inset 4px 4px 8px rgba(0, 0, 0, 0.55),
+        inset -2px -2px 4px rgba(255, 255, 255, 0.2),
+        0 1px 1px rgba(255, 255, 255, 0.25);
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 5px;
       width: 216px;
       max-width: 82%;
+      position: relative;
+      z-index: 3;
+      overflow: hidden;
+    }
+
+    /* Screen glass glare reflection */
+    .screen-glare {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.03) 42%, transparent 43%);
+      pointer-events: none;
+      border-radius: 11px;
+      z-index: 4;
     }
 
     /* Top and bottom rows of 4 status icons */
@@ -76,15 +194,17 @@
       width: 100%;
       font-size: 13px;
       line-height: 1;
-      color: rgba(27, 36, 22, 0.22);
+      color: rgba(27, 36, 22, 0.24);
       padding: 2px 0;
+      position: relative;
+      z-index: 2;
     }
     .icon-row span {
       transition: color 0.1s, text-shadow 0.1s;
     }
     .icon-row span.active {
       color: #1b2416;
-      text-shadow: 0 0 2px rgba(27,36,22,0.5);
+      text-shadow: 0 0 2px rgba(27,36,22,0.6);
     }
 
     /* 32x16 dot matrix with exact 2:1 ratio */
@@ -94,94 +214,57 @@
       display: block;
       margin: 0 auto;
       border-radius: 2px;
+      position: relative;
+      z-index: 2;
     }
 
-    /* Three physical tactile buttons (A, B, C) */
+    /* Three physical tactile dome buttons */
     .controls {
       display: flex;
       gap: 24px;
-      margin-top: 22px;
+      margin-top: 24px;
       align-items: flex-start;
+      position: relative;
+      z-index: 3;
     }
-    .btn-container {
+    .btn-well {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #5e000b 60%, #850311 100%);
+      box-shadow:
+        inset 0 3px 5px rgba(0,0,0,0.7),
+        0 1px 1px rgba(255,255,255,0.3);
       display: flex;
-      flex-direction: column;
       align-items: center;
-      gap: 4px;
+      justify-content: center;
     }
-    .btn-container.btn-center {
-      margin-top: 10px;
+    .btn-well.btn-center {
+      margin-top: 12px;
     }
     .hw-btn {
-      width: 40px;
-      height: 40px;
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
       border: none;
-      background: radial-gradient(circle at 30% 30%, #ffd166, #d49b00);
-      box-shadow: 0 5px 0 #7a5800, 0 6px 10px rgba(0,0,0,0.5);
+      background: radial-gradient(circle at 35% 30%, #ffffff 0%, #edf0f5 45%, #cfd4dc 80%, #9ba1ad 100%);
+      box-shadow:
+        0 4px 6px rgba(0,0,0,0.45),
+        inset 0 2px 2px rgba(255,255,255,0.95),
+        inset 0 -2px 3px rgba(0,0,0,0.2);
       cursor: pointer;
       touch-action: manipulation;
-      transition: transform 0.05s, box-shadow 0.05s;
+      transition: transform 0.06s ease, box-shadow 0.06s ease;
     }
     .hw-btn:active {
-      transform: translateY(4px);
-      box-shadow: 0 1px 0 #7a5800, 0 2px 4px rgba(0,0,0,0.5);
-    }
-    .btn-label {
-      font-size: 11px;
-      font-weight: bold;
-      color: rgba(255, 255, 255, 0.65);
-      letter-spacing: 1px;
+      transform: translateY(3px) scale(0.97);
+      box-shadow:
+        0 1px 2px rgba(0,0,0,0.5),
+        inset 0 1px 2px rgba(0,0,0,0.25);
     }
 
-    /* Mobile-first bottom QoL toolbar */
-    .qol-toolbar {
-      margin-top: 20px;
-      display: flex;
-      gap: 8px;
-      font-size: 12px;
-      flex-wrap: wrap;
-      justify-content: center;
-      max-width: 360px;
-      width: 100%;
-    }
-    .qol-toolbar select {
-      background: #232529;
-      color: #ffd166;
-      border: 1px solid #555;
-      padding: 7px 10px;
-      border-radius: 8px;
-      cursor: pointer;
-      touch-action: manipulation;
-      font-size: 12px;
-      font-weight: 500;
-      outline: none;
-    }
-    .qol-toolbar select:focus {
-      border-color: #ffd166;
-    }
-    .qol-toolbar button {
-      background: #232529;
-      color: #ddd;
-      border: 1px solid #3e4249;
-      padding: 7px 11px;
-      border-radius: 8px;
-      cursor: pointer;
-      touch-action: manipulation;
-      font-size: 12px;
-      transition: background 0.15s, border-color 0.15s;
-    }
-    .qol-toolbar button:active {
-      background: #34373d;
-      transform: scale(0.97);
-    }
-    .qol-toolbar button.btn-highlight {
-      border-color: #ffd166;
-      color: #ffd166;
-    }
-
-    /* Native modal dialog for instruction manual */
-    dialog#modal-manual {
+    /* Native modal dialogs (Manual & Settings) */
+    dialog.tamamodal {
       background: #1c1e24;
       color: #eee;
       border: 1px solid #3e4249;
@@ -195,16 +278,16 @@
       overflow: hidden;
       flex-direction: column;
     }
-    dialog#modal-manual[open] {
+    dialog.tamamodal[open] {
       display: flex;
     }
-    dialog#modal-manual:not([open]) {
+    dialog.tamamodal:not([open]) {
       display: none;
     }
-    dialog#modal-manual::backdrop {
+    dialog.tamamodal::backdrop {
       background: rgba(0, 0, 0, 0.72);
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
     }
     .modal-header {
       background: #24272e;
@@ -237,8 +320,9 @@
       line-height: 1;
       touch-action: manipulation;
     }
-    .btn-close-modal:active {
+    .btn-close-modal:hover {
       background: #444a57;
+      color: #fff;
     }
     .modal-body {
       padding: 16px 18px;
@@ -247,6 +331,71 @@
       line-height: 1.5;
       overscroll-behavior: contain;
     }
+
+    /* Settings group styling */
+    .settings-group {
+      margin-bottom: 16px;
+      background: #252830;
+      border: 1px solid #383c46;
+      border-radius: 10px;
+      padding: 12px 14px;
+    }
+    .settings-group-title {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #ffd166;
+      margin-bottom: 8px;
+    }
+    .settings-select {
+      width: 100%;
+      background: #181a1f;
+      color: #ffd166;
+      border: 1px solid #4a4f5c;
+      padding: 8px 10px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      outline: none;
+      cursor: pointer;
+    }
+    .settings-btn {
+      width: 100%;
+      background: #1e2129;
+      color: #e5e7eb;
+      border: 1px solid #434754;
+      padding: 9px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      touch-action: manipulation;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .settings-btn:hover {
+      background: #2c313d;
+      border-color: #5c6275;
+    }
+    .settings-btn:active {
+      transform: scale(0.98);
+    }
+    .settings-btn-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .settings-btn.btn-danger {
+      border-color: #a82937;
+      color: #ff6b7a;
+      margin-top: 4px;
+    }
+    .settings-btn.btn-danger:hover {
+      background: #3a161b;
+      border-color: #d6384a;
+    }
+
+    /* Manual styles */
     .manual-section {
       margin-bottom: 16px;
     }
@@ -293,9 +442,47 @@
   </style>
 </head>
 <body>
+  <!-- Top-left floating quick-access controls -->
+  <div class="top-controls">
+    <button id="btn-settings-open" class="floating-btn" title="Settings" aria-label="Settings">
+      <span class="btn-icon">⚙️</span>
+      <span id="txt-settings-open" class="btn-text">Settings</span>
+    </button>
+    <button id="btn-manual-open" class="floating-btn" title="Manual" aria-label="Manual">
+      <span class="btn-icon">📖</span>
+      <span id="txt-manual-open" class="btn-text">Manual</span>
+    </button>
+  </div>
+
+  <!-- Authentic Keychain Body -->
   <div class="tama-shell">
+    <!-- Molded lug tab & chrome split ring -->
+    <div class="keychain-lug">
+      <div class="keychain-hole"></div>
+    </div>
     <div class="keychain-ring"></div>
+
+    <!-- Molded crack egg grooves on the shell -->
+    <svg class="shell-grooves" viewBox="0 0 310 405" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Dark groove creases -->
+      <path d="M 48 102 L 86 102 L 106 118 L 126 102 L 155 115 L 184 102 L 204 118 L 224 102 L 262 102" stroke="rgba(90, 0, 10, 0.55)" stroke-width="2.5" stroke-linejoin="round" />
+      <path d="M 52 248 L 88 248 L 110 232 L 132 250 L 155 234 L 178 250 L 200 232 L 222 248 L 258 248" stroke="rgba(90, 0, 10, 0.55)" stroke-width="2.5" stroke-linejoin="round" />
+      <path d="M 10 175 L 48 175" stroke="rgba(90, 0, 10, 0.55)" stroke-width="2.5" />
+      <path d="M 262 175 L 300 175" stroke="rgba(90, 0, 10, 0.55)" stroke-width="2.5" />
+
+      <!-- Specular light highlights on groove rims -->
+      <path d="M 48 103.5 L 86 103.5 L 106 119.5 L 126 103.5 L 155 116.5 L 184 103.5 L 204 119.5 L 224 103.5 L 262 103.5" stroke="rgba(255, 140, 150, 0.35)" stroke-width="1.2" stroke-linejoin="round" />
+      <path d="M 52 249.5 L 88 249.5 L 110 233.5 L 132 251.5 L 155 235.5 L 178 251.5 L 200 233.5 L 222 249.5 L 258 249.5" stroke="rgba(255, 140, 150, 0.35)" stroke-width="1.2" stroke-linejoin="round" />
+      <path d="M 10 176.5 L 48 176.5" stroke="rgba(255, 140, 150, 0.35)" stroke-width="1.2" />
+      <path d="M 262 176.5 L 300 176.5" stroke="rgba(255, 140, 150, 0.35)" stroke-width="1.2" />
+    </svg>
+
+    <!-- White brush-lettering "Tama" brand -->
+    <div class="shell-brand">Tama</div>
+
+    <!-- Recessed screen bezel -->
     <div class="screen-bezel">
+      <div class="screen-glare"></div>
       <!-- Top Bezel: Feed, Light, Game, Medicine -->
       <div class="icon-row">
         <span id="icon-0" title="Feed">🍴</span>
@@ -313,51 +500,74 @@
         <span id="icon-7" title="Attention">🔔</span>
       </div>
     </div>
-    <!-- Hardware Buttons A, B, C -->
+
+    <!-- Three physical tactile white dome buttons without letters -->
     <div class="controls">
-      <div class="btn-container">
-        <button id="btn-a" class="hw-btn" aria-label="A"></button>
-        <span class="btn-label">A</span>
+      <div class="btn-well">
+        <button id="btn-a" class="hw-btn" aria-label="Button A (Left)"></button>
       </div>
-      <div class="btn-container btn-center">
-        <button id="btn-b" class="hw-btn" aria-label="B"></button>
-        <span class="btn-label">B</span>
+      <div class="btn-well btn-center">
+        <button id="btn-b" class="hw-btn" aria-label="Button B (Middle)"></button>
       </div>
-      <div class="btn-container">
-        <button id="btn-c" class="hw-btn" aria-label="C"></button>
-        <span class="btn-label">C</span>
+      <div class="btn-well">
+        <button id="btn-c" class="hw-btn" aria-label="Button C (Right)"></button>
       </div>
     </div>
   </div>
 
-  <!-- Mobile-first QoL Toolbar -->
-  <div class="qol-toolbar">
-    <select id="select-lang" aria-label="Language / Idioma">
-      <option value="en">🇬🇧 English</option>
-      <option value="es">🇪🇸 Español</option>
-      <option value="zh">🇨🇳 中文</option>
-      <option value="pt">🇧🇷 Português</option>
-    </select>
-    <button id="btn-manual" class="btn-highlight">📖 Manual</button>
-    <button id="btn-sitter">👶 Sitter: OFF</button>
-    <button id="btn-backlight">🌙 LED Light</button>
-    <button id="btn-export">💾 Export</button>
-    <button id="btn-import">📂 Import</button>
-    <button id="btn-sound">🔊 Audio</button>
-    <button id="btn-reset">🥚 New Egg</button>
-    <input type="file" id="file-import" accept=".json" style="display:none">
-  </div>
+  <!-- Settings Modal -->
+  <dialog id="modal-settings" class="tamamodal" closedby="any" aria-labelledby="settings-title">
+    <div class="modal-header">
+      <h2 id="settings-title">⚙️ Settings</h2>
+      <button id="btn-close-settings" class="btn-close-modal" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body">
+      <!-- Language selection -->
+      <div class="settings-group">
+        <div id="setting-lang-label" class="settings-group-title">🌐 Language / Idioma</div>
+        <select id="setting-lang" class="settings-select" aria-label="Language">
+          <option value="en">🇬🇧 English</option>
+          <option value="es">🇪🇸 Español</option>
+          <option value="zh">🇨🇳 中文</option>
+          <option value="pt">🇧🇷 Português</option>
+        </select>
+      </div>
+
+      <!-- Display options -->
+      <div class="settings-group">
+        <div id="setting-display-header" class="settings-group-title">📺 Display</div>
+        <button id="setting-backlight" class="settings-btn">🌙 LED Backlight</button>
+      </div>
+
+      <!-- Acoustic audio options -->
+      <div class="settings-group">
+        <div id="setting-audio-header" class="settings-group-title">🔊 Acoustic Synthesizer</div>
+        <button id="setting-sound" class="settings-btn">🔊 Audio: ON</button>
+      </div>
+
+      <!-- Data persistence & reset -->
+      <div class="settings-group">
+        <div id="setting-data-header" class="settings-group-title">💾 Save Data & Reset</div>
+        <div class="settings-btn-row">
+          <button id="setting-export" class="settings-btn">💾 Export Save JSON</button>
+          <button id="setting-import" class="settings-btn">📂 Import Save JSON</button>
+        </div>
+        <button id="setting-reset" class="settings-btn btn-danger">🥚 Hatch New Egg</button>
+        <input type="file" id="file-import" accept=".json" style="display:none">
+      </div>
+    </div>
+  </dialog>
 
   <!-- Instruction Manual Modal -->
-  <dialog id="modal-manual" closedby="any" aria-labelledby="manual-title">
+  <dialog id="modal-manual" class="tamamodal" closedby="any" aria-labelledby="manual-title">
     <div class="modal-header">
       <h2 id="manual-title">📖 Tamagotchi Manual</h2>
-      <button id="btn-close-modal" class="btn-close-modal" aria-label="Close">✕</button>
+      <button id="btn-close-manual" class="btn-close-modal" aria-label="Close">✕</button>
     </div>
     <div class="modal-body">
       <!-- Buttons Section -->
       <div class="manual-section">
-        <h3 id="manual-sec-buttons-title">🔘 Keychain Buttons</h3>
+        <h3 id="manual-sec-buttons-title">🔘 Keychain Buttons (Left to Right: A, B, C)</h3>
         <div class="manual-list">
           <div class="manual-item">
             <span class="badge">A</span>

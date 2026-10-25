@@ -117,18 +117,20 @@ Executes the Gen 1 branching evolution tree:
   - **Page 1**: Discipline bar (`DISCIP` with proportional bordered fill).
   - **Page 2**: Hunger (`HUNGRY` with 4 full/empty hearts).
   - **Page 3**: Happiness (`HAPPY` with 4 full/empty hearts).
+  - **Page 4**: Tama Sitter Status (`SITTER` / `ON` or `OFF`), toggled via Button B.
   - **Clock**: Real-time 24-hour clock with blinking colon (`TIME` / `HH:MM`).
 
 ### 3.6. `controllers/MenuController.js` & `constants/menu.js`
-- Hardware button state machine:
-  - **Button A**: In `IDLE`, enters `ICON_SELECT`. In `ICON_SELECT`, cycles icons 0..6. In `SUBMENU`, toggles index. In `STATUS_VIEW`, cycles status pages 0..3. In `MINIGAME`, inputs "Left".
-  - **Button B**: Confirms current icon or submenu action. In `IDLE`, triggers a happy jump animation (`HAPPY_JUMP`). In `MINIGAME`, inputs "Right".
+- Hardware button state machine (physical tactile white buttons from Left to Right: Button A, Button B, Button C):
+  - **Button A**: In `IDLE`, enters `ICON_SELECT`. In `ICON_SELECT`, cycles icons 0..6. In `SUBMENU`, toggles index (0..1 for FEED; 0..2 for LIGHT where option 2 is SITTER). In `STATUS_VIEW`, cycles status pages 0..4. In `MINIGAME`, inputs "Left".
+  - **Button B**: Confirms current icon or submenu action. On Status Page 4 (Sitter), toggles Tama Sitter mode. In `IDLE`, triggers a happy jump animation (`HAPPY_JUMP`). In `MINIGAME`, inputs "Right".
   - **Button C**: Cancels selection or returns to `IDLE`. In `IDLE`, displays the real-time clock.
 - Action handlers:
   - `feedPet(isCandy)`: Feeds Meal or Snack. Feeding $>4$ consecutive snacks triggers toothache/sickness (`isSick = true`).
   - `executeFlush()`: Sweeping water wave clearing all poops.
   - `executeMedicine()`: Administers treatment doses (refuses with negative sound if healthy).
   - `executeDiscipline()`: Scolds the pet; adds +25% discipline only if an active attention call exists without hunger or sadness.
+  - `executeSubmenuAction()`: Executes Meal/Snack for Feed, or Light On / Light Off / Sitter toggle for Light.
 
 ---
 
@@ -141,4 +143,4 @@ Executes the Gen 1 branching evolution tree:
    ```bash
    npm test
    ```
-   All 11 test suites must pass without errors.
+   All 12 test suites must pass without errors.

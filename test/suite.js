@@ -265,7 +265,8 @@ const petActive = {
   isSleeping: false,
   lightsOn: true,
   isCalling: false,
-  disciplineCallActive: false
+  disciplineCallActive: false,
+  sitterModeActive: false
 };
 
 const menu = new MenuController(petActive, mockAudio, () => {});
@@ -295,6 +296,29 @@ assert.strictEqual(menu.uiMode, UI_MODE.CLOCK);
 // Press B in CLOCK -> returns to IDLE
 menu.pressB();
 assert.strictEqual(menu.uiMode, UI_MODE.IDLE);
+// Test in-game Sitter toggle via LIGHT submenu option 2
+menu.pressA(); // ICON_SELECT -> 0 (FEED)
+menu.pressA(); // -> 1 (LIGHT)
+menu.pressB(); // SUBMENU (LIGHT)
+assert.strictEqual(menu.uiMode, UI_MODE.SUBMENU);
+menu.submenuIndex = 2; // SITTER
+assert.strictEqual(petActive.sitterModeActive, false);
+menu.pressB(); // Toggles sitterModeActive
+assert.strictEqual(petActive.sitterModeActive, true);
+assert.strictEqual(menu.uiMode, UI_MODE.IDLE);
+
+// Test in-game Sitter toggle via STATUS_VIEW page 4
+menu.pressA(); // ICON_SELECT -> 0 (FEED)
+for (let i = 0; i < 5; i++) menu.pressA(); // cycle to 5 (METER)
+assert.strictEqual(menu.selectedIcon, ICONS.METER);
+menu.pressB(); // Enters STATUS_VIEW at page 0
+assert.strictEqual(menu.uiMode, UI_MODE.STATUS_VIEW);
+menu.statusPage = 4; // Sitter page
+menu.pressB(); // Toggles sitterModeActive back to false
+assert.strictEqual(petActive.sitterModeActive, false);
+menu.pressC(); // Return to IDLE
+assert.strictEqual(menu.uiMode, UI_MODE.IDLE);
+
 console.log('✓ MenuController verified.');
 
 // 9. MiniGameController
@@ -361,7 +385,9 @@ StatusRenderer.renderStatusPage(mockLcd, { ageMinutes: 2880, weight: 12, discipl
 assert(mockLcd.buffer.size > 0);
 StatusRenderer.renderStatusPage(mockLcd, { ageMinutes: 2880, weight: 12, discipline: 50, hunger: 3, happiness: 4 }, 2);
 assert(mockLcd.buffer.size > 0);
-StatusRenderer.renderStatusPage(mockLcd, { ageMinutes: 2880, weight: 12, discipline: 50, hunger: 3, happiness: 4 }, 3);
+StatusRenderer.renderStatusPage(mockLcd, { ageMinutes: 2880, weight: 12, discipline: 50, hunger: 3, happiness: 4, sitterModeActive: true }, 3);
+assert(mockLcd.buffer.size > 0);
+StatusRenderer.renderStatusPage(mockLcd, { ageMinutes: 2880, weight: 12, discipline: 50, hunger: 3, happiness: 4, sitterModeActive: true }, 4);
 assert(mockLcd.buffer.size > 0);
 StatusRenderer.renderClock(mockLcd, new Date());
 assert(mockLcd.buffer.size > 0);

@@ -82,12 +82,18 @@ export class GameRenderer {
         StatusRenderer.drawText(lcd, "SNACK", 16, 6);
       }
     } else if (menuController.selectedIcon === ICONS.LIGHT) {
-      StatusRenderer.drawText(lcd, "ON", 8, 6);
-      StatusRenderer.drawText(lcd, "OFF", 20, 6);
       if (menuController.submenuIndex === 0) {
-        lcd.drawSprite(3, 5, SPRITES.ARROW_RIGHT);
+        StatusRenderer.drawText(lcd, "LIGHT", 6, 2);
+        lcd.drawSprite(7, 9, SPRITES.ARROW_RIGHT);
+        StatusRenderer.drawText(lcd, "ON", 13, 9);
+      } else if (menuController.submenuIndex === 1) {
+        StatusRenderer.drawText(lcd, "LIGHT", 6, 2);
+        lcd.drawSprite(7, 9, SPRITES.ARROW_RIGHT);
+        StatusRenderer.drawText(lcd, "OFF", 13, 9);
       } else {
-        lcd.drawSprite(15, 5, SPRITES.ARROW_RIGHT);
+        StatusRenderer.drawText(lcd, "SITTER", 4, 2);
+        lcd.drawSprite(5, 9, SPRITES.ARROW_RIGHT);
+        StatusRenderer.drawText(lcd, menuController.pet.sitterModeActive ? "ON" : "OFF", 11, 9);
       }
     }
   }
@@ -249,6 +255,11 @@ export class GameRenderer {
       if (blinkSkull) {
         lcd.drawSprite(0, 0, SPRITES.SKULL);
       }
+    }
+
+    // Tama Sitter indicator badge (top right)
+    if (petState.sitterModeActive) {
+      StatusRenderer.drawText(lcd, "S", 28, 1);
     }
   }
 }
