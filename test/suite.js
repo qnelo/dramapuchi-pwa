@@ -367,4 +367,20 @@ StatusRenderer.renderClock(mockLcd, new Date());
 assert(mockLcd.buffer.size > 0);
 console.log('✓ StatusRenderer verified.');
 
-console.log('\nALL 11 TEST SUITES PASSED SUCCESSFULLY! 🎯');
+// 12. i18n Translations
+console.log('Testing i18n Translations (en, es, zh, pt)...');
+const { TRANSLATIONS } = await import('../constants/i18n.js');
+const requiredLanguages = ['en', 'es', 'zh', 'pt'];
+for (const lang of requiredLanguages) {
+  assert(TRANSLATIONS[lang], `Missing language ${lang}`);
+  assert(TRANSLATIONS[lang].title, `Missing title in ${lang}`);
+  for (let i = 0; i < 8; i++) {
+    assert(TRANSLATIONS[lang].icons[i], `Missing icon ${i} in ${lang}`);
+  }
+  assert(TRANSLATIONS[lang].toolbar.manual, `Missing toolbar.manual in ${lang}`);
+  assert(TRANSLATIONS[lang].toolbar.sitterOn, `Missing toolbar.sitterOn in ${lang}`);
+  assert(TRANSLATIONS[lang].manual.title, `Missing manual.title in ${lang}`);
+}
+console.log('✓ i18n Translations verified.');
+
+console.log('\nALL 12 TEST SUITES PASSED SUCCESSFULLY! 🎯');

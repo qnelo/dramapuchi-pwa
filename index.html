@@ -17,7 +17,7 @@
       align-items: center;
       min-height: 100vh;
       min-height: 100dvh;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", monospace;
       color: #eee;
       padding: 16px 12px;
       overflow-x: hidden;
@@ -145,6 +145,21 @@
       max-width: 360px;
       width: 100%;
     }
+    .qol-toolbar select {
+      background: #232529;
+      color: #ffd166;
+      border: 1px solid #555;
+      padding: 7px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      touch-action: manipulation;
+      font-size: 12px;
+      font-weight: 500;
+      outline: none;
+    }
+    .qol-toolbar select:focus {
+      border-color: #ffd166;
+    }
     .qol-toolbar button {
       background: #232529;
       color: #ddd;
@@ -265,10 +280,6 @@
     .manual-item-desc {
       flex: 1;
     }
-    .manual-item-title {
-      font-weight: bold;
-      color: #5bfec8;
-    }
     .badge {
       display: inline-block;
       background: #2b2e36;
@@ -305,15 +316,15 @@
     <!-- Botones A, B y C -->
     <div class="controls">
       <div class="btn-container">
-        <button id="btn-a" class="hw-btn" aria-label="Seleccionar (A)"></button>
+        <button id="btn-a" class="hw-btn" aria-label="A"></button>
         <span class="btn-label">A</span>
       </div>
       <div class="btn-container btn-center">
-        <button id="btn-b" class="hw-btn" aria-label="Confirmar (B)"></button>
+        <button id="btn-b" class="hw-btn" aria-label="B"></button>
         <span class="btn-label">B</span>
       </div>
       <div class="btn-container">
-        <button id="btn-c" class="hw-btn" aria-label="Cancelar (C)"></button>
+        <button id="btn-c" class="hw-btn" aria-label="C"></button>
         <span class="btn-label">C</span>
       </div>
     </div>
@@ -321,6 +332,12 @@
 
   <!-- Controles QoL modernos adaptados a móvil -->
   <div class="qol-toolbar">
+    <select id="select-lang" aria-label="Idioma / Language">
+      <option value="es">🇪🇸 Español</option>
+      <option value="en">🇬🇧 English</option>
+      <option value="zh">🇨🇳 中文</option>
+      <option value="pt">🇧🇷 Português</option>
+    </select>
     <button id="btn-manual" class="btn-highlight">📖 Manual</button>
     <button id="btn-sitter">👶 Niñera: OFF</button>
     <button id="btn-backlight">🌙 Luz LED</button>
@@ -340,67 +357,67 @@
     <div class="modal-body">
       <!-- Sección Botones -->
       <div class="manual-section">
-        <h3>🔘 Botones del Llavero</h3>
+        <h3 id="manual-sec-buttons-title">🔘 Botones del Llavero</h3>
         <div class="manual-list">
           <div class="manual-item">
-            <span class="badge">Botón A</span>
-            <div class="manual-item-desc"><strong>Seleccionar:</strong> Navega entre los iconos superiores e inferiores, pasa páginas de estado o elige opción izquierda en el juego.</div>
+            <span class="badge">A</span>
+            <div id="manual-btn-a-desc" class="manual-item-desc"></div>
           </div>
           <div class="manual-item">
-            <span class="badge">Botón B</span>
-            <div class="manual-item-desc"><strong>Confirmar:</strong> Entra a la acción seleccionada. Si la mascota está en reposo, ¡salta de alegría! En el juego, elige la opción derecha.</div>
+            <span class="badge">B</span>
+            <div id="manual-btn-b-desc" class="manual-item-desc"></div>
           </div>
           <div class="manual-item">
-            <span class="badge">Botón C</span>
-            <div class="manual-item-desc"><strong>Cancelar / Reloj:</strong> Cancela menús y vuelve a la pantalla principal. En reposo, muestra el reloj en tiempo real.</div>
+            <span class="badge">C</span>
+            <div id="manual-btn-c-desc" class="manual-item-desc"></div>
           </div>
         </div>
       </div>
 
       <!-- Sección Iconos -->
       <div class="manual-section">
-        <h3>📟 Los 8 Iconos de Cuidado</h3>
+        <h3 id="manual-sec-icons-title">📟 Los 8 Iconos de Cuidado</h3>
         <div class="manual-list">
           <div class="manual-item">
             <span class="manual-icon">🍴</span>
-            <div class="manual-item-desc"><span class="manual-item-title">1. Comida:</span> <strong>Meal</strong> (Carne: +1 hambre, +1 lb) o <strong>Snack</strong> (Dulce: +1 felicidad, +2 lb). <em>¡Ojo! Más de 4 dulces seguidos le provoca dolor de muelas y enfermedad.</em></div>
+            <div id="manual-icon-0-desc" class="manual-item-desc"></div>
           </div>
           <div class="manual-item">
             <span class="manual-icon">💡</span>
-            <div class="manual-item-desc"><span class="manual-item-title">2. Luz (ON / OFF):</span> Apágala cuando tu mascota se duerma. Dejarla encendida más de 1 hora mientras duerme cuenta como descuido (Care Mistake).</div>
+            <div id="manual-icon-1-desc" class="manual-item-desc"></div>
           </div>
           <div class="manual-item">
             <span class="manual-icon">⚾</span>
-            <div class="manual-item-desc"><span class="manual-item-title">3. Juego:</span> Adivina hacia dónde mirará la mascota (A: Izquierda, B: Derecha). Ganar al menos 3 de 5 rondas otorga +1 felicidad y quema 1 lb.</div>
+            <div id="manual-icon-2-desc" class="manual-item-desc"></div>
           </div>
           <div class="manual-item">
             <span class="manual-icon">💉</span>
-            <div class="manual-item-desc"><span class="manual-item-title">4. Medicina:</span> Cúralo cuando aparezca el icono de cráneo ☠️ (puede requerir 1 o 2 dosis).</div>
+            <div id="manual-icon-3-desc" class="manual-item-desc"></div>
           </div>
           <div class="manual-item">
             <span class="manual-icon">🚿</span>
-            <div class="manual-item-desc"><span class="manual-item-title">5. Higiene:</span> Limpia la suciedad. Si acumula 4 cacas sin limpiar, contraerá una infección.</div>
+            <div id="manual-icon-4-desc" class="manual-item-desc"></div>
           </div>
           <div class="manual-item">
             <span class="manual-icon">⚖️</span>
-            <div class="manual-item-desc"><span class="manual-item-title">6. Báscula (Métricas):</span> 4 pantallas con botón A: 1) Edad y Peso, 2) Barra de Disciplina, 3) Corazones de Hambre, 4) Corazones de Felicidad.</div>
+            <div id="manual-icon-5-desc" class="manual-item-desc"></div>
           </div>
           <div class="manual-item">
             <span class="manual-icon">💢</span>
-            <div class="manual-item-desc"><span class="manual-item-title">7. Disciplina:</span> Regáñalo cuando llame teniendo comida y felicidad llenas (llamada caprichosa). Incrementa +25% de disciplina.</div>
+            <div id="manual-icon-6-desc" class="manual-item-desc"></div>
           </div>
           <div class="manual-item">
             <span class="manual-icon">🔔</span>
-            <div class="manual-item-desc"><span class="manual-item-title">8. Atención (Alerta):</span> Parpadea cuando tu mascota tiene hambre/tristeza en 0, está enferma o pide disciplina.</div>
+            <div id="manual-icon-7-desc" class="manual-item-desc"></div>
           </div>
         </div>
       </div>
 
       <!-- Sección Ciclo y Consejos -->
       <div class="manual-section">
-        <h3>🌱 Ciclo de Vida y Consejos</h3>
-        <p style="margin:4px 0 8px 0;">El huevo tarda 5 minutos en eclosionar. Luego pasa a Bebé (65 min), Niño (2 días), Adolescente (3 días) y Adulto (hasta 14 días adicionales).</p>
-        <p style="margin:0;"><strong>Modo Niñera:</strong> Actívalo en la barra inferior para congelar sus necesidades durante tu horario de trabajo o descanso y evitar que muera por descuido.</p>
+        <h3 id="manual-sec-lifecycle-title">🌱 Ciclo de Vida y Consejos</h3>
+        <p id="manual-lifecycle-desc" style="margin:4px 0 8px 0;"></p>
+        <p id="manual-sitter-desc" style="margin:0;"></p>
       </div>
     </div>
   </dialog>

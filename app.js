@@ -5,12 +5,14 @@ import { MenuController } from './controllers/MenuController.js';
 import { SaveManager } from './storage/SaveManager.js';
 import { GameRenderer } from './ui/GameRenderer.js';
 import { UI_MODE } from './constants/menu.js';
+import { TRANSLATIONS, detectLanguage } from './constants/i18n.js';
 
 let state = null;
 let lcd = null;
 let audio = null;
 let menu = null;
 let lastCallAlertTime = 0;
+let currentLang = detectLanguage();
 
 async function init() {
   // 1. Cargar estado persistente
@@ -30,10 +32,13 @@ async function init() {
   // 5. Vincular eventos de hardware y teclado
   setupInputListeners();
 
-  // 6. Vincular barra de herramientas QoL
+  // 6. Vincular barra de herramientas QoL y selector de idioma
   setupQolListeners();
 
-  // 7. Iniciar bucles de tiempo y renderizado
+  // 7. Aplicar traducciones detectadas / guardadas
+  applyTranslations(currentLang);
+
+  // 8. Iniciar bucles de tiempo y renderizado
   window.addEventListener('resize', () => lcd.resize());
 
   // Reconciliación cada segundo
@@ -53,14 +58,12 @@ async function init() {
   // Bucle de animación 60 FPS
   requestAnimationFrame(gameLoop);
 
-  // 8. Registro de Service Worker PWA
+  // 9. Registro de Service Worker PWA
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('./sw.js').catch(err => {
       console.warn('Service Worker registration skipped/failed:', err);
     });
   }
-
-  updateQolButtonsUI();
 }
 
 function setupInputListeners() {
@@ -107,6 +110,7 @@ function setupInputListeners() {
 }
 
 function setupQolListeners() {
+  const selectLang = document.getElementById('select-lang');
   const btnManual = document.getElementById('btn-manual');
   const modalManual = document.getElementById('modal-manual');
   const btnCloseModal = document.getElementById('btn-close-modal');
@@ -117,6 +121,16 @@ function setupQolListeners() {
   const fileImport = document.getElementById('file-import');
   const btnReset = document.getElementById('btn-reset');
   const btnSound = document.getElementById('btn-sound');
+
+  if (selectLang) {
+    selectLang.value = currentLang;
+    selectLang.addEventListener('change', (e) => {
+      currentLang = e.target.value;
+      localStorage.setItem('tama_lang', currentLang);
+      applyTranslations(currentLang);
+      audio.playClick();
+    });
+  }
 
   if (btnManual && modalManual) {
     btnManual.addEventListener('click', () => {
@@ -188,7 +202,8 @@ function setupQolListeners() {
         updateQolButtonsUI();
         audio.playConfirm();
       } catch (err) {
-        alert('Error al importar partida: ' + err.message);
+        const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
+        alert(t.dialogs.importError + err.message);
       }
       fileImport.value = '';
     });
@@ -196,8 +211,9 @@ function setupQolListeners() {
 
   if (btnReset) {
     btnReset.addEventListener('click', async () => {
+      const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
       if (state.stage !== 'DEAD' && state.stage !== 'DEPARTED') {
-        const ok = confirm('¿Deseas reiniciar un nuevo huevo de Tamagotchi?');
+        const ok = confirm(t.dialogs.confirmReset);
         if (!ok) return;
       }
       state = SaveManager.getInitialState();
@@ -216,23 +232,83 @@ function setupQolListeners() {
   }
 }
 
+function applyTranslations(lang) {
+  const t = TRANSLATIONS[lang] || TRANSLATIONS.en;
+  document.documentElement.lang = lang;
+  document.title = t.title;
+
+  const selectLang = document.getElementById('select-lang');
+  if (selectLang) selectLang.value = lang;
+
+  // Actualizar títulos de los iconos del bisel
+  for (let i = 0; i < 8; i++) {
+    const iconEl = document.getElementById(`icon-${i}`);
+    if (iconEl && t.icons[i]) {
+      iconEl.title = t.icons[i];
+    }
+  }
+
+  // Actualizar botones de la barra inferior
+  const btnManual = document.getElementById('btn-manual');
+  if (btnManual) btnManual.textContent = t.toolbar.manual;
+
+  const btnExport = document.getElementById('btn-export');
+  if (btnExport) btnExport.textContent = t.toolbar.export;
+
+  const btnImport = document.getElementById('btn-import');
+  if (btnImport) btnImport.textContent = t.toolbar.import;
+
+  const btnReset = document.getElementById('btn-reset');
+  if (btnReset) btnReset.textContent = t.toolbar.reset;
+
+  updateQolButtonsUI();
+
+  // Actualizar contenido del modal de instrucciones
+  const setElText = (id, text) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = text;
+  };
+
+  setElText('manual-title', t.manual.title);
+  setElText('manual-sec-buttons-title', t.manual.buttonsHeader);
+  setElText('manual-btn-a-desc', t.manual.btnA);
+  setElText('manual-btn-b-desc', t.manual.btnB);
+  setElText('manual-btn-c-desc', t.manual.btnC);
+
+  setElText('manual-sec-icons-title', t.manual.iconsHeader);
+  setElText('manual-icon-0-desc', t.manual.icon0);
+  setElText('manual-icon-1-desc', t.manual.icon1);
+  setElText('manual-icon-2-desc', t.manual.icon2);
+  setElText('manual-icon-3-desc', t.manual.icon3);
+  setElText('manual-icon-4-desc', t.manual.icon4);
+  setElText('manual-icon-5-desc', t.manual.icon5);
+  setElText('manual-icon-6-desc', t.manual.icon6);
+  setElText('manual-icon-7-desc', t.manual.icon7);
+
+  setElText('manual-sec-lifecycle-title', t.manual.lifecycleHeader);
+  setElText('manual-lifecycle-desc', t.manual.lifecycleDesc);
+  setElText('manual-sitter-desc', t.manual.sitterDesc);
+}
+
 function updateQolButtonsUI() {
+  const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
+
   const btnSitter = document.getElementById('btn-sitter');
-  if (btnSitter) {
-    btnSitter.textContent = `👶 Modo Niñera: ${state.sitterModeActive ? 'ON' : 'OFF'}`;
+  if (btnSitter && state) {
+    btnSitter.textContent = state.sitterModeActive ? t.toolbar.sitterOn : t.toolbar.sitterOff;
     btnSitter.style.borderColor = state.sitterModeActive ? '#5bfec8' : '#444';
   }
 
   const btnBacklight = document.getElementById('btn-backlight');
   if (btnBacklight && lcd) {
     const isBacklight = lcd.currentTheme === 'backlight';
-    btnBacklight.textContent = isBacklight ? '☀️ Modo Clásico' : '🌙 Luz LED';
+    btnBacklight.textContent = isBacklight ? t.toolbar.backlightClassic : t.toolbar.backlightNight;
     btnBacklight.style.borderColor = isBacklight ? '#5bfec8' : '#444';
   }
 
   const btnSound = document.getElementById('btn-sound');
   if (btnSound && audio) {
-    btnSound.textContent = audio.muted ? '🔇 Mudo' : '🔊 Audio';
+    btnSound.textContent = audio.muted ? t.toolbar.soundOff : t.toolbar.soundOn;
   }
 }
 

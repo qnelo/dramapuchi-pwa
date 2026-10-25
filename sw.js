@@ -1,4 +1,4 @@
-const CACHE_NAME = 'tama-pwa-v3';
+const CACHE_NAME = 'tama-pwa-v4';
 const ASSETS = [
   './',
   './index.html',
@@ -12,6 +12,7 @@ const ASSETS = [
   './ui/GameRenderer.js',
   './audio/TamagotchiAudio.js',
   './constants/menu.js',
+  './constants/i18n.js',
   './controllers/MenuController.js',
   './controllers/MiniGameController.js',
   './storage/SaveManager.js',
