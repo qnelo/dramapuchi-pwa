@@ -24,6 +24,7 @@ async function init() {
   // 3. Initialize LCD matrix and audio synthesizer
   const canvas = document.getElementById('lcdScreen');
   lcd = new LcdMatrix(canvas);
+  applyLcdPalette();
   audio = new TamagotchiAudio();
 
   // 4. Initialize menu controller
@@ -208,6 +209,7 @@ function setupQolListeners() {
     settingBacklight.addEventListener('click', () => {
       const nextTheme = lcd.currentTheme === 'classic' ? 'backlight' : 'classic';
       lcd.setTheme(nextTheme);
+      applyLcdPalette();
       updateSettingsUI();
       audio.playClick();
     });
@@ -372,6 +374,15 @@ function tickEngine() {
       lastCallAlertTime = now;
     }
   }
+}
+
+// Icon segments sit on the same LCD glass as the dot matrix, so they share its palette
+function applyLcdPalette() {
+  const p = lcd.palettes[lcd.currentTheme];
+  const glass = document.querySelector('.lcd-well');
+  glass.style.setProperty('--lcd-bg', p.bg);
+  glass.style.setProperty('--lcd-on', p.pixelOn);
+  glass.dataset.theme = lcd.currentTheme;
 }
 
 function updateIconBezel(now = Date.now()) {

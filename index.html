@@ -131,7 +131,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
       overflow: hidden;
     }
 
@@ -147,30 +147,71 @@
       z-index: 4;
     }
 
-    /* Top and bottom rows of 4 printed status icons */
+    /* Top and bottom rows of 4 icons on the LCD glass */
     .icon-row {
       display: flex;
       justify-content: space-around;
       width: 100%;
-      font-size: calc(var(--u) * 13);
-      line-height: 1;
       padding: calc(var(--u) * 2) 0;
-      position: relative;
-      z-index: 2;
-    }
-    .icon-row span {
-      opacity: 0.3;
-      filter: grayscale(0.7);
-      transition: opacity 0.1s, filter 0.1s;
-    }
-    .icon-row span.active {
-      opacity: 1;
-      filter: grayscale(0) drop-shadow(0 0 calc(var(--u) * 1.5) rgba(0, 0, 0, 0.45));
     }
 
-    /* Recessed LCD well */
+    /*
+     * Gen 1 icon segment: a colored drawing printed behind the glass (.ink) and an LCD
+     * segment of the same shape on top (.lcd). Off, the segment is clear and the drawing
+     * shows through; on, it darkens and hides the drawing.
+     */
+    .seg svg {
+      display: block;
+      width: calc(var(--u) * 16);
+      height: calc(var(--u) * 16);
+      overflow: visible;
+    }
+    /* Icons are solid etched shapes; holes (eyes, dial window) come from evenodd subpaths */
+    .seg use,
+    .manual-icon use {
+      fill: currentColor;
+      fill-rule: evenodd;
+    }
+    /* Ink seen through the tinted glass: it takes on the glass color like light passing a filter */
+    .seg .ink,
+    .manual-icon use {
+      mix-blend-mode: multiply;
+      opacity: 0.75;
+    }
+    /* Multiplying against the dark backlight glass would black the drawings out; the light passes through them instead */
+    .lcd-well[data-theme="backlight"] .seg .ink {
+      mix-blend-mode: normal;
+      opacity: 0.55;
+    }
+    .seg .lcd {
+      color: var(--lcd-on, #1b2416);
+      /* Slightly larger than the drawing so no antialiased ink fringe peeks out */
+      stroke: currentColor;
+      stroke-width: 0.5;
+      stroke-linejoin: round;
+      opacity: 0;
+      /* Approximates the dot matrix ghosting decay (0.35 per frame) */
+      transition: opacity 0.12s ease-out;
+    }
+    .seg.active .lcd {
+      opacity: 1;
+    }
+    /* Printed ink colors, shared by the device and the manual */
+    .ink-feed { color: #b5533c; }
+    .ink-light { color: #d4b02a; }
+    .ink-game { color: #2f6fb0; }
+    .ink-medicine { color: #b8405e; }
+    .ink-clean { color: #2c9aa0; }
+    .ink-scale { color: #6f5aa8; }
+    .ink-discipline { color: #c4372f; }
+    .ink-attention { color: #3f8f45; }
+
+    /* Recessed LCD glass: icon rows and dot matrix share the same panel and palette */
     .lcd-well {
       position: relative;
+      display: flex;
+      flex-direction: column;
+      background: var(--lcd-bg, #9ba885);
       border-radius: calc(var(--u) * 3);
       z-index: 2;
     }
@@ -379,10 +420,17 @@
       gap: 8px;
       align-items: flex-start;
     }
+    /* Icon shown on a chip of classic LCD glass, as it looks on the device */
     .manual-icon {
-      font-size: 16px;
-      min-width: 24px;
-      text-align: center;
+      flex: none;
+      padding: 3px;
+      border-radius: 4px;
+      background: #9ba885;
+    }
+    .manual-icon svg {
+      display: block;
+      width: 20px;
+      height: 20px;
     }
     .manual-item-desc {
       flex: 1;
@@ -586,26 +634,63 @@
       <!-- White pad-printed "Tama" brand -->
       <div class="shell-brand">Tama</div>
 
+      <!--
+        Gen 1 icon shapes, drawn like 90s etched LCD segments: chunky solid polygons with
+        45° bevels and ~1.2 unit gaps between parts. Each one is used twice, as printed ink
+        and as its LCD segment.
+      -->
+      <svg width="0" height="0" aria-hidden="true" style="position: absolute">
+        <symbol id="ico-feed" viewBox="0 0 16 16">
+          <path d="M.5 1h1.6v3.6h1.1V1h1.6v3.6h1.1V1h1.6v5.2L5 8.4V15H3V8.4L.5 6.2z" />
+          <path d="M9.5 1H11l3.8 3.8v3.8H9.5zM9.8 9.8H13V15H9.8z" />
+        </symbol>
+        <symbol id="ico-light" viewBox="0 0 16 16">
+          <path d="M5 1h6l3 3v3.2L11 10v1.3H5V10L2 7.2V4z" />
+          <path d="M5 12.5h6L10 15H6z" />
+        </symbol>
+        <symbol id="ico-game" viewBox="0 0 16 16">
+          <path transform="rotate(-45 8 8)" d="M1 6.5h1V7l6-.7 5.5-.5L15 6.6v2.8l-1.5.8L8 9.7 2 9v.5H1z" />
+          <path d="M11.3 9.8h2.2l1.5 1.5v2.2L13.5 15h-2.2l-1.5-1.5v-2.2z" />
+        </symbol>
+        <symbol id="ico-medicine" viewBox="0 0 16 16">
+          <path transform="rotate(-45 8 8)" d="M.3 5.1h1.5V7h1.4v2H1.8v1.9H.3zM4.4 5.1h6.2L12 7.1v1.8l-1.4 2H4.4zM6.2 5.1h1.2v2.1H6.2zM8.4 5.1h1.2v2.1H8.4zM13.2 7.1h2.7v1.8h-2.7z" />
+        </symbol>
+        <symbol id="ico-clean" viewBox="0 0 16 16">
+          <path transform="translate(0 1)" d="M.5 4.5l1.7-1.2 1.3-1.8h3L8 3v2.8L7 7.2h3.5L13 5.5l2.5-1v4L13.5 13h-9L2 10.5v-2l1.3-1.3v-1l-1.1-.6zM4.6 3h1.6v1.6H4.6z" />
+        </symbol>
+        <symbol id="ico-scale" viewBox="0 0 16 16">
+          <path d="M2 1.5h12l-1.5 2h-9z" />
+          <path d="M7 4.7h2v2.2h4l1.5 2.3v5.6h-13V9.2L3 6.9h4zM5 8.6h6l1.2 1.8v2H3.8v-2zM6.8 12.4l3-3.2h1.4l-2.4 3.2z" />
+        </symbol>
+        <symbol id="ico-discipline" viewBox="0 0 16 16">
+          <path d="M5 1h6l4 4v6l-4 4H5l-4-4V5zM3.8 5.2l3.4 1.6v1.8H3.8zM12.2 5.2v3.4H8.8V6.8zM4.5 12.8l1.5-2h4l1.5 2z" />
+        </symbol>
+        <symbol id="ico-attention" viewBox="0 0 16 16">
+          <path d="M6.6.5h2.8l1 1v2.2l-1 1H6.6l-1-1V1.5z" />
+          <path d="M6.6 5.9 2.4 2.2 1 3.6l5.6 4.7v2.2l-3.3 3.9 1.6 1.2L8 12l3.1 3.6 1.6-1.2-3.3-3.9V8.3L15 3.6l-1.4-1.4-4.2 3.7z" />
+        </symbol>
+      </svg>
+
       <!-- Screen window -->
       <div class="screen-bezel">
         <div class="screen-glare"></div>
-        <!-- Top Bezel: Feed, Light, Game, Medicine -->
-        <div class="icon-row">
-          <span id="icon-0" title="Feed">🍴</span>
-          <span id="icon-1" title="Light">💡</span>
-          <span id="icon-2" title="Game">⚾</span>
-          <span id="icon-3" title="Medicine">💉</span>
-        </div>
-        <!-- 32x16 LCD Matrix -->
+        <!-- LCD glass: icon segment rows around the 32x16 dot matrix -->
         <div class="lcd-well">
+          <!-- Top row: Feed, Light, Game, Medicine -->
+          <div class="icon-row">
+            <span id="icon-0" class="seg ink-feed" title="Feed"><svg viewBox="0 0 16 16"><use class="ink" href="#ico-feed" /><use class="lcd" href="#ico-feed" /></svg></span>
+            <span id="icon-1" class="seg ink-light" title="Light"><svg viewBox="0 0 16 16"><use class="ink" href="#ico-light" /><use class="lcd" href="#ico-light" /></svg></span>
+            <span id="icon-2" class="seg ink-game" title="Game"><svg viewBox="0 0 16 16"><use class="ink" href="#ico-game" /><use class="lcd" href="#ico-game" /></svg></span>
+            <span id="icon-3" class="seg ink-medicine" title="Medicine"><svg viewBox="0 0 16 16"><use class="ink" href="#ico-medicine" /><use class="lcd" href="#ico-medicine" /></svg></span>
+          </div>
           <canvas id="lcdScreen"></canvas>
-        </div>
-        <!-- Bottom Bezel: Clean, Scale, Discipline, Attention -->
-        <div class="icon-row">
-          <span id="icon-4" title="Clean">🚿</span>
-          <span id="icon-5" title="Scale">⚖️</span>
-          <span id="icon-6" title="Discipline">💢</span>
-          <span id="icon-7" title="Attention">🔔</span>
+          <!-- Bottom row: Clean, Scale, Discipline, Attention -->
+          <div class="icon-row">
+            <span id="icon-4" class="seg ink-clean" title="Clean"><svg viewBox="0 0 16 16"><use class="ink" href="#ico-clean" /><use class="lcd" href="#ico-clean" /></svg></span>
+            <span id="icon-5" class="seg ink-scale" title="Scale"><svg viewBox="0 0 16 16"><use class="ink" href="#ico-scale" /><use class="lcd" href="#ico-scale" /></svg></span>
+            <span id="icon-6" class="seg ink-discipline" title="Discipline"><svg viewBox="0 0 16 16"><use class="ink" href="#ico-discipline" /><use class="lcd" href="#ico-discipline" /></svg></span>
+            <span id="icon-7" class="seg ink-attention" title="Attention"><svg viewBox="0 0 16 16"><use class="ink" href="#ico-attention" /><use class="lcd" href="#ico-attention" /></svg></span>
+          </div>
         </div>
       </div>
 
@@ -696,35 +781,35 @@
         <h3 id="manual-sec-icons-title">📟 8 Care Icons</h3>
         <div class="manual-list">
           <div class="manual-item">
-            <span class="manual-icon">🍴</span>
+            <span class="manual-icon ink-feed"><svg viewBox="0 0 16 16"><use href="#ico-feed" /></svg></span>
             <div id="manual-icon-0-desc" class="manual-item-desc"></div>
           </div>
           <div class="manual-item">
-            <span class="manual-icon">💡</span>
+            <span class="manual-icon ink-light"><svg viewBox="0 0 16 16"><use href="#ico-light" /></svg></span>
             <div id="manual-icon-1-desc" class="manual-item-desc"></div>
           </div>
           <div class="manual-item">
-            <span class="manual-icon">⚾</span>
+            <span class="manual-icon ink-game"><svg viewBox="0 0 16 16"><use href="#ico-game" /></svg></span>
             <div id="manual-icon-2-desc" class="manual-item-desc"></div>
           </div>
           <div class="manual-item">
-            <span class="manual-icon">💉</span>
+            <span class="manual-icon ink-medicine"><svg viewBox="0 0 16 16"><use href="#ico-medicine" /></svg></span>
             <div id="manual-icon-3-desc" class="manual-item-desc"></div>
           </div>
           <div class="manual-item">
-            <span class="manual-icon">🚿</span>
+            <span class="manual-icon ink-clean"><svg viewBox="0 0 16 16"><use href="#ico-clean" /></svg></span>
             <div id="manual-icon-4-desc" class="manual-item-desc"></div>
           </div>
           <div class="manual-item">
-            <span class="manual-icon">⚖️</span>
+            <span class="manual-icon ink-scale"><svg viewBox="0 0 16 16"><use href="#ico-scale" /></svg></span>
             <div id="manual-icon-5-desc" class="manual-item-desc"></div>
           </div>
           <div class="manual-item">
-            <span class="manual-icon">💢</span>
+            <span class="manual-icon ink-discipline"><svg viewBox="0 0 16 16"><use href="#ico-discipline" /></svg></span>
             <div id="manual-icon-6-desc" class="manual-item-desc"></div>
           </div>
           <div class="manual-item">
-            <span class="manual-icon">🔔</span>
+            <span class="manual-icon ink-attention"><svg viewBox="0 0 16 16"><use href="#ico-attention" /></svg></span>
             <div id="manual-icon-7-desc" class="manual-item-desc"></div>
           </div>
         </div>
@@ -754,6 +839,6 @@
     </div>
   </dialog>
 
-  <script type="module" src="./app.js?v=28"></script>
+  <script type="module" src="./app.js?v=29"></script>
 </body>
 </html>
