@@ -67,200 +67,158 @@
       line-height: 1;
     }
 
-    /* 1996 Authentic Keychain Oval Shell */
-    .tama-shell {
-      width: 310px;
-      max-width: 90vw;
-      height: 405px;
-      max-height: 74vh;
-      background: radial-gradient(circle at 34% 20%, #ff5264 0%, #e8192d 38%, #b80c1d 72%, #70000d 100%);
-      border-radius: 50% 50% 46% 46% / 60% 60% 40% 40%;
-      border: 2px solid rgba(135, 0, 16, 0.75);
-      box-shadow:
-        inset 7px 9px 18px rgba(255, 255, 255, 0.42),
-        inset -8px -12px 22px rgba(0, 0, 0, 0.55),
-        0 24px 48px rgba(0, 0, 0, 0.75),
-        0 6px 14px rgba(0, 0, 0, 0.45);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 30px 24px 20px;
+    /*
+     * Keychain device. The plastic body is a layered SVG illustration (viewBox 320x446)
+     * and the interactive parts (screen, buttons, logo) are overlaid on top of it.
+     * All overlay geometry is expressed in --u units (1/320 of the device width),
+     * so the whole keychain scales proportionally on any screen size.
+     */
+    .tama-device {
       position: relative;
+      width: min(340px, 90vw, calc((100dvh - 110px) * 320 / 446));
+      aspect-ratio: 320 / 446;
+      container-type: inline-size;
     }
-
-    /* Molded plastic lug tab at top of shell */
-    .keychain-lug {
+    .tama-body {
       position: absolute;
-      top: -15px;
-      width: 26px;
-      height: 20px;
-      background: linear-gradient(to right, #9e0a19, #ff5264 45%, #9e0a19);
-      border-radius: 8px 8px 0 0;
-      box-shadow: inset 0 2px 2px rgba(255,255,255,0.4), 0 -2px 5px rgba(0,0,0,0.3);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 2;
-    }
-    .keychain-hole {
-      width: 10px;
-      height: 10px;
-      background: radial-gradient(circle at 50% 50%, #15171d, #090a0c);
-      border-radius: 50%;
-      box-shadow: inset 0 2px 3px rgba(0,0,0,0.85);
-    }
-
-    /* Chrome metallic split ring */
-    .keychain-ring {
-      width: 38px;
-      height: 38px;
-      border: 4px solid #d4d8e0;
-      border-radius: 50%;
-      position: absolute;
-      top: -30px;
-      z-index: 1;
-      box-shadow:
-        0 4px 10px rgba(0,0,0,0.65),
-        inset 0 1px 2px rgba(255,255,255,0.9),
-        inset 0 -2px 3px rgba(0,0,0,0.4);
-      background: transparent;
-    }
-
-    /* Molded decorative crack lines on the plastic shell */
-    .shell-grooves {
-      position: absolute;
-      top: 0;
-      left: 0;
+      inset: 0;
       width: 100%;
       height: 100%;
+      overflow: visible;
       pointer-events: none;
-      z-index: 1;
+      filter:
+        drop-shadow(0 16px 20px rgba(0, 0, 0, 0.6))
+        drop-shadow(0 3px 4px rgba(0, 0, 0, 0.45));
+    }
+    .tama-ui {
+      --u: calc(100cqw / 320);
+      position: absolute;
+      inset: 0;
     }
 
-    /* "Tama" White Brush Logo */
+    /* "Tama" pad-printed white brush logo */
     .shell-brand {
       position: absolute;
-      top: 36px;
+      left: 0;
+      right: 0;
+      top: calc(var(--u) * 92);
+      text-align: center;
       font-family: 'Permanent Marker', cursive, sans-serif;
-      font-size: 27px;
-      color: #ffffff;
-      letter-spacing: 2.5px;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.45);
-      transform: rotate(-3deg);
-      user-select: none;
+      font-size: calc(var(--u) * 27);
+      line-height: 1;
+      color: #fffaf2;
+      letter-spacing: calc(var(--u) * 2);
+      transform: rotate(-4deg);
+      text-shadow:
+        0 calc(var(--u) * 0.8) 0 rgba(110, 0, 10, 0.55),
+        0 0 calc(var(--u) * 1) rgba(255, 255, 255, 0.2);
       pointer-events: none;
-      z-index: 3;
     }
 
-    /* Recessed screen bezel */
+    /* Printed window frame around the LCD (sits inside the dark molded recess) */
     .screen-bezel {
-      background: #8b9776;
-      border: 5px solid #3c4233;
-      border-radius: 16px;
-      padding: 6px 8px;
+      position: absolute;
+      left: calc(var(--u) * 56);
+      top: calc(var(--u) * 152);
+      width: calc(var(--u) * 208);
+      height: calc(var(--u) * 148);
+      padding: calc(var(--u) * 5) calc(var(--u) * 8);
+      border-radius: calc(var(--u) * 14);
+      background: linear-gradient(180deg, #e6e4d8 0%, #d2d0c1 100%);
       box-shadow:
-        inset 4px 4px 8px rgba(0, 0, 0, 0.55),
-        inset -2px -2px 4px rgba(255, 255, 255, 0.2),
-        0 1px 1px rgba(255, 255, 255, 0.25);
+        inset 0 calc(var(--u) * 3) calc(var(--u) * 5) rgba(0, 0, 0, 0.5),
+        inset 0 calc(var(--u) * -1) calc(var(--u) * 2) rgba(255, 255, 255, 0.55);
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 5px;
-      width: 216px;
-      max-width: 82%;
-      position: relative;
-      z-index: 3;
+      justify-content: space-between;
       overflow: hidden;
     }
 
-    /* Screen glass glare reflection */
+    /* Clear plastic window glare */
     .screen-glare {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.03) 42%, transparent 43%);
+      inset: 0;
+      background:
+        linear-gradient(128deg, rgba(255, 255, 255, 0.34) 0%, rgba(255, 255, 255, 0.08) 34%, transparent 35%),
+        linear-gradient(180deg, transparent 70%, rgba(255, 255, 255, 0.08) 100%);
       pointer-events: none;
-      border-radius: 11px;
+      border-radius: inherit;
       z-index: 4;
     }
 
-    /* Top and bottom rows of 4 status icons */
+    /* Top and bottom rows of 4 printed status icons */
     .icon-row {
       display: flex;
       justify-content: space-around;
       width: 100%;
-      font-size: 13px;
+      font-size: calc(var(--u) * 13);
       line-height: 1;
-      color: rgba(27, 36, 22, 0.24);
-      padding: 2px 0;
+      padding: calc(var(--u) * 2) 0;
       position: relative;
       z-index: 2;
     }
     .icon-row span {
-      transition: color 0.1s, text-shadow 0.1s;
+      opacity: 0.3;
+      filter: grayscale(0.7);
+      transition: opacity 0.1s, filter 0.1s;
     }
     .icon-row span.active {
-      color: #1b2416;
-      text-shadow: 0 0 2px rgba(27,36,22,0.6);
+      opacity: 1;
+      filter: grayscale(0) drop-shadow(0 0 calc(var(--u) * 1.5) rgba(0, 0, 0, 0.45));
     }
 
-    /* 32x16 dot matrix with exact 2:1 ratio */
-    canvas {
-      width: 192px; /* Exact 6x scale: 32 * 6 = 192 */
-      height: 96px;  /* 16 * 6 = 96 */
-      display: block;
-      margin: 0 auto;
-      border-radius: 2px;
+    /* Recessed LCD well */
+    .lcd-well {
       position: relative;
+      border-radius: calc(var(--u) * 3);
       z-index: 2;
     }
+    .lcd-well::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      box-shadow:
+        inset 0 calc(var(--u) * 2) calc(var(--u) * 4) rgba(0, 0, 0, 0.45),
+        0 0 0 calc(var(--u) * 1.2) rgba(70, 76, 58, 0.55);
+      pointer-events: none;
+    }
 
-    /* Three physical tactile dome buttons */
-    .controls {
-      display: flex;
-      gap: 24px;
-      margin-top: 24px;
-      align-items: flex-start;
-      position: relative;
-      z-index: 3;
+    /* 32x16 dot matrix with exact 2:1 ratio (6x scale on a 320-unit device) */
+    canvas {
+      width: calc(var(--u) * 192);
+      height: calc(var(--u) * 96);
+      display: block;
+      border-radius: calc(var(--u) * 3);
     }
-    .btn-well {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: radial-gradient(circle, #5e000b 60%, #850311 100%);
-      box-shadow:
-        inset 0 3px 5px rgba(0,0,0,0.7),
-        0 1px 1px rgba(255,255,255,0.3);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .btn-well.btn-center {
-      margin-top: 12px;
-    }
+
+    /* Three cream-white dome buttons seated in molded wells (Left to Right: A, B, C) */
     .hw-btn {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
+      position: absolute;
+      width: calc(var(--u) * 34);
+      height: calc(var(--u) * 34);
+      margin: calc(var(--u) * -17) 0 0 calc(var(--u) * -17);
+      padding: 0;
       border: none;
-      background: radial-gradient(circle at 35% 30%, #ffffff 0%, #edf0f5 45%, #cfd4dc 80%, #9ba1ad 100%);
+      border-radius: 50%;
+      background: radial-gradient(circle at 38% 30%, #ffffff 0%, #f7f4ec 30%, #ddd8cb 70%, #b5ae9f 100%);
       box-shadow:
-        0 4px 6px rgba(0,0,0,0.45),
-        inset 0 2px 2px rgba(255,255,255,0.95),
-        inset 0 -2px 3px rgba(0,0,0,0.2);
+        0 calc(var(--u) * 3) calc(var(--u) * 3) rgba(40, 0, 5, 0.6),
+        inset 0 calc(var(--u) * -2) calc(var(--u) * 3) rgba(0, 0, 0, 0.18),
+        inset 0 calc(var(--u) * 1.5) calc(var(--u) * 1.5) rgba(255, 255, 255, 0.95);
       cursor: pointer;
       touch-action: manipulation;
       transition: transform 0.06s ease, box-shadow 0.06s ease;
     }
+    #btn-a { left: calc(var(--u) * 104); top: calc(var(--u) * 362); }
+    #btn-b { left: calc(var(--u) * 160); top: calc(var(--u) * 374); }
+    #btn-c { left: calc(var(--u) * 216); top: calc(var(--u) * 362); }
     .hw-btn:active {
-      transform: translateY(3px) scale(0.97);
+      transform: translateY(calc(var(--u) * 2)) scale(0.96);
       box-shadow:
-        0 1px 2px rgba(0,0,0,0.5),
-        inset 0 1px 2px rgba(0,0,0,0.25);
+        0 calc(var(--u) * 1) calc(var(--u) * 1) rgba(40, 0, 5, 0.65),
+        inset 0 calc(var(--u) * 1) calc(var(--u) * 2) rgba(0, 0, 0, 0.25);
     }
 
     /* Native modal dialogs (Manual & Settings) */
@@ -454,64 +412,207 @@
     </button>
   </div>
 
-  <!-- Authentic Keychain Body -->
-  <div class="tama-shell">
-    <!-- Molded lug tab & chrome split ring -->
-    <div class="keychain-lug">
-      <div class="keychain-hole"></div>
-    </div>
-    <div class="keychain-ring"></div>
+  <!-- Keychain device: layered SVG plastic body + interactive overlay -->
+  <div class="tama-device">
+    <svg class="tama-body" viewBox="0 0 320 446" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <!-- Egg silhouette shared by fills, clips and strokes -->
+        <path id="egg" d="M160,46 C242,46 307,144 309,264 C311,372 246,438 160,438 C74,438 9,372 11,264 C13,144 78,46 160,46 Z" />
+        <clipPath id="clip-egg"><use href="#egg" /></clipPath>
 
-    <!-- Molded crack egg grooves on the shell -->
-    <svg class="shell-grooves" viewBox="0 0 310 405" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <!-- Dark groove creases -->
-      <path d="M 48 102 L 86 102 L 106 118 L 126 102 L 155 115 L 184 102 L 204 118 L 224 102 L 262 102" stroke="rgba(90, 0, 10, 0.55)" stroke-width="2.5" stroke-linejoin="round" />
-      <path d="M 52 248 L 88 248 L 110 232 L 132 250 L 155 234 L 178 250 L 200 232 L 222 248 L 258 248" stroke="rgba(90, 0, 10, 0.55)" stroke-width="2.5" stroke-linejoin="round" />
-      <path d="M 10 175 L 48 175" stroke="rgba(90, 0, 10, 0.55)" stroke-width="2.5" />
-      <path d="M 262 175 L 300 175" stroke="rgba(90, 0, 10, 0.55)" stroke-width="2.5" />
+        <!-- Base ABS plastic color: lit from the upper left -->
+        <radialGradient id="g-plastic" cx="0.38" cy="0.28" r="0.8">
+          <stop offset="0" stop-color="#ff4d5c" />
+          <stop offset="0.35" stop-color="#e81b2e" />
+          <stop offset="0.72" stop-color="#c41022" />
+          <stop offset="1" stop-color="#8a0715" />
+        </radialGradient>
+        <!-- Rim darkening that rounds the body like a pillow -->
+        <radialGradient id="g-rim" cx="0.46" cy="0.42" r="0.62">
+          <stop offset="0.68" stop-color="#3a0006" stop-opacity="0" />
+          <stop offset="1" stop-color="#3a0006" stop-opacity="0.6" />
+        </radialGradient>
+        <!-- Visible side wall (shell thickness) -->
+        <linearGradient id="g-wall" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#9c0a1a" />
+          <stop offset="1" stop-color="#4c010a" />
+        </linearGradient>
+        <!-- Beveled edge highlight -->
+        <linearGradient id="g-bevel" x1="0.1" y1="0" x2="0.75" y2="1">
+          <stop offset="0" stop-color="#ffd0d4" stop-opacity="0.85" />
+          <stop offset="0.45" stop-color="#ff9aa3" stop-opacity="0.15" />
+          <stop offset="1" stop-color="#ff9aa3" stop-opacity="0" />
+        </linearGradient>
+        <!-- Raised faceplate band between the eggshell cracks -->
+        <linearGradient id="g-band" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#f02a3c" stop-opacity="0.55" />
+          <stop offset="1" stop-color="#9e0a1a" stop-opacity="0.35" />
+        </linearGradient>
+        <!-- Molded recess around the screen window -->
+        <linearGradient id="g-recess" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#4a020b" />
+          <stop offset="1" stop-color="#7a0614" />
+        </linearGradient>
+        <!-- Button wells -->
+        <radialGradient id="g-well" cx="0.5" cy="0.35" r="0.65">
+          <stop offset="0" stop-color="#2c0005" />
+          <stop offset="0.8" stop-color="#5a030d" />
+          <stop offset="1" stop-color="#7d0614" />
+        </radialGradient>
+        <!-- Chrome split ring -->
+        <linearGradient id="g-chrome" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#6f7783" />
+          <stop offset="0.3" stop-color="#f6f8fb" />
+          <stop offset="0.55" stop-color="#a7afba" />
+          <stop offset="0.8" stop-color="#e9edf2" />
+          <stop offset="1" stop-color="#5d6470" />
+        </linearGradient>
+        <linearGradient id="g-chrome-back" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#4b525c" />
+          <stop offset="0.5" stop-color="#9aa2ad" />
+          <stop offset="1" stop-color="#3f454e" />
+        </linearGradient>
+        <!-- Keychain lug plastic -->
+        <linearGradient id="g-lug" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#8a0715" />
+          <stop offset="0.35" stop-color="#f23446" />
+          <stop offset="0.6" stop-color="#d0142a" />
+          <stop offset="1" stop-color="#76050f" />
+        </linearGradient>
 
-      <!-- Specular light highlights on groove rims -->
-      <path d="M 48 103.5 L 86 103.5 L 106 119.5 L 126 103.5 L 155 116.5 L 184 103.5 L 204 119.5 L 224 103.5 L 262 103.5" stroke="rgba(255, 140, 150, 0.35)" stroke-width="1.2" stroke-linejoin="round" />
-      <path d="M 52 249.5 L 88 249.5 L 110 233.5 L 132 251.5 L 155 235.5 L 178 251.5 L 200 233.5 L 222 249.5 L 258 249.5" stroke="rgba(255, 140, 150, 0.35)" stroke-width="1.2" stroke-linejoin="round" />
-      <path d="M 10 176.5 L 48 176.5" stroke="rgba(255, 140, 150, 0.35)" stroke-width="1.2" />
-      <path d="M 262 176.5 L 300 176.5" stroke="rgba(255, 140, 150, 0.35)" stroke-width="1.2" />
+        <linearGradient id="g-lug-shade" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0.45" stop-color="#2a0004" stop-opacity="0" />
+          <stop offset="1" stop-color="#2a0004" stop-opacity="0.65" />
+        </linearGradient>
+
+        <!-- Lug with a real see-through hole (the ring passes through it) -->
+        <mask id="mask-lug-hole" maskUnits="userSpaceOnUse" x="0" y="0" width="320" height="80">
+          <rect x="0" y="0" width="320" height="80" fill="#fff" />
+          <circle cx="160" cy="36" r="7" fill="#000" />
+        </mask>
+
+        <!-- Filters -->
+        <filter id="f-blur-lg" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="9" /></filter>
+        <filter id="f-blur-md" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3" /></filter>
+        <filter id="f-blur-sm" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="1.2" /></filter>
+        <!-- Fine matte grain of injection-molded plastic -->
+        <filter id="f-grain" x="0" y="0" width="100%" height="100%">
+          <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="7" stitchTiles="stitch" />
+          <feColorMatrix type="saturate" values="0" />
+        </filter>
+      </defs>
+
+      <!-- 1. Back half of the chrome ring (behind the lug) -->
+      <path d="M160,3 A11,19 0 0 1 160,41" fill="none" stroke="url(#g-chrome-back)" stroke-width="3.2" stroke-linecap="round" />
+
+      <!-- 2. Molded keychain lug (behind the shell so the body overlaps its base) -->
+      <g mask="url(#mask-lug-hole)">
+        <path d="M142,60 L142,38 A18,18 0 0 1 178,38 L178,60 Z" fill="url(#g-lug)" />
+        <path d="M142,60 L142,38 A18,18 0 0 1 178,38 L178,60 Z" fill="url(#g-lug-shade)" />
+        <path d="M144.5,38 A15.5,15.5 0 0 1 175.5,38" fill="none" stroke="#ffb3ba" stroke-opacity="0.55" stroke-width="1.2" />
+      </g>
+      <!-- Inner wall of the lug hole -->
+      <circle cx="160" cy="36" r="7" fill="none" stroke="#4a020b" stroke-width="1.6" />
+      <path d="M153.4,34 A7,7 0 0 1 166.6,34" fill="none" stroke="#000" stroke-opacity="0.45" stroke-width="2" />
+      <path d="M154,39.5 A6.8,6.8 0 0 0 166,39.5" fill="none" stroke="#ff8f99" stroke-opacity="0.6" stroke-width="0.9" />
+
+      <!-- 3. Side wall: the visible thickness of the shell -->
+      <use href="#egg" transform="translate(0 7)" fill="url(#g-wall)" />
+
+      <!-- 4. Main front shell -->
+      <use href="#egg" fill="url(#g-plastic)" />
+
+      <g clip-path="url(#clip-egg)">
+        <!-- Plastic grain texture -->
+        <rect x="0" y="40" width="320" height="406" filter="url(#f-grain)" opacity="0.09" style="mix-blend-mode: overlay" />
+
+        <!-- 5. Raised faceplate band bounded by the zigzag eggshell cracks -->
+        <path d="M0,128 L40,128 L62,120 L86,134 L110,120 L134,134 L160,118 L186,134 L210,120 L234,134 L258,120 L280,128 L320,128
+                 L320,322 L280,322 L258,330 L234,316 L210,330 L186,316 L160,332 L134,316 L110,330 L86,316 L62,330 L40,322 L0,322 Z"
+              fill="url(#g-band)" />
+        <!-- Crack crease (dark groove) and lit lip on the top zigzag -->
+        <path d="M0,127 L40,127 L62,119 L86,133 L110,119 L134,133 L160,117 L186,133 L210,119 L234,133 L258,119 L280,127 L320,127"
+              fill="none" stroke="#4d010a" stroke-opacity="0.75" stroke-width="1.6" stroke-linejoin="round" />
+        <path d="M0,129.2 L40,129.2 L62,121.2 L86,135.2 L110,121.2 L134,135.2 L160,119.2 L186,135.2 L210,121.2 L234,135.2 L258,121.2 L280,129.2 L320,129.2"
+              fill="none" stroke="#ffb0b8" stroke-opacity="0.55" stroke-width="1.1" stroke-linejoin="round" />
+        <!-- Soft cast shadow and crease under the bottom zigzag -->
+        <path d="M0,325 L40,325 L62,333 L86,319 L110,333 L134,319 L160,335 L186,319 L210,333 L234,319 L258,333 L280,325 L320,325"
+              fill="none" stroke="#3a0006" stroke-opacity="0.55" stroke-width="4" stroke-linejoin="round" filter="url(#f-blur-sm)" />
+        <path d="M0,322.5 L40,322.5 L62,330.5 L86,316.5 L110,330.5 L134,316.5 L160,332.5 L186,316.5 L210,330.5 L234,316.5 L258,330.5 L280,322.5 L320,322.5"
+              fill="none" stroke="#4d010a" stroke-opacity="0.8" stroke-width="1.4" stroke-linejoin="round" />
+        <path d="M0,320.8 L40,320.8 L62,328.8 L86,314.8 L110,328.8 L134,314.8 L160,330.8 L186,314.8 L210,328.8 L234,314.8 L258,328.8 L280,320.8 L320,320.8"
+              fill="none" stroke="#ff9aa3" stroke-opacity="0.35" stroke-width="0.9" stroke-linejoin="round" />
+
+        <!-- Specular highlights of glossy 90s plastic (painted under the recess) -->
+        <ellipse cx="100" cy="108" rx="60" ry="30" transform="rotate(-38 100 108)" fill="#fff" opacity="0.24" filter="url(#f-blur-lg)" />
+        <path d="M24,272 C22,172 74,84 150,56 C98,90 50,164 24,272 Z" fill="#fff" opacity="0.34" filter="url(#f-blur-sm)" />
+
+        <!-- 6. Molded recess that holds the screen window -->
+        <rect x="47" y="145.5" width="226" height="164" rx="22" fill="#ff7a85" opacity="0.5" />
+        <rect x="47" y="143" width="226" height="164" rx="22" fill="url(#g-recess)" />
+        <rect x="47" y="143" width="226" height="164" rx="22" fill="none" stroke="#1f0003" stroke-opacity="0.75" stroke-width="5" filter="url(#f-blur-md)" transform="translate(0 2)" />
+
+        <!-- 7. Button wells (A, B, C from left to right) -->
+        <g>
+          <circle cx="104" cy="363.5" r="22.5" fill="#ff7a85" opacity="0.45" />
+          <circle cx="104" cy="362" r="22" fill="url(#g-well)" />
+          <circle cx="160" cy="375.5" r="22.5" fill="#ff7a85" opacity="0.45" />
+          <circle cx="160" cy="374" r="22" fill="url(#g-well)" />
+          <circle cx="216" cy="363.5" r="22.5" fill="#ff7a85" opacity="0.45" />
+          <circle cx="216" cy="362" r="22" fill="url(#g-well)" />
+        </g>
+
+        <!-- 8. Volume shading: rim darkening -->
+        <use href="#egg" fill="url(#g-rim)" />
+
+        <!-- 9. Glint and bounce light (on top of everything) -->
+        <ellipse cx="116" cy="70" rx="9" ry="3.5" transform="rotate(-28 116 70)" fill="#fff" opacity="0.75" filter="url(#f-blur-sm)" />
+        <path d="M262,392 C284,366 298,330 302,296 C304,340 290,376 266,398 Z" fill="#ff9aa3" opacity="0.3" filter="url(#f-blur-sm)" />
+
+        <!-- 10. Beveled edge where the front face meets the side wall -->
+        <use href="#egg" fill="none" stroke="url(#g-bevel)" stroke-width="6" />
+      </g>
+
+      <!-- Parting line between the front and back shell halves -->
+      <use href="#egg" fill="none" stroke="#2a0004" stroke-opacity="0.55" stroke-width="1" />
+
+      <!-- 11. Front half of the chrome ring (in front of the lug, through the hole) -->
+      <path d="M160,3 A11,19 0 0 0 157,40" fill="none" stroke="#000" stroke-opacity="0.4" stroke-width="3.2" stroke-linecap="round" transform="translate(1.5 2)" filter="url(#f-blur-sm)" />
+      <path d="M160,3 A11,19 0 0 0 160,41" fill="none" stroke="url(#g-chrome)" stroke-width="3.2" stroke-linecap="round" />
+      <path d="M158.4,5 A10,17.5 0 0 0 150.4,24" fill="none" stroke="#fff" stroke-opacity="0.85" stroke-width="0.8" stroke-linecap="round" />
     </svg>
 
-    <!-- White brush-lettering "Tama" brand -->
-    <div class="shell-brand">Tama</div>
+    <div class="tama-ui">
+      <!-- White pad-printed "Tama" brand -->
+      <div class="shell-brand">Tama</div>
 
-    <!-- Recessed screen bezel -->
-    <div class="screen-bezel">
-      <div class="screen-glare"></div>
-      <!-- Top Bezel: Feed, Light, Game, Medicine -->
-      <div class="icon-row">
-        <span id="icon-0" title="Feed">🍴</span>
-        <span id="icon-1" title="Light">💡</span>
-        <span id="icon-2" title="Game">⚾</span>
-        <span id="icon-3" title="Medicine">💉</span>
+      <!-- Screen window -->
+      <div class="screen-bezel">
+        <div class="screen-glare"></div>
+        <!-- Top Bezel: Feed, Light, Game, Medicine -->
+        <div class="icon-row">
+          <span id="icon-0" title="Feed">🍴</span>
+          <span id="icon-1" title="Light">💡</span>
+          <span id="icon-2" title="Game">⚾</span>
+          <span id="icon-3" title="Medicine">💉</span>
+        </div>
+        <!-- 32x16 LCD Matrix -->
+        <div class="lcd-well">
+          <canvas id="lcdScreen"></canvas>
+        </div>
+        <!-- Bottom Bezel: Clean, Scale, Discipline, Attention -->
+        <div class="icon-row">
+          <span id="icon-4" title="Clean">🚿</span>
+          <span id="icon-5" title="Scale">⚖️</span>
+          <span id="icon-6" title="Discipline">💢</span>
+          <span id="icon-7" title="Attention">🔔</span>
+        </div>
       </div>
-      <!-- 32x16 LCD Matrix -->
-      <canvas id="lcdScreen"></canvas>
-      <!-- Bottom Bezel: Clean, Scale, Discipline, Attention -->
-      <div class="icon-row">
-        <span id="icon-4" title="Clean">🚿</span>
-        <span id="icon-5" title="Scale">⚖️</span>
-        <span id="icon-6" title="Discipline">💢</span>
-        <span id="icon-7" title="Attention">🔔</span>
-      </div>
-    </div>
 
-    <!-- Three physical tactile white dome buttons without letters -->
-    <div class="controls">
-      <div class="btn-well">
-        <button id="btn-a" class="hw-btn" aria-label="Button A (Left)"></button>
-      </div>
-      <div class="btn-well btn-center">
-        <button id="btn-b" class="hw-btn" aria-label="Button B (Middle)"></button>
-      </div>
-      <div class="btn-well">
-        <button id="btn-c" class="hw-btn" aria-label="Button C (Right)"></button>
-      </div>
+      <!-- Three physical dome buttons without letters (Left to Right: A, B, C) -->
+      <button id="btn-a" class="hw-btn" aria-label="Button A (Left)"></button>
+      <button id="btn-b" class="hw-btn" aria-label="Button B (Middle)"></button>
+      <button id="btn-c" class="hw-btn" aria-label="Button C (Right)"></button>
     </div>
   </div>
 
