@@ -1,6 +1,6 @@
 import { TamagotchiEngine } from './engine/timeEngine.js';
 import { LcdMatrix } from './ui/LcdMatrix.js';
-import { TamagotchiAudio } from './audio/TamagotchiAudio.js';
+import { TamagotchiAudio } from './audio/TamagotchiAudio.js?v=26';
 import { MenuController } from './controllers/MenuController.js';
 import { SaveManager } from './storage/SaveManager.js';
 import { GameRenderer } from './ui/GameRenderer.js';
@@ -60,7 +60,9 @@ async function init() {
 
   // 9. Register offline-first Service Worker
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js').catch(err => {
+    navigator.serviceWorker.register('./sw.js').then((reg) => {
+      reg.update();
+    }).catch(err => {
       console.warn('Service Worker registration skipped/failed:', err);
     });
   }

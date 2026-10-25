@@ -1,4 +1,4 @@
-const CACHE_NAME = 'tama-pwa-v10';
+const CACHE_NAME = 'tama-pwa-v14';
 const ASSETS = [
   '/',
   '/index.html',
@@ -120,11 +120,16 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Non-navigation asset requests (scripts, images, etc.)
+  // Non-navigation asset requests (scripts, images, etc.) - Network-first with offline cache fallback
   event.respondWith(
-    caches.match(event.request, { ignoreSearch: true }).then((cached) => {
-      if (cached) return cached;
-      return fetch(event.request);
-    })
+    fetch(event.request)
+      .then(async (networkRes) => {
+        if (networkRes && networkRes.ok) {
+          const cache = await caches.open(CACHE_NAME);
+          cache.put(event.request, networkRes.clone());
+        }
+        return networkRes;
+      })
+      .catch(() => caches.match(event.request, { ignoreSearch: true }))
   );
 });

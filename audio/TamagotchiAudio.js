@@ -32,7 +32,7 @@ export class TamagotchiAudio {
     }
   }
 
-  playTone(freq, durationMs, startOffsetSec = 0) {
+  playTone(freq, durationMs, startOffsetSec = 0, volume = 1.0) {
     if (this.muted) return;
     this.init();
     const startTime = this.ctx.currentTime + startOffsetSec;
@@ -43,9 +43,10 @@ export class TamagotchiAudio {
     osc.type = 'square';
     osc.frequency.setValueAtTime(freq, startTime);
 
+    const peakGain = Math.max(0.0001, volume);
     noteGain.gain.setValueAtTime(0.0001, startTime);
-    noteGain.gain.exponentialRampToValueAtTime(1.0, startTime + 0.0015);
-    noteGain.gain.setValueAtTime(1.0, stopTime - 0.0015);
+    noteGain.gain.exponentialRampToValueAtTime(peakGain, startTime + 0.0015);
+    noteGain.gain.setValueAtTime(peakGain, stopTime - 0.0015);
     noteGain.gain.exponentialRampToValueAtTime(0.0001, stopTime);
 
     osc.connect(noteGain);
@@ -56,17 +57,17 @@ export class TamagotchiAudio {
   }
 
   playClick() {
-    this.playTone(this.FREQ.HIGH_MID, 25);
+    this.playTone(this.FREQ.HIGH_MID, 25, 0, 0.10);
   }
 
   playConfirm() {
-    this.playTone(this.FREQ.MID, 30, 0);
-    this.playTone(this.FREQ.HIGH, 40, 0.04);
+    this.playTone(this.FREQ.MID, 30, 0, 0.10);
+    this.playTone(this.FREQ.HIGH, 40, 0.04, 0.10);
   }
 
   playCancel() {
-    this.playTone(this.FREQ.HIGH, 30, 0);
-    this.playTone(this.FREQ.LOW, 40, 0.04);
+    this.playTone(this.FREQ.HIGH, 30, 0, 0.10);
+    this.playTone(this.FREQ.LOW, 40, 0.04, 0.10);
   }
 
   playEat() {
