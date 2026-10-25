@@ -410,6 +410,9 @@ for (const lang of requiredLanguages) {
   assert(TRANSLATIONS[lang].settings.sitterOn, `Missing settings.sitterOn in ${lang}`);
   assert(TRANSLATIONS[lang].settings.sitterOff, `Missing settings.sitterOff in ${lang}`);
   assert(TRANSLATIONS[lang].manual.title, `Missing manual.title in ${lang}`);
+  assert(TRANSLATIONS[lang].manual.installHeader, `Missing manual.installHeader in ${lang}`);
+  assert(TRANSLATIONS[lang].manual.installAndroid, `Missing manual.installAndroid in ${lang}`);
+  assert(TRANSLATIONS[lang].manual.installIos, `Missing manual.installIos in ${lang}`);
 }
 console.log('✓ i18n Translations verified.');
 

@@ -65,7 +65,10 @@ export const TRANSLATIONS = {
       icon7: "8. Attention: Flashes and beeps when your pet has 0 hunger/happiness, falls sick, or seeks discipline.",
       lifecycleHeader: "🌱 Lifecycle & Pro Tips",
       lifecycleDesc: "The egg hatches in 5 minutes. Stages: Baby (65 min) → Child (2 days) → Teen (3 days) → Adult (up to 14 days).",
-      sitterDesc: "Tama Sitter Mode: Activate in the Settings menu (⚙️) in the top-left corner. Freezes biological decay (hunger, happiness, and poop) during work/school hours (07:00 - 18:00)."
+      sitterDesc: "Tama Sitter Mode: Activate in the Settings menu (⚙️) in the top-left corner. Freezes biological decay (hunger, happiness, and poop) during work/school hours (07:00 - 18:00).",
+      installHeader: "📱 Install as Mobile App (PWA)",
+      installAndroid: "Android (Chrome): Tap the three-dot menu (⋮) in the top-right corner and select 'Install application' (or 'Add to Home screen'). The app will run in standalone fullscreen mode without address bars.",
+      installIos: "iOS / iPhone (Safari): Tap the Share button (square with arrow ↑) at the bottom and select 'Add to Home Screen'. It will launch like a native app."
     }
   },
 
@@ -135,7 +138,10 @@ export const TRANSLATIONS = {
       icon7: "8. Atención: Parpadea cuando tu mascota tiene hambre/tristeza en 0, está enferma o pide disciplina.",
       lifecycleHeader: "🌱 Ciclo de Vida y Consejos",
       lifecycleDesc: "El huevo tarda 5 minutos en eclosionar. Etapas: Bebé (65 min) → Niño (2 días) → Adolescente (3 días) → Adulto (hasta 14 días adicionales).",
-      sitterDesc: "Modo Niñera: Actívalo en el menú de Opciones (⚙️) de la esquina superior izquierda. Congela el hambre, felicidad y suciedad durante horas de estudio o trabajo (07:00 a 18:00)."
+      sitterDesc: "Modo Niñera: Actívalo en el menú de Opciones (⚙️) de la esquina superior izquierda. Congela el hambre, felicidad y suciedad durante horas de estudio o trabajo (07:00 a 18:00).",
+      installHeader: "📱 Instalar en el Móvil (PWA)",
+      installAndroid: "Android (Chrome): Toca el menú de tres puntos (⋮) en la esquina superior derecha y selecciona 'Instalar aplicación' (o 'Agregar a la pantalla principal'). Se abrirá a pantalla completa como una app nativa.",
+      installIos: "iOS / iPhone (Safari): Toca el botón Compartir (cuadrado con flecha ↑) en la barra inferior y selecciona 'Agregar a pantalla de inicio'. Se abrirá en pantalla completa sin barras de navegación."
     }
   },
 
@@ -205,7 +211,10 @@ export const TRANSLATIONS = {
       icon7: "8. 呼叫指示灯：被动警报灯，当宠物饥饿度归零、快乐度归零、生病或任性呼叫时闪烁鸣叫。",
       lifecycleHeader: "🌱 进化周期与秘诀",
       lifecycleDesc: "蛋孵化耗时5分钟。成长阶段：婴儿期 (65分钟) → 幼儿期 (2天) → 青年期 (3天) → 成年期 (最长达14天)。",
-      sitterDesc: "保姆模式：可在左上角设置菜单 (⚙️) 中开启。在工作或学习时间（07:00 - 18:00）冻结代谢衰减。"
+      sitterDesc: "保姆模式：可在左上角设置菜单 (⚙️) 中开启。在工作或学习时间（07:00 - 18:00）冻结代谢衰减。",
+      installHeader: "📱 安装到手机桌面 (PWA)",
+      installAndroid: "Android (Chrome)：点击右上角菜单 (⋮)，选择“安装应用”（或“添加到主屏幕”）。安装后如原生 App 般全屏运行，无地址栏干扰。",
+      installIos: "iOS / iPhone (Safari)：点击底部中央的“分享”按钮（带箭头的方框 ↑），选择“添加到主屏幕”。即可生成独立全屏应用。"
     }
   },
 
@@ -275,7 +284,10 @@ export const TRANSLATIONS = {
       icon7: "8. Atenção: Pisca quando seu pet está com fome/felicidade zeradas, doente ou pedindo disciplina.",
       lifecycleHeader: "🌱 Ciclo de Vida e Dicas",
       lifecycleDesc: "O ovo leva 5 minutos para chocar. Fases: Bebê (65 min) → Criança (2 dias) → Adolescente (3 dias) → Adulto (até 14 dias adicionais).",
-      sitterDesc: "Modo Babá: Ative no menu de Ajustes (⚙️) no canto superior esquerdo. Congela a fome, felicidade e sujeira durante o horário de trabalho/estudo (07:00 às 18:00)."
+      sitterDesc: "Modo Babá: Ative no menu de Ajustes (⚙️) no canto superior esquerdo. Congela a fome, felicidade e sujeira durante o horário de trabalho/estudo (07:00 às 18:00).",
+      installHeader: "📱 Instalar no Celular (PWA)",
+      installAndroid: "Android (Chrome): Toque no menu de três pontos (⋮) no canto superior direito e selecione 'Instalar aplicativo' (ou 'Adicionar à tela inicial'). Funcionará em tela cheia como um app nativo.",
+      installIos: "iOS / iPhone (Safari): Toque no botão Compartilhar (quadrado com seta ↑) na barra inferior e selecione 'Adicionar à Tela de Início'. Ele será aberto em tela cheia sem barras de navegação."
     }
   }
 };

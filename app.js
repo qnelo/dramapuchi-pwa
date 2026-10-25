@@ -327,6 +327,10 @@ function applyTranslations(lang) {
   setElText('manual-sec-lifecycle-title', t.manual.lifecycleHeader);
   setElText('manual-lifecycle-desc', t.manual.lifecycleDesc);
   setElText('manual-sitter-desc', t.manual.sitterDesc);
+
+  setElText('manual-sec-install-title', t.manual.installHeader);
+  setElText('manual-install-android', t.manual.installAndroid);
+  setElText('manual-install-ios', t.manual.installIos);
 }
 
 function updateSettingsUI() {
