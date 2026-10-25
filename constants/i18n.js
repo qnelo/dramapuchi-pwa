@@ -18,8 +18,8 @@ export const TRANSLATIONS = {
       backlightNight: "🌙 LED Backlight",
       soundOn: "🔊 Audio: ON",
       soundOff: "🔇 Audio: Muted",
-      export: "💾 Export Save JSON",
-      import: "📂 Import Save JSON",
+      export: "💾 Export Save (Tama)",
+      import: "📂 Import Save (Tama)",
       reset: "🥚 Hatch New Egg"
     },
     icons: {
@@ -91,8 +91,8 @@ export const TRANSLATIONS = {
       backlightNight: "🌙 Retroiluminación LED",
       soundOn: "🔊 Audio: ACTIVADO",
       soundOff: "🔇 Audio: SILENCIADO",
-      export: "💾 Exportar Partida JSON",
-      import: "📂 Importar Partida JSON",
+      export: "💾 Exportar partida (Tama)",
+      import: "📂 Importar partida (Tama)",
       reset: "🥚 Eclosionar Nuevo Huevo"
     },
     icons: {
@@ -164,8 +164,8 @@ export const TRANSLATIONS = {
       backlightNight: "🌙 夜间荧光背光",
       soundOn: "🔊 声音：开启",
       soundOff: "🔇 声音：静音",
-      export: "💾 导出存档 JSON",
-      import: "📂 导入存档 JSON",
+      export: "💾 导出存档 (Tama)",
+      import: "📂 导入存档 (Tama)",
       reset: "🥚 重新孵化新蛋"
     },
     icons: {
@@ -237,8 +237,8 @@ export const TRANSLATIONS = {
       backlightNight: "🌙 Luz de Fundo LED",
       soundOn: "🔊 Áudio: LIGADO",
       soundOff: "🔇 Áudio: MUDO",
-      export: "💾 Exportar Jogo JSON",
-      import: "📂 Importar Jogo JSON",
+      export: "💾 Exportar partida (Tama)",
+      import: "📂 Importar partida (Tama)",
       reset: "🥚 Chocar Novo Ovo"
     },
     icons: {
