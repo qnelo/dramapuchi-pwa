@@ -1,4 +1,4 @@
-const CACHE_NAME = 'tama-pwa-v15';
+const CACHE_NAME = 'tama-pwa-v16';
 const ASSETS = [
   '/',
   '/index.html',

@@ -1,6 +1,6 @@
 import { TamagotchiEngine } from './engine/timeEngine.js';
 import { LcdMatrix } from './ui/LcdMatrix.js';
-import { TamagotchiAudio } from './audio/TamagotchiAudio.js?v=27';
+import { TamagotchiAudio } from './audio/TamagotchiAudio.js?v=28';
 import { MenuController } from './controllers/MenuController.js';
 import { SaveManager } from './storage/SaveManager.js';
 import { GameRenderer } from './ui/GameRenderer.js';

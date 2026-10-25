@@ -11,6 +11,18 @@ export class TamagotchiAudio {
       HIGH_MID: 3277, // 32768 / 10
       HIGH: 4096      // 32768 / 8
     };
+
+    // Restore persisted sound mute setting
+    try {
+      if (typeof localStorage !== 'undefined') {
+        const saved = localStorage.getItem('tama_audio_muted');
+        if (saved !== null) {
+          this.muted = saved === 'true';
+        }
+      }
+    } catch {
+      // Fallback if localStorage access is restricted
+    }
   }
 
   init() {
@@ -18,7 +30,8 @@ export class TamagotchiAudio {
       const AudioCtx = window.AudioContext || window.webkitAudioContext;
       this.ctx = new AudioCtx();
       this.masterGain = this.ctx.createGain();
-      this.masterGain.gain.setValueAtTime(this.baseVolume, this.ctx.currentTime);
+      const initialGain = this.muted ? 0 : this.baseVolume;
+      this.masterGain.gain.setValueAtTime(initialGain, this.ctx.currentTime);
       this.masterGain.connect(this.ctx.destination);
     }
     if (this.ctx.state === 'suspended') {
@@ -28,6 +41,13 @@ export class TamagotchiAudio {
 
   setMute(isMuted) {
     this.muted = isMuted;
+    try {
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem('tama_audio_muted', isMuted ? 'true' : 'false');
+      }
+    } catch {
+      // Fallback
+    }
     if (this.masterGain && this.ctx) {
       this.masterGain.gain.setValueAtTime(isMuted ? 0 : this.baseVolume, this.ctx.currentTime);
     }
