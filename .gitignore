@@ -1,0 +1,17 @@
+# Documentación de especificación funcional (privada)
+er.docx
+er.txt
+
+# Wrangler / Cloudflare
+.wrangler/
+
+# Dependencias y logs
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db

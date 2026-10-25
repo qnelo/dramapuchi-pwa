@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Tamagotchi PWA</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+  <style>
+    * { box-sizing: border-box; user-select: none; -webkit-tap-highlight-color: transparent; }
+    body {
+      margin: 0;
+      background: #141416;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      min-height: 100dvh;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace;
+      color: #eee;
+      padding: 16px 12px;
+      overflow-x: hidden;
+    }
+
+    /* Carcasa ovalada estilo llavero 1996 - Optimizada para no desbordar */
+    .tama-shell {
+      width: 320px;
+      max-width: 92vw;
+      height: 410px;
+      max-height: 70vh;
+      background: radial-gradient(circle at 35% 25%, #ff5a67, #c9182b 70%, #800f1b);
+      border-radius: 50% 50% 46% 46% / 56% 56% 44% 44%;
+      box-shadow:
+        inset -8px -12px 20px rgba(0,0,0,0.45),
+        inset 6px 8px 16px rgba(255,255,255,0.35),
+        0 16px 36px rgba(0,0,0,0.7);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 30px 24px 20px;
+      position: relative;
+    }
+
+    /* Argolla metálica superior del llavero */
+    .keychain-ring {
+      width: 36px;
+      height: 22px;
+      border: 5px solid #c0c5ce;
+      border-radius: 50%;
+      position: absolute;
+      top: -14px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.5);
+    }
+
+    /* Bisel hundido de la pantalla - Perfectamente encajado en la zona ancha */
+    .screen-bezel {
+      background: #8b9574;
+      border: 5px solid #4a4e42;
+      border-radius: 14px;
+      padding: 6px 8px;
+      box-shadow: inset 3px 3px 6px rgba(0,0,0,0.45);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      width: 216px;
+      max-width: 82%;
+    }
+
+    /* Filas superior e inferior de 4 iconos */
+    .icon-row {
+      display: flex;
+      justify-content: space-around;
+      width: 100%;
+      font-size: 13px;
+      line-height: 1;
+      color: rgba(27, 36, 22, 0.22);
+      padding: 2px 0;
+    }
+    .icon-row span {
+      transition: color 0.1s, text-shadow 0.1s;
+    }
+    .icon-row span.active {
+      color: #1b2416;
+      text-shadow: 0 0 2px rgba(27,36,22,0.5);
+    }
+
+    /* Matriz de puntos 32x16 con ratio 2:1 exacto */
+    canvas {
+      width: 192px; /* Escala exacta 6x: 32 * 6 = 192 */
+      height: 96px;  /* 16 * 6 = 96 */
+      display: block;
+      margin: 0 auto;
+      border-radius: 2px;
+    }
+
+    /* Tres botones físicos (A, B, C) con etiquetas táctiles */
+    .controls {
+      display: flex;
+      gap: 24px;
+      margin-top: 22px;
+      align-items: flex-start;
+    }
+    .btn-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    .btn-container.btn-center {
+      margin-top: 10px;
+    }
+    .hw-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: none;
+      background: radial-gradient(circle at 30% 30%, #ffd166, #d49b00);
+      box-shadow: 0 5px 0 #7a5800, 0 6px 10px rgba(0,0,0,0.5);
+      cursor: pointer;
+      touch-action: manipulation;
+      transition: transform 0.05s, box-shadow 0.05s;
+    }
+    .hw-btn:active {
+      transform: translateY(4px);
+      box-shadow: 0 1px 0 #7a5800, 0 2px 4px rgba(0,0,0,0.5);
+    }
+    .btn-label {
+      font-size: 11px;
+      font-weight: bold;
+      color: rgba(255, 255, 255, 0.65);
+      letter-spacing: 1px;
+    }
+
+    /* Barra de herramientas QoL inferior - Pensada 100% para móvil */
+    .qol-toolbar {
+      margin-top: 20px;
+      display: flex;
+      gap: 8px;
+      font-size: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      max-width: 360px;
+      width: 100%;
+    }
+    .qol-toolbar button {
+      background: #232529;
+      color: #ddd;
+      border: 1px solid #3e4249;
+      padding: 7px 11px;
+      border-radius: 8px;
+      cursor: pointer;
+      touch-action: manipulation;
+      font-size: 12px;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .qol-toolbar button:active {
+      background: #34373d;
+      transform: scale(0.97);
+    }
+    .qol-toolbar button.btn-highlight {
+      border-color: #ffd166;
+      color: #ffd166;
+    }
+
+    /* Modal Dialog Nativo para el Manual */
+    dialog#modal-manual {
+      background: #1c1e24;
+      color: #eee;
+      border: 1px solid #3e4249;
+      border-radius: 16px;
+      box-shadow: 0 20px 48px rgba(0,0,0,0.85);
+      max-width: 440px;
+      width: 90vw;
+      max-height: 82vh;
+      max-height: 82dvh;
+      padding: 0;
+      overflow: hidden;
+      flex-direction: column;
+    }
+    dialog#modal-manual[open] {
+      display: flex;
+    }
+    dialog#modal-manual:not([open]) {
+      display: none;
+    }
+    dialog#modal-manual::backdrop {
+      background: rgba(0, 0, 0, 0.72);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+    }
+    .modal-header {
+      background: #24272e;
+      padding: 14px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #343842;
+    }
+    .modal-header h2 {
+      margin: 0;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #fff;
+    }
+    .btn-close-modal {
+      background: #2d313a;
+      border: none;
+      color: #ccc;
+      font-size: 18px;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      touch-action: manipulation;
+    }
+    .btn-close-modal:active {
+      background: #444a57;
+    }
+    .modal-body {
+      padding: 16px 18px;
+      overflow-y: auto;
+      font-size: 13px;
+      line-height: 1.5;
+      overscroll-behavior: contain;
+    }
+    .manual-section {
+      margin-bottom: 16px;
+    }
+    .manual-section:last-child {
+      margin-bottom: 4px;
+    }
+    .manual-section h3 {
+      font-size: 13px;
+      color: #ffd166;
+      margin: 0 0 8px 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid #2e323b;
+      padding-bottom: 4px;
+    }
+    .manual-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .manual-item {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+    }
+    .manual-icon {
+      font-size: 16px;
+      min-width: 24px;
+      text-align: center;
+    }
+    .manual-item-desc {
+      flex: 1;
+    }
+    .manual-item-title {
+      font-weight: bold;
+      color: #5bfec8;
+    }
+    .badge {
+      display: inline-block;
+      background: #2b2e36;
+      border: 1px solid #444;
+      padding: 1px 5px;
+      border-radius: 4px;
+      font-size: 11px;
+      color: #ffd166;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="tama-shell">
+    <div class="keychain-ring"></div>
+    <div class="screen-bezel">
+      <!-- Bisel Superior: Comida, Luz, Juego, Medicina -->
+      <div class="icon-row">
+        <span id="icon-0" title="Comida">🍴</span>
+        <span id="icon-1" title="Luz">💡</span>
+        <span id="icon-2" title="Juego">⚾</span>
+        <span id="icon-3" title="Medicina">💉</span>
+      </div>
+      <!-- Matriz de puntos 32x16 -->
+      <canvas id="lcdScreen"></canvas>
+      <!-- Bisel Inferior: Higiene, Métricas, Disciplina, Alerta -->
+      <div class="icon-row">
+        <span id="icon-4" title="Limpiar">🚿</span>
+        <span id="icon-5" title="Métricas">⚖️</span>
+        <span id="icon-6" title="Disciplina">💢</span>
+        <span id="icon-7" title="Atención">🔔</span>
+      </div>
+    </div>
+    <!-- Botones A, B y C -->
+    <div class="controls">
+      <div class="btn-container">
+        <button id="btn-a" class="hw-btn" aria-label="Seleccionar (A)"></button>
+        <span class="btn-label">A</span>
+      </div>
+      <div class="btn-container btn-center">
+        <button id="btn-b" class="hw-btn" aria-label="Confirmar (B)"></button>
+        <span class="btn-label">B</span>
+      </div>
+      <div class="btn-container">
+        <button id="btn-c" class="hw-btn" aria-label="Cancelar (C)"></button>
+        <span class="btn-label">C</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Controles QoL modernos adaptados a móvil -->
+  <div class="qol-toolbar">
+    <button id="btn-manual" class="btn-highlight">📖 Manual</button>
+    <button id="btn-sitter">👶 Niñera: OFF</button>
+    <button id="btn-backlight">🌙 Luz LED</button>
+    <button id="btn-export">💾 Exportar</button>
+    <button id="btn-import">📂 Importar</button>
+    <button id="btn-sound">🔊 Audio</button>
+    <button id="btn-reset">🥚 Nuevo</button>
+    <input type="file" id="file-import" accept=".json" style="display:none">
+  </div>
+
+  <!-- Modal Manual de Instrucciones -->
+  <dialog id="modal-manual" closedby="any" aria-labelledby="manual-title">
+    <div class="modal-header">
+      <h2 id="manual-title">📖 Manual del Tamagotchi</h2>
+      <button id="btn-close-modal" class="btn-close-modal" aria-label="Cerrar">✕</button>
+    </div>
+    <div class="modal-body">
+      <!-- Sección Botones -->
+      <div class="manual-section">
+        <h3>🔘 Botones del Llavero</h3>
+        <div class="manual-list">
+          <div class="manual-item">
+            <span class="badge">Botón A</span>
+            <div class="manual-item-desc"><strong>Seleccionar:</strong> Navega entre los iconos superiores e inferiores, pasa páginas de estado o elige opción izquierda en el juego.</div>
+          </div>
+          <div class="manual-item">
+            <span class="badge">Botón B</span>
+            <div class="manual-item-desc"><strong>Confirmar:</strong> Entra a la acción seleccionada. Si la mascota está en reposo, ¡salta de alegría! En el juego, elige la opción derecha.</div>
+          </div>
+          <div class="manual-item">
+            <span class="badge">Botón C</span>
+            <div class="manual-item-desc"><strong>Cancelar / Reloj:</strong> Cancela menús y vuelve a la pantalla principal. En reposo, muestra el reloj en tiempo real.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sección Iconos -->
+      <div class="manual-section">
+        <h3>📟 Los 8 Iconos de Cuidado</h3>
+        <div class="manual-list">
+          <div class="manual-item">
+            <span class="manual-icon">🍴</span>
+            <div class="manual-item-desc"><span class="manual-item-title">1. Comida:</span> <strong>Meal</strong> (Carne: +1 hambre, +1 lb) o <strong>Snack</strong> (Dulce: +1 felicidad, +2 lb). <em>¡Ojo! Más de 4 dulces seguidos le provoca dolor de muelas y enfermedad.</em></div>
+          </div>
+          <div class="manual-item">
+            <span class="manual-icon">💡</span>
+            <div class="manual-item-desc"><span class="manual-item-title">2. Luz (ON / OFF):</span> Apágala cuando tu mascota se duerma. Dejarla encendida más de 1 hora mientras duerme cuenta como descuido (Care Mistake).</div>
+          </div>
+          <div class="manual-item">
+            <span class="manual-icon">⚾</span>
+            <div class="manual-item-desc"><span class="manual-item-title">3. Juego:</span> Adivina hacia dónde mirará la mascota (A: Izquierda, B: Derecha). Ganar al menos 3 de 5 rondas otorga +1 felicidad y quema 1 lb.</div>
+          </div>
+          <div class="manual-item">
+            <span class="manual-icon">💉</span>
+            <div class="manual-item-desc"><span class="manual-item-title">4. Medicina:</span> Cúralo cuando aparezca el icono de cráneo ☠️ (puede requerir 1 o 2 dosis).</div>
+          </div>
+          <div class="manual-item">
+            <span class="manual-icon">🚿</span>
+            <div class="manual-item-desc"><span class="manual-item-title">5. Higiene:</span> Limpia la suciedad. Si acumula 4 cacas sin limpiar, contraerá una infección.</div>
+          </div>
+          <div class="manual-item">
+            <span class="manual-icon">⚖️</span>
+            <div class="manual-item-desc"><span class="manual-item-title">6. Báscula (Métricas):</span> 4 pantallas con botón A: 1) Edad y Peso, 2) Barra de Disciplina, 3) Corazones de Hambre, 4) Corazones de Felicidad.</div>
+          </div>
+          <div class="manual-item">
+            <span class="manual-icon">💢</span>
+            <div class="manual-item-desc"><span class="manual-item-title">7. Disciplina:</span> Regáñalo cuando llame teniendo comida y felicidad llenas (llamada caprichosa). Incrementa +25% de disciplina.</div>
+          </div>
+          <div class="manual-item">
+            <span class="manual-icon">🔔</span>
+            <div class="manual-item-desc"><span class="manual-item-title">8. Atención (Alerta):</span> Parpadea cuando tu mascota tiene hambre/tristeza en 0, está enferma o pide disciplina.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sección Ciclo y Consejos -->
+      <div class="manual-section">
+        <h3>🌱 Ciclo de Vida y Consejos</h3>
+        <p style="margin:4px 0 8px 0;">El huevo tarda 5 minutos en eclosionar. Luego pasa a Bebé (65 min), Niño (2 días), Adolescente (3 días) y Adulto (hasta 14 días adicionales).</p>
+        <p style="margin:0;"><strong>Modo Niñera:</strong> Actívalo en la barra inferior para congelar sus necesidades durante tu horario de trabajo o descanso y evitar que muera por descuido.</p>
+      </div>
+    </div>
+  </dialog>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

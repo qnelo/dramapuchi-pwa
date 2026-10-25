@@ -1,0 +1,20 @@
+export const ICONS = {
+  FEED: 0,
+  LIGHT: 1,
+  GAME: 2,
+  MEDICINE: 3,
+  FLUSH: 4,
+  METER: 5,
+  DISCIPLINE: 6,
+  ATTENTION: 7
+};
+
+export const UI_MODE = {
+  IDLE: 'IDLE',
+  ICON_SELECT: 'ICON_SELECT',
+  SUBMENU: 'SUBMENU',
+  STATUS_VIEW: 'STATUS_VIEW',
+  MINIGAME: 'MINIGAME',
+  ANIMATING: 'ANIMATING',
+  CLOCK: 'CLOCK'
+};
