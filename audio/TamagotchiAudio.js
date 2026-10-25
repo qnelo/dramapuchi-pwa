@@ -3,6 +3,7 @@ export class TamagotchiAudio {
     this.ctx = null;
     this.masterGain = null;
     this.muted = false;
+    this.baseVolume = 0.012; // 10% of original 0.12 master volume
     // Exact integer submultiples of a 32.768 kHz quartz crystal
     this.FREQ = {
       LOW: 1024,      // 32768 / 32
@@ -17,7 +18,7 @@ export class TamagotchiAudio {
       const AudioCtx = window.AudioContext || window.webkitAudioContext;
       this.ctx = new AudioCtx();
       this.masterGain = this.ctx.createGain();
-      this.masterGain.gain.setValueAtTime(0.12, this.ctx.currentTime);
+      this.masterGain.gain.setValueAtTime(this.baseVolume, this.ctx.currentTime);
       this.masterGain.connect(this.ctx.destination);
     }
     if (this.ctx.state === 'suspended') {
@@ -28,7 +29,7 @@ export class TamagotchiAudio {
   setMute(isMuted) {
     this.muted = isMuted;
     if (this.masterGain && this.ctx) {
-      this.masterGain.gain.setValueAtTime(isMuted ? 0 : 0.12, this.ctx.currentTime);
+      this.masterGain.gain.setValueAtTime(isMuted ? 0 : this.baseVolume, this.ctx.currentTime);
     }
   }
 
@@ -57,17 +58,17 @@ export class TamagotchiAudio {
   }
 
   playClick() {
-    this.playTone(this.FREQ.HIGH_MID, 25, 0, 0.10);
+    this.playTone(this.FREQ.HIGH_MID, 25);
   }
 
   playConfirm() {
-    this.playTone(this.FREQ.MID, 30, 0, 0.10);
-    this.playTone(this.FREQ.HIGH, 40, 0.04, 0.10);
+    this.playTone(this.FREQ.MID, 30, 0);
+    this.playTone(this.FREQ.HIGH, 40, 0.04);
   }
 
   playCancel() {
-    this.playTone(this.FREQ.HIGH, 30, 0, 0.10);
-    this.playTone(this.FREQ.LOW, 40, 0.04, 0.10);
+    this.playTone(this.FREQ.HIGH, 30, 0);
+    this.playTone(this.FREQ.LOW, 40, 0.04);
   }
 
   playEat() {
