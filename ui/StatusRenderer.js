@@ -62,16 +62,6 @@ export class StatusRenderer {
         this.drawHeartsRow(lcd, petState.happiness);
         break;
       }
-      case 4: {
-        // Page 5: Tama Sitter Mode (Built-in option toggled via Button B)
-        this.drawText(lcd, "SITTER", 4, 2);
-        if (petState.sitterModeActive) {
-          this.drawText(lcd, "ON", 12, 9);
-        } else {
-          this.drawText(lcd, "OFF", 10, 9);
-        }
-        break;
-      }
     }
   }
 

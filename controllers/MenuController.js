@@ -43,14 +43,10 @@ export class MenuController {
         this.selectedIcon = (this.selectedIcon + 1) % 7;
         break;
       case UI_MODE.SUBMENU:
-        if (this.selectedIcon === ICONS.LIGHT) {
-          this.submenuIndex = (this.submenuIndex + 1) % 3;
-        } else {
-          this.submenuIndex = (this.submenuIndex + 1) % 2;
-        }
+        this.submenuIndex = (this.submenuIndex + 1) % 2;
         break;
       case UI_MODE.STATUS_VIEW:
-        this.statusPage = (this.statusPage + 1) % 5;
+        this.statusPage = (this.statusPage + 1) % 4;
         break;
     }
     this.notify();
@@ -78,14 +74,8 @@ export class MenuController {
         this.executeSubmenuAction();
         break;
       case UI_MODE.STATUS_VIEW:
-        if (this.statusPage === 4) {
-          this.pet.sitterModeActive = !this.pet.sitterModeActive;
-          this.audio.playConfirm();
-          this.triggerHaptic(25);
-        } else {
-          this.audio.playConfirm();
-          this.resetToIdle();
-        }
+        this.audio.playConfirm();
+        this.resetToIdle();
         break;
       case UI_MODE.CLOCK:
         this.audio.playConfirm();
@@ -153,13 +143,7 @@ export class MenuController {
     if (this.selectedIcon === ICONS.FEED) {
       this.feedPet(this.submenuIndex === 1);
     } else if (this.selectedIcon === ICONS.LIGHT) {
-      if (this.submenuIndex === 0) {
-        this.pet.lightsOn = true;
-      } else if (this.submenuIndex === 1) {
-        this.pet.lightsOn = false;
-      } else if (this.submenuIndex === 2) {
-        this.pet.sitterModeActive = !this.pet.sitterModeActive;
-      }
+      this.pet.lightsOn = (this.submenuIndex === 0);
       this.resetToIdle();
     }
   }

@@ -86,14 +86,10 @@ export class GameRenderer {
         StatusRenderer.drawText(lcd, "LIGHT", 6, 2);
         lcd.drawSprite(7, 9, SPRITES.ARROW_RIGHT);
         StatusRenderer.drawText(lcd, "ON", 13, 9);
-      } else if (menuController.submenuIndex === 1) {
+      } else {
         StatusRenderer.drawText(lcd, "LIGHT", 6, 2);
         lcd.drawSprite(7, 9, SPRITES.ARROW_RIGHT);
         StatusRenderer.drawText(lcd, "OFF", 13, 9);
-      } else {
-        StatusRenderer.drawText(lcd, "SITTER", 4, 2);
-        lcd.drawSprite(5, 9, SPRITES.ARROW_RIGHT);
-        StatusRenderer.drawText(lcd, menuController.pet.sitterModeActive ? "ON" : "OFF", 11, 9);
       }
     }
   }

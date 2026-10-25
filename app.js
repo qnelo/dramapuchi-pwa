@@ -119,6 +119,7 @@ function setupQolListeners() {
   const modalManual = document.getElementById('modal-manual');
 
   const settingLang = document.getElementById('setting-lang');
+  const settingSitter = document.getElementById('setting-sitter');
   const settingBacklight = document.getElementById('setting-backlight');
   const settingSound = document.getElementById('setting-sound');
   const settingExport = document.getElementById('setting-export');
@@ -185,6 +186,18 @@ function setupQolListeners() {
       localStorage.setItem('tama_lang', currentLang);
       applyTranslations(currentLang);
       audio.playClick();
+    });
+  }
+
+  // Tama Sitter Mode Toggle
+  if (settingSitter) {
+    settingSitter.addEventListener('click', async () => {
+      if (!state) return;
+      state.sitterModeActive = !state.sitterModeActive;
+      await SaveManager.save(state);
+      updateSettingsUI();
+      audio.playConfirm();
+      if (menu) menu.triggerHaptic(30);
     });
   }
 
@@ -275,6 +288,7 @@ function applyTranslations(lang) {
   if (t.settings) {
     setElText('settings-title', t.settings.title);
     setElText('setting-lang-label', t.settings.langLabel);
+    setElText('setting-sitter-header', t.settings.sitterHeader);
     setElText('setting-display-header', t.settings.displayHeader);
     setElText('setting-audio-header', t.settings.audioHeader);
     setElText('setting-data-header', t.settings.dataHeader);
@@ -317,6 +331,15 @@ function applyTranslations(lang) {
 
 function updateSettingsUI() {
   const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
+
+  const settingSitter = document.getElementById('setting-sitter');
+  if (settingSitter && state && t.settings) {
+    const isActive = Boolean(state.sitterModeActive);
+    settingSitter.textContent = isActive ? t.settings.sitterOn : t.settings.sitterOff;
+    settingSitter.style.borderColor = isActive ? '#5bfec8' : '#434754';
+    settingSitter.style.background = isActive ? 'rgba(91, 254, 200, 0.14)' : '';
+  }
+
   const settingBacklight = document.getElementById('setting-backlight');
   if (settingBacklight && lcd && t.settings) {
     const isBacklight = lcd.currentTheme === 'backlight';

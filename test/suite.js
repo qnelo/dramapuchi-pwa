@@ -296,27 +296,32 @@ assert.strictEqual(menu.uiMode, UI_MODE.CLOCK);
 // Press B in CLOCK -> returns to IDLE
 menu.pressB();
 assert.strictEqual(menu.uiMode, UI_MODE.IDLE);
-// Test in-game Sitter toggle via LIGHT submenu option 2
+// Test LIGHT submenu (LIGHT ON and LIGHT OFF)
 menu.pressA(); // ICON_SELECT -> 0 (FEED)
 menu.pressA(); // -> 1 (LIGHT)
 menu.pressB(); // SUBMENU (LIGHT)
 assert.strictEqual(menu.uiMode, UI_MODE.SUBMENU);
-menu.submenuIndex = 2; // SITTER
-assert.strictEqual(petActive.sitterModeActive, false);
-menu.pressB(); // Toggles sitterModeActive
-assert.strictEqual(petActive.sitterModeActive, true);
+menu.submenuIndex = 1; // LIGHT OFF
+menu.pressB(); // sets lightsOn = false and resets to IDLE
+assert.strictEqual(petActive.lightsOn, false);
 assert.strictEqual(menu.uiMode, UI_MODE.IDLE);
 
-// Test in-game Sitter toggle via STATUS_VIEW page 4
+// Test STATUS_VIEW 4-page cycling (0..3)
 menu.pressA(); // ICON_SELECT -> 0 (FEED)
 for (let i = 0; i < 5; i++) menu.pressA(); // cycle to 5 (METER)
 assert.strictEqual(menu.selectedIcon, ICONS.METER);
 menu.pressB(); // Enters STATUS_VIEW at page 0
 assert.strictEqual(menu.uiMode, UI_MODE.STATUS_VIEW);
-menu.statusPage = 4; // Sitter page
-menu.pressB(); // Toggles sitterModeActive back to false
-assert.strictEqual(petActive.sitterModeActive, false);
-menu.pressC(); // Return to IDLE
+assert.strictEqual(menu.statusPage, 0);
+menu.pressA(); // Page 1 (Discipline)
+assert.strictEqual(menu.statusPage, 1);
+menu.pressA(); // Page 2 (Hunger)
+assert.strictEqual(menu.statusPage, 2);
+menu.pressA(); // Page 3 (Happiness)
+assert.strictEqual(menu.statusPage, 3);
+menu.pressA(); // Wraps back to Page 0
+assert.strictEqual(menu.statusPage, 0);
+menu.pressB(); // Confirm in STATUS_VIEW returns to IDLE
 assert.strictEqual(menu.uiMode, UI_MODE.IDLE);
 
 console.log('✓ MenuController verified.');
@@ -387,8 +392,6 @@ StatusRenderer.renderStatusPage(mockLcd, { ageMinutes: 2880, weight: 12, discipl
 assert(mockLcd.buffer.size > 0);
 StatusRenderer.renderStatusPage(mockLcd, { ageMinutes: 2880, weight: 12, discipline: 50, hunger: 3, happiness: 4, sitterModeActive: true }, 3);
 assert(mockLcd.buffer.size > 0);
-StatusRenderer.renderStatusPage(mockLcd, { ageMinutes: 2880, weight: 12, discipline: 50, hunger: 3, happiness: 4, sitterModeActive: true }, 4);
-assert(mockLcd.buffer.size > 0);
 StatusRenderer.renderClock(mockLcd, new Date());
 assert(mockLcd.buffer.size > 0);
 console.log('✓ StatusRenderer verified.');
@@ -403,8 +406,9 @@ for (const lang of requiredLanguages) {
   for (let i = 0; i < 8; i++) {
     assert(TRANSLATIONS[lang].icons[i], `Missing icon ${i} in ${lang}`);
   }
-  assert(TRANSLATIONS[lang].toolbar.manual, `Missing toolbar.manual in ${lang}`);
-  assert(TRANSLATIONS[lang].toolbar.sitterOn, `Missing toolbar.sitterOn in ${lang}`);
+  assert(TRANSLATIONS[lang].settings.sitterHeader, `Missing settings.sitterHeader in ${lang}`);
+  assert(TRANSLATIONS[lang].settings.sitterOn, `Missing settings.sitterOn in ${lang}`);
+  assert(TRANSLATIONS[lang].settings.sitterOff, `Missing settings.sitterOff in ${lang}`);
   assert(TRANSLATIONS[lang].manual.title, `Missing manual.title in ${lang}`);
 }
 console.log('✓ i18n Translations verified.');
