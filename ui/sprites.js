@@ -453,7 +453,7 @@ export const SPRITES = {
   ])
 };
 
-// Fuente minimalista de 3x5 píxeles para métricas y reloj en matriz 32x16
+// Minimalist 3x5 pixel bitmap font for meter pages and clock on 32x16 matrix
 export const FONT_3X5 = {
   '0': ["111", "101", "101", "101", "111"],
   '1': ["010", "110", "010", "010", "111"],

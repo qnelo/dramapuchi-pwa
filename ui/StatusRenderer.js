@@ -8,21 +8,21 @@ export class StatusRenderer {
       const char = cleanText[i];
       const glyph = FONT_3X5[char] || FONT_3X5[' '];
       lcd.drawSprite(cursorX, startY, glyph);
-      cursorX += 4; // 3px de ancho + 1px de espacio
+      cursorX += 4; // 3px character width + 1px spacing
     }
   }
 
   /**
-   * Renderiza una de las 4 páginas del menú de estado (Báscula).
+   * Renders one of the 4 status meter pages (Scale).
    * @param {LcdMatrix} lcd
    * @param {Object} petState
-   * @param {number} pageIndex - 0: Edad/Peso, 1: Disciplina, 2: Hambre, 3: Felicidad
+   * @param {number} pageIndex - 0: Age/Weight, 1: Discipline, 2: Hunger, 3: Happiness
    */
   static renderStatusPage(lcd, petState, pageIndex) {
     lcd.clear();
     switch (pageIndex) {
       case 0: {
-        // Página 1: Edad en días y Peso en libras
+        // Page 1: Age in days and Weight in pounds
         const days = Math.min(99, Math.floor(petState.ageMinutes / 1440));
         const weight = Math.min(99, petState.weight);
         this.drawText(lcd, `AGE ${days}`, 2, 2);
@@ -30,9 +30,9 @@ export class StatusRenderer {
         break;
       }
       case 1: {
-        // Página 2: Barra de Disciplina (0% - 100%)
+        // Page 2: Discipline meter (0% - 100%)
         this.drawText(lcd, "DISCIP", 4, 2);
-        // Marco exterior de la barra (x: 2..29, y: 9..13)
+        // Outer border of the meter bar (x: 2..29, y: 9..13)
         for (let x = 2; x <= 29; x++) {
           lcd.setPixel(x, 9, 1);
           lcd.setPixel(x, 13, 1);
@@ -41,7 +41,7 @@ export class StatusRenderer {
           lcd.setPixel(2, y, 1);
           lcd.setPixel(29, y, 1);
         }
-        // Relleno proporcional
+        // Proportional filled width
         const fillWidth = Math.round((petState.discipline / 100) * 24);
         for (let x = 4; x < 4 + fillWidth; x++) {
           for (let y = 10; y <= 12; y++) {
@@ -51,13 +51,13 @@ export class StatusRenderer {
         break;
       }
       case 2: {
-        // Página 3: Hambre (4 Corazones)
+        // Page 3: Hunger (4 Hearts)
         this.drawText(lcd, "HUNGRY", 4, 1);
         this.drawHeartsRow(lcd, petState.hunger);
         break;
       }
       case 3: {
-        // Página 4: Felicidad (4 Corazones)
+        // Page 4: Happiness (4 Hearts)
         this.drawText(lcd, "HAPPY", 6, 1);
         this.drawHeartsRow(lcd, petState.happiness);
         break;
@@ -73,7 +73,7 @@ export class StatusRenderer {
   }
 
   /**
-   * Renderiza la pantalla del reloj en tiempo real.
+   * Renders the real-time 24-hour clock screen.
    */
   static renderClock(lcd, now = new Date()) {
     lcd.clear();

@@ -3,7 +3,7 @@ import { EvolutionResolver } from './evolutionResolver.js';
 
 export class TamagotchiEngine {
   /**
-   * Reconcilia el estado desde el último timestamp guardado hasta el presente.
+   * Reconciles pet state from the last saved timestamp to the current time.
    */
   static reconcile(state, currentTimestamp = Date.now()) {
     if (state.stage === 'DEAD' || state.stage === 'DEPARTED') {
@@ -16,7 +16,7 @@ export class TamagotchiEngine {
     if (elapsedMs < THRESHOLDS.TICK_SIZE_MS) return state;
 
     const totalMinutes = Math.floor(elapsedMs / THRESHOLDS.TICK_SIZE_MS);
-    const minutesToSimulate = Math.min(totalMinutes, 1440 * 14); // Tope de 14 días
+    const minutesToSimulate = Math.min(totalMinutes, 1440 * 14); // Safety cap: 14 days
     let simTime = state.lastTickTimestamp;
 
     for (let i = 0; i < minutesToSimulate; i++) {
@@ -38,14 +38,14 @@ export class TamagotchiEngine {
     const hour = dateObj.getHours();
     state.ageMinutes++;
 
-    // 1. Verificar transición evolutiva
+    // 1. Check evolutionary transitions
     EvolutionResolver.checkAndEvolve(state);
     if (state.stage === 'DEPARTED') return;
 
-    // 2. Verificar horario de sueño
+    // 2. Evaluate sleep schedule
     const sleepingNow = this.isSleepTime(hour, config.sleepStart, config.sleepEnd);
     
-    // Si acaba de dormirse y la luz quedó encendida, iniciamos contador de descuido nocturno
+    // If pet just fell asleep and lights were left on, initialize light neglect timer
     if (sleepingNow && !state.isSleeping) {
       state.lightMistakeTimer = 0;
     }
@@ -54,36 +54,36 @@ export class TamagotchiEngine {
       if (state.lightsOn) {
         state.lightMistakeTimer = (state.lightMistakeTimer || 0) + 1;
         if (state.lightMistakeTimer === 60) {
-          state.careMistakes++; // No apagar la luz durante la primera hora de sueño
+          state.careMistakes++; // Lights left on during first hour of sleep
         }
       }
-      return; // El metabolismo se pausa mientras duerme
+      return; // Metabolic degradation pauses while sleeping
     }
 
-    // 3. Si el modo Guardería (Tama Sitter) está activo en horario diurno (07:00 - 18:00)
+    // 3. Tama Sitter mode active during daytime (07:00 - 18:00)
     if (state.sitterModeActive) {
       if (hour >= 7 && hour < 18) {
-        return; // La niñera mantiene los indicadores estables
+        return; // Sitter maintains stats frozen
       } else {
-        state.sitterModeActive = false; // La niñera se retira a las 18:00
+        state.sitterModeActive = false; // Sitter leaves at 18:00
       }
     }
 
-    // 4. Degradación de Hambre
+    // 4. Hunger degradation
     state.hungerTick++;
     if (state.hungerTick >= config.hungerRateMin) {
       state.hungerTick = 0;
       if (state.hunger > 0) state.hunger--;
     }
 
-    // 5. Degradación de Felicidad
+    // 5. Happiness degradation
     state.happyTick++;
     if (state.happyTick >= config.happyRateMin) {
       state.happyTick = 0;
       if (state.happiness > 0) state.happiness--;
     }
 
-    // 6. Generación de Suciedad
+    // 6. Poop generation
     state.poopTick++;
     if (state.poopTick >= config.poopRateMin) {
       state.poopTick = 0;
@@ -92,7 +92,7 @@ export class TamagotchiEngine {
       }
     }
 
-    // 7. Llamadas de Disciplina (cada 4 horas en vigilia pide atención caprichosa)
+    // 7. Discipline calls (every 4 hours of waking time triggers a capricious call)
     if (state.ageMinutes % 240 === 0 && state.hunger > 0 && state.happiness > 0) {
       state.disciplineCallActive = true;
       state.disciplineCallTimer = 0;
@@ -105,7 +105,7 @@ export class TamagotchiEngine {
       }
     }
 
-    // 8. Contabilización de Care Mistakes por Hambre o Felicidad en 0
+    // 8. Care Mistakes from 0 Hunger or 0 Happiness
     if (state.hunger === 0 || state.happiness === 0) {
       state.neglectTimer = (state.neglectTimer || 0) + 1;
       if (state.neglectTimer === THRESHOLDS.CARE_MISTAKE_WAIT_MIN) {
@@ -115,13 +115,13 @@ export class TamagotchiEngine {
       state.neglectTimer = 0;
     }
 
-    // 9. Enfermedad por exceso de suciedad
+    // 9. Sickness from accumulated filth
     if (state.poopCount >= THRESHOLDS.MAX_POOP && !state.isSick) {
       state.isSick = true;
       state.sickDosesNeeded = 2;
     }
 
-    // 10. Evaluación de Muerte
+    // 10. Death evaluation
     if (state.hunger === 0) {
       state.starvationMinutes++;
       if (state.starvationMinutes >= THRESHOLDS.MAX_STARVATION_MIN) {
@@ -144,7 +144,7 @@ export class TamagotchiEngine {
       state.sickMinutes = 0;
     }
 
-    // Actualizar flag general del icono de Atención (8º icono)
+    // Update general attention call flag (8th icon)
     state.isCalling = (
       state.hunger === 0 ||
       state.happiness === 0 ||

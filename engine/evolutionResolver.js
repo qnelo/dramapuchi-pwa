@@ -7,21 +7,21 @@ export class EvolutionResolver {
     const tTeen = tChild + STAGE_CONFIG.TEEN.durationMin;
     const tAdultMax = tTeen + STAGE_CONFIG.ADULT.durationMin;
 
-    // 1. Bebé -> Niño
+    // 1. Baby -> Child
     if (state.stage === 'BABY' && state.ageMinutes >= tBaby) {
       state.stage = 'CHILD';
       state.species = 'MARUTCHI';
       state.weight = Math.max(state.weight, STAGE_CONFIG.CHILD.baseWeight);
-      state.careMistakes = 0; // Se reinician los errores para evaluar la fase infantil
+      state.careMistakes = 0; // Mistakes reset for child stage evaluation
     }
-    // 2. Niño -> Adolescente
+    // 2. Child -> Teen
     else if (state.stage === 'CHILD' && state.ageMinutes >= tChild) {
       state.stage = 'TEEN';
       state.species = state.careMistakes <= 2 ? 'TAMATCHI' : 'KUCHITAMATCHI';
       state.weight = Math.max(state.weight, STAGE_CONFIG.TEEN.baseWeight);
       state.teenCareMistakes = 0;
     }
-    // 3. Adolescente -> Adulto
+    // 3. Teen -> Adult
     else if (state.stage === 'TEEN' && state.ageMinutes >= tTeen) {
       state.stage = 'ADULT';
       state.weight = Math.max(state.weight, STAGE_CONFIG.ADULT.baseWeight);
@@ -37,7 +37,7 @@ export class EvolutionResolver {
           state.species = 'MASKUTCHI';
         }
       } else {
-        // Rama Kuchitamatchi
+        // Kuchitamatchi branch
         if (mistakes <= 4 && disc >= 50) {
           state.species = 'KUCHIPATCHI';
         } else if (mistakes <= 6) {
@@ -47,7 +47,7 @@ export class EvolutionResolver {
         }
       }
     }
-    // 4. Despedida pacífica por vejez (Regreso a su planeta natal)
+    // 4. Peaceful departure due to old age (Return to home planet in UFO)
     else if (state.stage === 'ADULT' && state.ageMinutes >= tAdultMax) {
       state.stage = 'DEPARTED';
     }

@@ -26,7 +26,7 @@ export class MiniGameController {
 
   guess(direction) {
     if (this.phase !== 'WAITING_INPUT') return;
-    this.playerGuess = direction; // 'LEFT' o 'RIGHT'
+    this.playerGuess = direction; // 'LEFT' or 'RIGHT'
     this.petDirection = Math.random() < 0.5 ? 'LEFT' : 'RIGHT';
     this.phase = 'REVEAL';
     const wonRound = this.playerGuess === this.petDirection;

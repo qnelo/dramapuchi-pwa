@@ -9,8 +9,8 @@ export const STAGE_CONFIG = {
     baseWeight: 5
   },
   BABY: {
-    durationMin: 65, // ~1 hora y 5 min
-    sleepStart: null, // Solo toma una siesta corta, simplificado a vigilia
+    durationMin: 65, // ~1 hour and 5 minutes
+    sleepStart: null, // Takes a brief nap in canon, simplified to waking state
     sleepEnd: null,
     hungerRateMin: 15,
     happyRateMin: 15,
@@ -18,27 +18,27 @@ export const STAGE_CONFIG = {
     baseWeight: 5
   },
   CHILD: {
-    durationMin: 1440 * 2, // 2 días
-    sleepStart: 20, // 20:00
-    sleepEnd: 9,    // 09:00
+    durationMin: 1440 * 2, // 2 days
+    sleepStart: 20, // 20:00 (8:00 PM)
+    sleepEnd: 9,    // 09:00 (9:00 AM)
     hungerRateMin: 45,
     happyRateMin: 40,
     poopRateMin: 90,
     baseWeight: 10
   },
   TEEN: {
-    durationMin: 1440 * 3, // 3 días
-    sleepStart: 21,
-    sleepEnd: 9,
+    durationMin: 1440 * 3, // 3 days
+    sleepStart: 21, // 21:00 (9:00 PM)
+    sleepEnd: 9,    // 09:00 (9:00 AM)
     hungerRateMin: 60,
     happyRateMin: 50,
     poopRateMin: 120,
     baseWeight: 20
   },
   ADULT: {
-    durationMin: 1440 * 14, // Hasta 14 días adicionales
-    sleepStart: 22,
-    sleepEnd: 8,
+    durationMin: 1440 * 14, // Up to 14 additional days
+    sleepStart: 22, // 22:00 (10:00 PM)
+    sleepEnd: 8,    // 08:00 (8:00 AM)
     hungerRateMin: 75,
     happyRateMin: 65,
     poopRateMin: 180,
@@ -47,9 +47,9 @@ export const STAGE_CONFIG = {
 };
 
 export const THRESHOLDS = {
-  MAX_STARVATION_MIN: 360, // 6 horas con hambre en 0 = muerte
-  MAX_SICK_MIN: 360,       // 6 horas enfermo sin curar = muerte
-  CARE_MISTAKE_WAIT_MIN: 15, // 15 min ignorando alerta = +1 Care Mistake
+  MAX_STARVATION_MIN: 360, // 6 hours at 0 hunger = death
+  MAX_SICK_MIN: 360,       // 6 hours sick without cure = death
+  CARE_MISTAKE_WAIT_MIN: 15, // 15 min ignoring alert call = +1 Care Mistake
   MAX_POOP: 4,
-  TICK_SIZE_MS: 60 * 1000  // Resolución del simulador: 1 minuto
+  TICK_SIZE_MS: 60 * 1000  // Simulator resolution: 1 minute per tick
 };

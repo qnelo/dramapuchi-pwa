@@ -155,7 +155,7 @@ export class MenuController {
         this.pet.happiness = Math.min(4, this.pet.happiness + 1);
         this.pet.weight += 2;
         this.pet.snacksFedRow = (this.pet.snacksFedRow || 0) + 1;
-        // Abusar de dulces (>4 seguidos) provoca dolor de muelas/enfermedad
+        // Snack abuse (>4 in a row) triggers toothache and sickness
         if (this.pet.snacksFedRow >= 5) {
           this.pet.isSick = true;
           this.pet.snacksFedRow = 0;

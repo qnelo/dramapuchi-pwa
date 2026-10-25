@@ -55,8 +55,8 @@ assert.strictEqual(state.happiness, 0);
 assert.strictEqual(state.isCalling, true);
 console.log('✓ Degradation & Attention verified.');
 
-// 4. Sitter Mode (Guardería)
-console.log('Testing Sitter Mode (Guardería)...');
+// 4. Sitter Mode
+console.log('Testing Sitter Mode (Tama Sitter)...');
 const sitterState = {
   ...SaveManager.getInitialState(),
   stage: 'CHILD',
@@ -306,10 +306,10 @@ miniGame.start();
 assert.strictEqual(miniGame.getState().round, 1);
 assert.strictEqual(miniGame.getState().wins, 0);
 
-miniGame.wins = 3; // Simular 3 victorias en 5 rondas
+miniGame.wins = 3; // Simulate 3 wins in 5 rounds
 miniGame.finishGame();
-assert.strictEqual(gamePet.happiness, 2); // Felicidad aumenta en 1
-assert.strictEqual(gamePet.weight, 7);    // Peso disminuye en 1 lb
+assert.strictEqual(gamePet.happiness, 2); // Happiness increases by 1
+assert.strictEqual(gamePet.weight, 7);    // Weight decreases by 1 lb
 console.log('✓ MiniGameController verified.');
 
 // 10. Sprites & Font

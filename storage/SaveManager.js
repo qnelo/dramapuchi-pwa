@@ -47,13 +47,13 @@ export class SaveManager {
   }
 
   static async save(state) {
-    localStorage.setItem(SAVE_KEY, JSON.stringify(state)); // Fallback síncrono
+    localStorage.setItem(SAVE_KEY, JSON.stringify(state)); // Synchronous fallback
     try {
       const db = await this.openDB();
       const tx = db.transaction(STORE_NAME, 'readwrite');
       tx.objectStore(STORE_NAME).put(state, SAVE_KEY);
     } catch (err) {
-      console.warn('Fallback a localStorage activo:', err);
+      console.warn('Fallback to localStorage active:', err);
     }
   }
 
@@ -82,7 +82,7 @@ export class SaveManager {
   }
 
   /**
-   * Descarga el estado actual en un archivo .json portátil.
+   * Exports the current state into a portable .json backup file.
    */
   static exportToFile(state) {
     const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
@@ -95,7 +95,7 @@ export class SaveManager {
   }
 
   /**
-   * Importa y valida un archivo .json desde el selector de archivos del móvil.
+   * Imports and validates a .json save file from the device file selector.
    */
   static importFromFile(file) {
     return new Promise((resolve, reject) => {
@@ -104,7 +104,7 @@ export class SaveManager {
         try {
           const parsed = JSON.parse(e.target.result);
           if (!parsed.stage || !parsed.bornTimestamp) {
-            throw new Error('Formato de partida inválido');
+            throw new Error('Invalid save file format');
           }
           parsed.lastTickTimestamp = Date.now();
           await this.save(parsed);

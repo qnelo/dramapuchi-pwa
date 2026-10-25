@@ -36,37 +36,37 @@ export class GameRenderer {
 
     const mode = menuController.uiMode;
 
-    // 1. Status View (Métricas)
+    // 1. Status View (Meters)
     if (mode === UI_MODE.STATUS_VIEW) {
       StatusRenderer.renderStatusPage(lcd, petState, menuController.statusPage);
       return;
     }
 
-    // 2. Reloj
+    // 2. Real-time Clock
     if (mode === UI_MODE.CLOCK) {
       StatusRenderer.renderClock(lcd, new Date());
       return;
     }
 
-    // 3. Submenús
+    // 3. Submenus
     if (mode === UI_MODE.SUBMENU) {
       this.renderSubmenu(lcd, menuController);
       return;
     }
 
-    // 4. Minijuego
+    // 4. Mini-game
     if (mode === UI_MODE.MINIGAME) {
       this.renderMiniGame(lcd, petState, menuController.miniGame.getState(), tickMs);
       return;
     }
 
-    // 5. Animaciones de acción
+    // 5. Action animations
     if (mode === UI_MODE.ANIMATING) {
       this.renderAnimation(lcd, petState, menuController.currentAnim, tickMs);
       return;
     }
 
-    // 6. Estado Idle / Selección de Iconos
+    // 6. Idle State / Icon Selection
     this.renderPetIdle(lcd, petState, tickMs);
   }
 
@@ -131,7 +131,6 @@ export class GameRenderer {
       case 'EATING_MEAT': {
         const step = Math.floor(tickMs / 250) % 4;
         const petX = 3;
-        const mouthOpen = step % 2 === 0;
         lcd.drawSprite(petX, 0, petSprite);
         if (step < 3) {
           lcd.drawSprite(20 - step * 2, 4, SPRITES.MEAT);
@@ -182,14 +181,14 @@ export class GameRenderer {
   }
 
   static renderPetIdle(lcd, petState, tickMs) {
-    // 1. Estado Huevo
+    // 1. Egg Stage
     if (petState.stage === 'EGG') {
       const wiggle = Math.floor(tickMs / 1000) % 3 === 0;
       lcd.drawSprite(8, 0, wiggle ? SPRITES.EGG_WIGGLE : SPRITES.EGG_IDLE);
       return;
     }
 
-    // 2. Estado Muerte
+    // 2. Dead Stage
     if (petState.stage === 'DEAD') {
       lcd.drawSprite(8, 0, SPRITES.DEAD_TOMB);
       const blink = Math.floor(tickMs / 500) % 2 === 0;
@@ -199,7 +198,7 @@ export class GameRenderer {
       return;
     }
 
-    // 3. Estado Despedida (DEPARTED)
+    // 3. Departed Stage (UFO Return)
     if (petState.stage === 'DEPARTED') {
       lcd.drawSprite(8, 0, SPRITES.DEPARTED_UFO);
       const twinkle = Math.floor(tickMs / 400) % 2 === 0;
@@ -211,13 +210,13 @@ export class GameRenderer {
       return;
     }
 
-    // 4. Durmiendo
+    // 4. Sleeping
     if (petState.isSleeping) {
       if (!petState.lightsOn) {
-        // Luces apagadas: pantalla oscura
+        // Lights off: dark screen
         return;
       }
-      // Luces encendidas: mascota durmiendo con indicador "Z"
+      // Lights on: sleeping pet with floating 'Z' indicator
       const petSprite = this.getSpeciesSprite(petState.species, 0);
       lcd.drawSprite(4, 2, petSprite);
       const zOffset = Math.floor(tickMs / 600) % 3;
@@ -225,13 +224,13 @@ export class GameRenderer {
       return;
     }
 
-    // 5. Mascota despierta (Wandering Idle)
+    // 5. Awake Pet (Wandering Idle)
     const frame = Math.floor(tickMs / 600) % 2;
     const petX = frame === 0 ? 6 : 9;
     const petSprite = this.getSpeciesSprite(petState.species, frame);
     lcd.drawSprite(petX, 0, petSprite);
 
-    // Cacas (hasta 4)
+    // Poop sprites (up to 4)
     if (petState.poopCount > 0) {
       const positions = [
         [24, 8],
@@ -244,7 +243,7 @@ export class GameRenderer {
       }
     }
 
-    // Calavera si está enfermo
+    // Skull indicator when sick
     if (petState.isSick) {
       const blinkSkull = Math.floor(tickMs / 400) % 2 === 0;
       if (blinkSkull) {

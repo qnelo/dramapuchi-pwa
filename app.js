@@ -15,36 +15,36 @@ let lastCallAlertTime = 0;
 let currentLang = detectLanguage();
 
 async function init() {
-  // 1. Cargar estado persistente
+  // 1. Load persistent state
   state = await SaveManager.load();
 
-  // 2. Reconciliación temporal inmediata tras reinicio/apertura
+  // 2. Immediate temporal reconciliation upon launch/reopen
   TamagotchiEngine.reconcile(state, Date.now());
 
-  // 3. Inicializar pantalla LCD y Audio
+  // 3. Initialize LCD matrix and audio synthesizer
   const canvas = document.getElementById('lcdScreen');
   lcd = new LcdMatrix(canvas);
   audio = new TamagotchiAudio();
 
-  // 4. Inicializar controlador de menús
+  // 4. Initialize menu controller
   menu = new MenuController(state, audio, () => updateIconBezel());
 
-  // 5. Vincular eventos de hardware y teclado
+  // 5. Bind hardware buttons and keyboard listeners
   setupInputListeners();
 
-  // 6. Vincular barra de herramientas QoL y selector de idioma
+  // 6. Bind QoL toolbar and language selector
   setupQolListeners();
 
-  // 7. Aplicar traducciones detectadas / guardadas
+  // 7. Apply detected / stored translations
   applyTranslations(currentLang);
 
-  // 8. Iniciar bucles de tiempo y renderizado
+  // 8. Start time reconciliation and render loops
   window.addEventListener('resize', () => lcd.resize());
 
-  // Reconciliación cada segundo
+  // Reconcile simulation every second
   setInterval(tickEngine, 1000);
 
-  // Guardado periódico cada 5 segundos
+  // Periodic save every 5 seconds
   setInterval(() => SaveManager.save(state), 5000);
   window.addEventListener('beforeunload', () => SaveManager.save(state));
   document.addEventListener('visibilitychange', () => {
@@ -55,10 +55,10 @@ async function init() {
     }
   });
 
-  // Bucle de animación 60 FPS
+  // 60 FPS animation loop
   requestAnimationFrame(gameLoop);
 
-  // 9. Registro de Service Worker PWA
+  // 9. Register offline-first Service Worker
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('./sw.js').catch(err => {
       console.warn('Service Worker registration skipped/failed:', err);
@@ -94,7 +94,7 @@ function setupInputListeners() {
   addPressListener(btnB, () => menu.pressB());
   addPressListener(btnC, () => menu.pressC());
 
-  // Soporte teclado (A, B, C / Flechas / Espacio / Esc)
+  // Desktop keyboard shortcuts (A, B, C / Arrows / Enter / Space / Esc)
   window.addEventListener('keydown', (e) => {
     audio.init();
     if (e.repeat) return;
@@ -147,7 +147,7 @@ function setupQolListeners() {
     });
   }
 
-  // Fallback para light-dismiss (cerrar al pulsar el fondo)
+  // Light-dismiss fallback (close on backdrop click)
   if (modalManual && !('closedBy' in HTMLDialogElement.prototype)) {
     modalManual.addEventListener('click', (event) => {
       if (event.target !== modalManual) return;
@@ -240,7 +240,7 @@ function applyTranslations(lang) {
   const selectLang = document.getElementById('select-lang');
   if (selectLang) selectLang.value = lang;
 
-  // Actualizar títulos de los iconos del bisel
+  // Update bezel icon tooltips/titles
   for (let i = 0; i < 8; i++) {
     const iconEl = document.getElementById(`icon-${i}`);
     if (iconEl && t.icons[i]) {
@@ -248,7 +248,7 @@ function applyTranslations(lang) {
     }
   }
 
-  // Actualizar botones de la barra inferior
+  // Update bottom toolbar buttons
   const btnManual = document.getElementById('btn-manual');
   if (btnManual) btnManual.textContent = t.toolbar.manual;
 
@@ -263,7 +263,7 @@ function applyTranslations(lang) {
 
   updateQolButtonsUI();
 
-  // Actualizar contenido del modal de instrucciones
+  // Update instruction manual modal content
   const setElText = (id, text) => {
     const el = document.getElementById(id);
     if (el) el.textContent = text;
@@ -316,7 +316,7 @@ function tickEngine() {
   if (!state) return;
   TamagotchiEngine.reconcile(state, Date.now());
 
-  // Alerta acústica si la mascota llama la atención
+  // Acoustic alert when the pet calls for attention
   if (state.isCalling && !state.isSleeping && state.stage !== 'DEAD' && state.stage !== 'DEPARTED') {
     const now = Date.now();
     if (now - lastCallAlertTime > 15000) {
@@ -330,7 +330,7 @@ function tickEngine() {
 function updateIconBezel(now = Date.now()) {
   if (!menu || !state) return;
 
-  // Iconos 0 a 6: seleccionables con el botón A
+  // Icons 0 to 6: selectable via Button A
   for (let i = 0; i < 7; i++) {
     const iconEl = document.getElementById(`icon-${i}`);
     if (!iconEl) continue;
@@ -341,7 +341,7 @@ function updateIconBezel(now = Date.now()) {
     }
   }
 
-  // Icono 7: Atención (parpadea si isCalling es true)
+  // Icon 7: Attention LED (blinks when isCalling is true)
   const iconAttention = document.getElementById('icon-7');
   if (iconAttention) {
     if (state.isCalling && state.stage !== 'DEAD' && state.stage !== 'DEPARTED') {
@@ -362,5 +362,5 @@ function gameLoop(now) {
   requestAnimationFrame(gameLoop);
 }
 
-// Iniciar aplicación al cargar el DOM
+// Initialize application on DOMContentLoaded
 window.addEventListener('DOMContentLoaded', init);

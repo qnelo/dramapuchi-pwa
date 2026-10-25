@@ -3,7 +3,7 @@ export class TamagotchiAudio {
     this.ctx = null;
     this.masterGain = null;
     this.muted = false;
-    // Submúltiplos exactos del cristal de cuarzo de 32.768 Hz
+    // Exact integer submultiples of a 32.768 kHz quartz crystal
     this.FREQ = {
       LOW: 1024,      // 32768 / 32
       MID: 2048,      // 32768 / 16
