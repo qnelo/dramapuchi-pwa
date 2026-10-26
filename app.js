@@ -59,14 +59,102 @@ async function init() {
   // 60 FPS animation loop
   requestAnimationFrame(gameLoop);
 
-  // 9. Register offline-first Service Worker
+  // 9. Register offline-first Service Worker & handle PWA updates
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('./sw.js').then((reg) => {
-      reg.update();
+      setupServiceWorkerUpdates(reg);
+      reg.update().catch(() => {});
     }).catch(err => {
       console.warn('Service Worker registration skipped/failed:', err);
     });
   }
+}
+
+function setupServiceWorkerUpdates(reg) {
+  const toast = document.getElementById('update-toast');
+  const btnReload = document.getElementById('btn-update-reload');
+  const btnDismiss = document.getElementById('btn-update-dismiss');
+
+  let waitingWorker = null;
+
+  const showToast = (worker) => {
+    waitingWorker = worker;
+    if (toast) {
+      toast.classList.remove('hidden');
+    }
+  };
+
+  if (btnDismiss) {
+    btnDismiss.addEventListener('click', () => {
+      if (toast) {
+        toast.classList.add('hidden');
+      }
+    });
+  }
+
+  if (btnReload) {
+    btnReload.addEventListener('click', () => {
+      const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
+      btnReload.disabled = true;
+      btnReload.textContent = (t.update && t.update.updating) ? t.update.updating : '...';
+
+      let refreshing = false;
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if (!refreshing) {
+          refreshing = true;
+          window.location.reload();
+        }
+      });
+
+      const target = waitingWorker || reg.waiting;
+      if (target) {
+        target.postMessage({ type: 'SKIP_WAITING' });
+      } else {
+        window.location.reload();
+      }
+
+      // Safeguard reload in case controllerchange doesn't fire
+      setTimeout(() => {
+        if (!refreshing) {
+          refreshing = true;
+          window.location.reload();
+        }
+      }, 1500);
+    });
+  }
+
+  // Case 1: If there is already a waiting service worker
+  if (reg.waiting && navigator.serviceWorker.controller) {
+    showToast(reg.waiting);
+  }
+
+  // Case 2: Listen for newly installed workers
+  reg.addEventListener('updatefound', () => {
+    const installingWorker = reg.installing;
+    if (!installingWorker) return;
+
+    installingWorker.addEventListener('statechange', () => {
+      if (installingWorker.state === 'installed' && navigator.serviceWorker.controller) {
+        showToast(installingWorker);
+      }
+    });
+  });
+
+  // Check for updates whenever user returns to the app
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') {
+      reg.update().catch(() => {});
+    }
+  });
+
+  window.addEventListener('focus', () => {
+    reg.update().catch(() => {});
+  });
+
+  // Check periodically (every 30 minutes)
+  setInterval(() => {
+    reg.update().catch(() => {});
+  }, 30 * 60 * 1000);
 }
 
 function setupInputListeners() {
@@ -339,6 +427,15 @@ function applyTranslations(lang) {
   setElText('manual-sec-credits-title', t.manual.creditsHeader);
   setElText('manual-credits-author-label', t.manual.creditsAuthorLabel);
   setElText('manual-credits-repo-label', t.manual.creditsRepoLabel);
+
+  // Update notification toast
+  if (t.update) {
+    setElText('update-toast-text', t.update.available);
+    const btnReload = document.getElementById('btn-update-reload');
+    if (btnReload && !btnReload.disabled) {
+      setElText('btn-update-reload', t.update.action);
+    }
+  }
 }
 
 function updateSettingsUI() {

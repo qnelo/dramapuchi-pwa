@@ -455,6 +455,96 @@
     .manual-link:hover {
       color: #ffd166;
     }
+
+    /* PWA Update Toast Notification */
+    .update-toast {
+      position: fixed;
+      bottom: max(16px, env(safe-area-inset-bottom, 16px));
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: #1c2026;
+      border: 1.5px solid #ffd166;
+      border-radius: 12px;
+      box-shadow: 0 10px 32px rgba(0, 0, 0, 0.75), 0 0 16px rgba(255, 209, 102, 0.2);
+      padding: 10px 16px;
+      width: calc(100% - 32px);
+      max-width: 420px;
+      box-sizing: border-box;
+      color: #e6edf3;
+      font-size: 13px;
+      font-family: inherit;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+    }
+    .update-toast.hidden {
+      transform: translate(-50%, 60px);
+      opacity: 0;
+      pointer-events: none;
+    }
+    .update-toast-content {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 500;
+      min-width: 0;
+      flex: 1;
+    }
+    .update-toast-icon {
+      font-size: 16px;
+      flex: none;
+    }
+    .update-toast-text {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .update-toast-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: none;
+    }
+    .update-toast-btn {
+      background: #ffd166;
+      color: #12141a;
+      border: none;
+      border-radius: 6px;
+      padding: 6px 12px;
+      font-weight: 700;
+      font-size: 12px;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      transition: background 0.15s, transform 0.1s;
+    }
+    .update-toast-btn:hover {
+      background: #ffdd80;
+    }
+    .update-toast-btn:active {
+      transform: scale(0.96);
+    }
+    .update-toast-btn:disabled {
+      opacity: 0.6;
+      cursor: default;
+    }
+    .update-toast-dismiss {
+      background: transparent;
+      color: #8e95a5;
+      border: none;
+      font-size: 15px;
+      cursor: pointer;
+      padding: 4px 6px;
+      border-radius: 4px;
+      line-height: 1;
+      transition: color 0.15s, background 0.15s;
+    }
+    .update-toast-dismiss:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.08);
+    }
   </style>
 </head>
 <body>
@@ -861,6 +951,18 @@
     </div>
   </dialog>
 
-  <script type="module" src="./app.js?v=30"></script>
+  <!-- PWA Update Notification Toast -->
+  <div id="update-toast" class="update-toast hidden" role="alert" aria-live="polite">
+    <div class="update-toast-content">
+      <span class="update-toast-icon">✨</span>
+      <span id="update-toast-text" class="update-toast-text">¡Nueva versión disponible!</span>
+    </div>
+    <div class="update-toast-actions">
+      <button id="btn-update-reload" class="update-toast-btn">Actualizar</button>
+      <button id="btn-update-dismiss" class="update-toast-dismiss" aria-label="Cerrar">✕</button>
+    </div>
+  </div>
+
+  <script type="module" src="./app.js?v=31"></script>
 </body>
 </html>

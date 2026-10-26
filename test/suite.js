@@ -416,6 +416,9 @@ for (const lang of requiredLanguages) {
   assert(TRANSLATIONS[lang].manual.creditsHeader, `Missing manual.creditsHeader in ${lang}`);
   assert(TRANSLATIONS[lang].manual.creditsAuthorLabel, `Missing manual.creditsAuthorLabel in ${lang}`);
   assert(TRANSLATIONS[lang].manual.creditsRepoLabel, `Missing manual.creditsRepoLabel in ${lang}`);
+  assert(TRANSLATIONS[lang].update.available, `Missing update.available in ${lang}`);
+  assert(TRANSLATIONS[lang].update.action, `Missing update.action in ${lang}`);
+  assert(TRANSLATIONS[lang].update.updating, `Missing update.updating in ${lang}`);
 }
 console.log('✓ i18n Translations verified.');
 

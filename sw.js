@@ -1,4 +1,4 @@
-const CACHE_NAME = 'tama-pwa-v18';
+const CACHE_NAME = 'tama-pwa-v19';
 const ASSETS = [
   '/',
   '/index.html',
@@ -62,7 +62,13 @@ self.addEventListener('install', (event) => {
       );
     })()
   );
-  self.skipWaiting();
+});
+
+// Allow client app to prompt user and trigger skipWaiting on demand
+self.addEventListener('message', (event) => {
+  if (event.data && (event.data.type === 'SKIP_WAITING' || event.data.action === 'SKIP_WAITING')) {
+    self.skipWaiting();
+  }
 });
 
 self.addEventListener('activate', (event) => {

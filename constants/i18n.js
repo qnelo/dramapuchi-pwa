@@ -73,6 +73,11 @@ export const TRANSLATIONS = {
       creditsAuthorLabel: "Created by",
       creditsAuthor: "Camilo",
       creditsRepoLabel: "Repository"
+    },
+    update: {
+      available: "✨ New version available!",
+      action: "Update",
+      updating: "Updating..."
     }
   },
 
@@ -150,6 +155,11 @@ export const TRANSLATIONS = {
       creditsAuthorLabel: "Creado por",
       creditsAuthor: "Camilo",
       creditsRepoLabel: "Repositorio"
+    },
+    update: {
+      available: "✨ ¡Nueva versión disponible!",
+      action: "Actualizar",
+      updating: "Actualizando..."
     }
   },
 
@@ -227,6 +237,11 @@ export const TRANSLATIONS = {
       creditsAuthorLabel: "开发者",
       creditsAuthor: "Camilo",
       creditsRepoLabel: "代码仓库"
+    },
+    update: {
+      available: "✨ 发现新版本！",
+      action: "立即更新",
+      updating: "更新中..."
     }
   },
 
@@ -304,6 +319,11 @@ export const TRANSLATIONS = {
       creditsAuthorLabel: "Criado por",
       creditsAuthor: "Camilo",
       creditsRepoLabel: "Repositório"
+    },
+    update: {
+      available: "✨ Nova versão disponível!",
+      action: "Atualizar",
+      updating: "Atualizando..."
     }
   }
 };
