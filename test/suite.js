@@ -397,9 +397,9 @@ assert(mockLcd.buffer.size > 0);
 console.log('✓ StatusRenderer verified.');
 
 // 12. i18n Translations
-console.log('Testing i18n Translations (en, es, zh, pt)...');
+console.log('Testing i18n Translations (13 languages)...');
 const { TRANSLATIONS } = await import('../constants/i18n.js');
-const requiredLanguages = ['en', 'es', 'zh', 'pt'];
+const requiredLanguages = ['en', 'es', 'zh', 'pt', 'ja', 'de', 'fr', 'it', 'ru', 'ar', 'hi', 'bn', 'id'];
 for (const lang of requiredLanguages) {
   assert(TRANSLATIONS[lang], `Missing language ${lang}`);
   assert(TRANSLATIONS[lang].title, `Missing title in ${lang}`);

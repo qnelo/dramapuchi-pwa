@@ -395,6 +395,7 @@ function renderEvolutionSprites() {
 function applyTranslations(lang) {
   const t = TRANSLATIONS[lang] || TRANSLATIONS.en;
   document.documentElement.lang = lang;
+  document.documentElement.dir = (lang === 'ar' ? 'rtl' : 'ltr');
   document.title = t.title;
 
   const setElText = (id, text) => {
@@ -404,8 +405,9 @@ function applyTranslations(lang) {
 
   // Top floating buttons
   if (t.topControls) {
-    setElText('txt-settings-open', t.topControls.settings.replace(/[^a-zA-Z\u4e00-\u9fa5\u00C0-\u017F ]/g, '').trim());
-    setElText('txt-manual-open', t.topControls.manual.replace(/[^a-zA-Z\u4e00-\u9fa5\u00C0-\u017F ]/g, '').trim());
+    const cleanLabel = (s) => (s || '').replace(/[\p{Extended_Pictographic}\uFE0F]/gu, '').trim();
+    setElText('txt-settings-open', cleanLabel(t.topControls.settings));
+    setElText('txt-manual-open', cleanLabel(t.topControls.manual));
   }
 
   // Settings modal labels
