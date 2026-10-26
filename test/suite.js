@@ -413,6 +413,9 @@ for (const lang of requiredLanguages) {
   assert(TRANSLATIONS[lang].manual.installHeader, `Missing manual.installHeader in ${lang}`);
   assert(TRANSLATIONS[lang].manual.installAndroid, `Missing manual.installAndroid in ${lang}`);
   assert(TRANSLATIONS[lang].manual.installIos, `Missing manual.installIos in ${lang}`);
+  assert(TRANSLATIONS[lang].manual.creditsHeader, `Missing manual.creditsHeader in ${lang}`);
+  assert(TRANSLATIONS[lang].manual.creditsAuthorLabel, `Missing manual.creditsAuthorLabel in ${lang}`);
+  assert(TRANSLATIONS[lang].manual.creditsRepoLabel, `Missing manual.creditsRepoLabel in ${lang}`);
 }
 console.log('✓ i18n Translations verified.');
 

@@ -445,6 +445,16 @@
       color: #ffd166;
       font-weight: bold;
     }
+    .manual-link {
+      color: #5bfec8;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      word-break: break-all;
+      transition: color 0.15s;
+    }
+    .manual-link:hover {
+      color: #ffd166;
+    }
   </style>
 </head>
 <body>
@@ -836,9 +846,21 @@
           </div>
         </div>
       </div>
+
+      <!-- Credits & Repository Section -->
+      <div class="manual-section">
+        <h3 id="manual-sec-credits-title">✨ Credits & Repository</h3>
+        <p style="margin:4px 0 6px 0;">
+          <span id="manual-credits-author-label">Created by</span>: <strong>Camilo</strong>
+        </p>
+        <p style="margin:0;">
+          <span id="manual-credits-repo-label">Repository</span>: 
+          <a href="https://github.com/qnelo/tama-pwa" target="_blank" rel="noopener noreferrer" class="manual-link">https://github.com/qnelo/tama-pwa</a>
+        </p>
+      </div>
     </div>
   </dialog>
 
-  <script type="module" src="./app.js?v=29"></script>
+  <script type="module" src="./app.js?v=30"></script>
 </body>
 </html>

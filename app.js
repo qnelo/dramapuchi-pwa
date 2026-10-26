@@ -335,6 +335,10 @@ function applyTranslations(lang) {
   setElText('manual-sec-install-title', t.manual.installHeader);
   setElText('manual-install-android', t.manual.installAndroid);
   setElText('manual-install-ios', t.manual.installIos);
+
+  setElText('manual-sec-credits-title', t.manual.creditsHeader);
+  setElText('manual-credits-author-label', t.manual.creditsAuthorLabel);
+  setElText('manual-credits-repo-label', t.manual.creditsRepoLabel);
 }
 
 function updateSettingsUI() {

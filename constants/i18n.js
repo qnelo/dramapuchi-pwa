@@ -68,7 +68,11 @@ export const TRANSLATIONS = {
       sitterDesc: "Tama Sitter Mode: Activate in the Settings menu (⚙️) in the top-left corner. Freezes biological decay (hunger, happiness, and poop) during work/school hours (07:00 - 18:00).",
       installHeader: "📱 Install as Mobile App (PWA)",
       installAndroid: "Android (Chrome): Tap the three-dot menu (⋮) in the top-right corner and select 'Install application' (or 'Add to Home screen'). The app will run in standalone fullscreen mode without address bars.",
-      installIos: "iOS / iPhone (Safari): Tap the Share button (square with arrow ↑) at the bottom and select 'Add to Home Screen'. It will launch like a native app."
+      installIos: "iOS / iPhone (Safari): Tap the Share button (square with arrow ↑) at the bottom and select 'Add to Home Screen'. It will launch like a native app.",
+      creditsHeader: "✨ Credits & Repository",
+      creditsAuthorLabel: "Created by",
+      creditsAuthor: "Camilo",
+      creditsRepoLabel: "Repository"
     }
   },
 
@@ -141,7 +145,11 @@ export const TRANSLATIONS = {
       sitterDesc: "Modo Niñera: Actívalo en el menú de Opciones (⚙️) de la esquina superior izquierda. Congela el hambre, felicidad y suciedad durante horas de estudio o trabajo (07:00 a 18:00).",
       installHeader: "📱 Instalar en el Móvil (PWA)",
       installAndroid: "Android (Chrome): Toca el menú de tres puntos (⋮) en la esquina superior derecha y selecciona 'Instalar aplicación' (o 'Agregar a la pantalla principal'). Se abrirá a pantalla completa como una app nativa.",
-      installIos: "iOS / iPhone (Safari): Toca el botón Compartir (cuadrado con flecha ↑) en la barra inferior y selecciona 'Agregar a pantalla de inicio'. Se abrirá en pantalla completa sin barras de navegación."
+      installIos: "iOS / iPhone (Safari): Toca el botón Compartir (cuadrado con flecha ↑) en la barra inferior y selecciona 'Agregar a pantalla de inicio'. Se abrirá en pantalla completa sin barras de navegación.",
+      creditsHeader: "✨ Créditos y Repositorio",
+      creditsAuthorLabel: "Creado por",
+      creditsAuthor: "Camilo",
+      creditsRepoLabel: "Repositorio"
     }
   },
 
@@ -214,7 +222,11 @@ export const TRANSLATIONS = {
       sitterDesc: "保姆模式：可在左上角设置菜单 (⚙️) 中开启。在工作或学习时间（07:00 - 18:00）冻结代谢衰减。",
       installHeader: "📱 安装到手机桌面 (PWA)",
       installAndroid: "Android (Chrome)：点击右上角菜单 (⋮)，选择“安装应用”（或“添加到主屏幕”）。安装后如原生 App 般全屏运行，无地址栏干扰。",
-      installIos: "iOS / iPhone (Safari)：点击底部中央的“分享”按钮（带箭头的方框 ↑），选择“添加到主屏幕”。即可生成独立全屏应用。"
+      installIos: "iOS / iPhone (Safari)：点击底部中央的“分享”按钮（带箭头的方框 ↑），选择“添加到主屏幕”。即可生成独立全屏应用。",
+      creditsHeader: "✨ 致谢与开源仓库",
+      creditsAuthorLabel: "开发者",
+      creditsAuthor: "Camilo",
+      creditsRepoLabel: "代码仓库"
     }
   },
 
@@ -287,7 +299,11 @@ export const TRANSLATIONS = {
       sitterDesc: "Modo Babá: Ative no menu de Ajustes (⚙️) no canto superior esquerdo. Congela a fome, felicidade e sujeira durante o horário de trabalho/estudo (07:00 às 18:00).",
       installHeader: "📱 Instalar no Celular (PWA)",
       installAndroid: "Android (Chrome): Toque no menu de três pontos (⋮) no canto superior direito e selecione 'Instalar aplicativo' (ou 'Adicionar à tela inicial'). Funcionará em tela cheia como um app nativo.",
-      installIos: "iOS / iPhone (Safari): Toque no botão Compartilhar (quadrado com seta ↑) na barra inferior e selecione 'Adicionar à Tela de Início'. Ele será aberto em tela cheia sem barras de navegação."
+      installIos: "iOS / iPhone (Safari): Toque no botão Compartilhar (quadrado com seta ↑) na barra inferior e selecione 'Adicionar à Tela de Início'. Ele será aberto em tela cheia sem barras de navegação.",
+      creditsHeader: "✨ Créditos e Repositório",
+      creditsAuthorLabel: "Criado por",
+      creditsAuthor: "Camilo",
+      creditsRepoLabel: "Repositório"
     }
   }
 };
