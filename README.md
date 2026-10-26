@@ -161,6 +161,30 @@ No build step or bundling required. Everything runs natively as standard ES Modu
 
 ---
 
+## ☁️ Deployment (Cloudflare Pages)
+
+The live site is a Cloudflare Pages project (`tama-pwa`) published by direct upload. Always deploy with:
+
+```bash
+npx wrangler login   # once per machine
+npm run deploy
+```
+
+`npm run deploy` exports the last commit with `git archive HEAD` into a temporary folder and uploads only that folder. Files ignored by git, such as the private specs `er.txt` and `er.docx`, never leave your machine. Uncommitted changes are not deployed either, so commit first.
+
+**Never run `wrangler pages deploy .` from the repo root.** Pages reads no ignore file: neither `.gitignore` nor `.assetsignore` apply. It uploads every file except a fixed list (`node_modules`, `.git`, `.DS_Store`, `.wrangler`, `_worker.js`, `functions`).
+
+Every deployment also stays reachable at its own URL (`<id>.tama-pwa.pages.dev`). If a private file is ever published, deploy a clean commit and then delete the old deployments:
+
+```bash
+npx wrangler pages deployment list --project-name tama-pwa
+npx wrangler pages deployment delete <id> --project-name tama-pwa
+```
+
+Before committing a content change, bump `CACHE_NAME` in `sw.js` so installed PWAs pick up the new version.
+
+---
+
 ## 📄 License
 
 Distributed under the MIT License. Inspired by the original Tamagotchi virtual pet created by Bandai / WiZ (1996).

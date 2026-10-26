@@ -144,3 +144,4 @@ Executes the Gen 1 branching evolution tree:
    npm test
    ```
    All 12 test suites must pass without errors.
+5. **Deploy Only From a Commit**: Publish with `npm run deploy`, which uploads a `git archive` of `HEAD`, so commit before deploying: uncommitted changes are not published. Never run `wrangler pages deploy` on the repo root: Cloudflare Pages reads no ignore file and would publish the private, git-ignored specs (`er.txt`, `er.docx`). Bump `CACHE_NAME` in `sw.js` with every content change.
