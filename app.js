@@ -6,6 +6,7 @@ import { SaveManager } from './storage/SaveManager.js';
 import { GameRenderer } from './ui/GameRenderer.js';
 import { UI_MODE } from './constants/menu.js';
 import { TRANSLATIONS, detectLanguage } from './constants/i18n.js';
+import { SPRITES } from './ui/sprites.js';
 
 let state = null;
 let lcd = null;
@@ -38,6 +39,7 @@ async function init() {
 
   // 7. Apply detected / stored translations
   applyTranslations(currentLang);
+  renderEvolutionSprites();
 
   // 8. Start time reconciliation and render loops
   window.addEventListener('resize', () => lcd.resize());
@@ -237,6 +239,7 @@ function setupQolListeners() {
   if (btnManualOpen && modalManual) {
     btnManualOpen.addEventListener('click', () => {
       audio.init();
+      renderEvolutionSprites();
       modalManual.showModal();
       audio.playConfirm();
     });
@@ -357,6 +360,38 @@ function setupQolListeners() {
   }
 }
 
+function renderEvolutionSprites() {
+  const mapping = [
+    { id: 'canvas-evo-babytchi', sprite: SPRITES.BABYTCHI_IDLE },
+    { id: 'canvas-evo-marutchi', sprite: SPRITES.MARUTCHI_IDLE },
+    { id: 'canvas-evo-tamatchi', sprite: SPRITES.TAMATCHI_IDLE },
+    { id: 'canvas-evo-kuchitamatchi', sprite: SPRITES.KUCHITAMATCHI_IDLE },
+    { id: 'canvas-evo-mametchi', sprite: SPRITES.MAMETCHI_IDLE },
+    { id: 'canvas-evo-ginjirotchi', sprite: SPRITES.GINJIROTCHI_IDLE },
+    { id: 'canvas-evo-maskutchi', sprite: SPRITES.MASKUTCHI_IDLE },
+    { id: 'canvas-evo-kuchipatchi', sprite: SPRITES.KUCHIPATCHI_IDLE },
+    { id: 'canvas-evo-nyorotchi', sprite: SPRITES.NYOROTCHI_IDLE },
+    { id: 'canvas-evo-tarakotchi', sprite: SPRITES.TARAKOTCHI_IDLE },
+    { id: 'canvas-evo-departed', sprite: SPRITES.DEPARTED_UFO }
+  ];
+
+  for (const item of mapping) {
+    const canvas = document.getElementById(item.id);
+    if (!canvas || !item.sprite) continue;
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, 16, 16);
+    ctx.fillStyle = '#1b2416';
+    for (let y = 0; y < 16; y++) {
+      const row = item.sprite[y];
+      for (let x = 0; x < 16; x++) {
+        if (row && row[x] === '1') {
+          ctx.fillRect(x, y, 1, 1);
+        }
+      }
+    }
+  }
+}
+
 function applyTranslations(lang) {
   const t = TRANSLATIONS[lang] || TRANSLATIONS.en;
   document.documentElement.lang = lang;
@@ -419,6 +454,26 @@ function applyTranslations(lang) {
   setElText('manual-sec-lifecycle-title', t.manual.lifecycleHeader);
   setElText('manual-lifecycle-desc', t.manual.lifecycleDesc);
   setElText('manual-sitter-desc', t.manual.sitterDesc);
+
+  // Evolution Matrix
+  setElText('manual-sec-evolution-title', t.manual.evolutionHeader);
+  setElText('manual-evolution-desc', t.manual.evolutionDesc);
+  setElText('manual-evo-early-title', t.manual.evoEarlyTitle);
+  setElText('manual-evo-baby-desc', t.manual.evoBabyDesc);
+  setElText('manual-evo-child-desc', t.manual.evoChildDesc);
+  setElText('manual-evo-branch-a-title', t.manual.evoBranchATitle);
+  setElText('manual-evo-tamatchi-desc', t.manual.evoTamatchiDesc);
+  setElText('manual-evo-mametchi-desc', t.manual.evoMametchiDesc);
+  setElText('manual-evo-ginjirotchi-desc', t.manual.evoGinjirotchiDesc);
+  setElText('manual-evo-maskutchi-desc', t.manual.evoMaskutchiDesc);
+  setElText('manual-evo-branch-b-title', t.manual.evoBranchBTitle);
+  setElText('manual-evo-kuchitamatchi-desc', t.manual.evoKuchitamatchiDesc);
+  setElText('manual-evo-kuchipatchi-desc', t.manual.evoKuchipatchiDesc);
+  setElText('manual-evo-nyorotchi-desc', t.manual.evoNyorotchiDesc);
+  setElText('manual-evo-tarakotchi-desc', t.manual.evoTarakotchiDesc);
+  setElText('manual-evo-departure-title', t.manual.evoDepartureTitle);
+  setElText('manual-evo-departed-name', t.manual.evoDepartedName);
+  setElText('manual-evo-departed-desc', t.manual.evoDepartedDesc);
 
   setElText('manual-sec-install-title', t.manual.installHeader);
   setElText('manual-install-android', t.manual.installAndroid);

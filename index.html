@@ -456,6 +456,86 @@
       color: #ffd166;
     }
 
+    /* Evolution Matrix */
+    .evo-group {
+      margin-bottom: 10px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid #2e323b;
+      border-radius: 8px;
+      padding: 8px 10px;
+    }
+    .evo-stage-title {
+      font-size: 11px;
+      font-weight: bold;
+      color: #ffd166;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .evo-cards, .evo-subcards {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .evo-subcards {
+      margin-top: 6px;
+      padding-left: 10px;
+      border-left: 2px dashed #3a4050;
+    }
+    .evo-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 6px;
+      padding: 6px 8px;
+    }
+    .evo-card-teen {
+      background: rgba(91, 254, 200, 0.06);
+      border-color: rgba(91, 254, 200, 0.2);
+    }
+    .manual-sprite-chip {
+      flex: none;
+      width: 26px;
+      height: 26px;
+      padding: 2px;
+      border-radius: 4px;
+      background: #9ba885;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.35);
+    }
+    .manual-sprite-canvas {
+      width: 22px;
+      height: 22px;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+    }
+    .evo-info {
+      flex: 1;
+      min-width: 0;
+      font-size: 12px;
+      line-height: 1.35;
+    }
+    .evo-info strong {
+      color: #fff;
+    }
+    .evo-desc {
+      color: #a0a6b5;
+      font-size: 11px;
+      margin-top: 2px;
+    }
+    .badge-gold {
+      background: #ffd166 !important;
+      color: #12141a !important;
+      border-color: #ffdd80 !important;
+    }
+
     /* PWA Update Toast Notification */
     .update-toast {
       position: fixed;
@@ -922,6 +1002,115 @@
         <p id="manual-sitter-desc" style="margin:0;"></p>
       </div>
 
+      <!-- Evolution Matrix Section -->
+      <div class="manual-section">
+        <h3 id="manual-sec-evolution-title">🧬 Evolution Matrix</h3>
+        <p id="manual-evolution-desc" style="margin:4px 0 10px 0;"></p>
+
+        <!-- Early stages -->
+        <div class="evo-group">
+          <div id="manual-evo-early-title" class="evo-stage-title">🌱 Early Stages (Linear)</div>
+          <div class="evo-cards">
+            <div class="evo-card">
+              <div class="manual-sprite-chip"><canvas id="canvas-evo-babytchi" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
+              <div class="evo-info">
+                <strong>Babytchi</strong> <span class="badge">Baby</span>
+                <div id="manual-evo-baby-desc" class="evo-desc"></div>
+              </div>
+            </div>
+            <div class="evo-card">
+              <div class="manual-sprite-chip"><canvas id="canvas-evo-marutchi" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
+              <div class="evo-info">
+                <strong>Marutchi</strong> <span class="badge">Child</span>
+                <div id="manual-evo-child-desc" class="evo-desc"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Branch A: Tamatchi -->
+        <div class="evo-group">
+          <div id="manual-evo-branch-a-title" class="evo-stage-title">⭐ Branch A: Good Care (Tamatchi)</div>
+          <div class="evo-card evo-card-teen">
+            <div class="manual-sprite-chip"><canvas id="canvas-evo-tamatchi" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
+            <div class="evo-info">
+              <strong>Tamatchi</strong> <span class="badge">Teen</span>
+              <div id="manual-evo-tamatchi-desc" class="evo-desc"></div>
+            </div>
+          </div>
+          <div class="evo-subcards">
+            <div class="evo-card">
+              <div class="manual-sprite-chip"><canvas id="canvas-evo-mametchi" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
+              <div class="evo-info">
+                <strong>Mametchi</strong> <span class="badge badge-gold">Adult</span>
+                <div id="manual-evo-mametchi-desc" class="evo-desc"></div>
+              </div>
+            </div>
+            <div class="evo-card">
+              <div class="manual-sprite-chip"><canvas id="canvas-evo-ginjirotchi" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
+              <div class="evo-info">
+                <strong>Ginjirotchi</strong> <span class="badge">Adult</span>
+                <div id="manual-evo-ginjirotchi-desc" class="evo-desc"></div>
+              </div>
+            </div>
+            <div class="evo-card">
+              <div class="manual-sprite-chip"><canvas id="canvas-evo-maskutchi" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
+              <div class="evo-info">
+                <strong>Maskutchi</strong> <span class="badge">Adult</span>
+                <div id="manual-evo-maskutchi-desc" class="evo-desc"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Branch B: Kuchitamatchi -->
+        <div class="evo-group">
+          <div id="manual-evo-branch-b-title" class="evo-stage-title">🍂 Branch B: Poor Care (Kuchitamatchi)</div>
+          <div class="evo-card evo-card-teen">
+            <div class="manual-sprite-chip"><canvas id="canvas-evo-kuchitamatchi" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
+            <div class="evo-info">
+              <strong>Kuchitamatchi</strong> <span class="badge">Teen</span>
+              <div id="manual-evo-kuchitamatchi-desc" class="evo-desc"></div>
+            </div>
+          </div>
+          <div class="evo-subcards">
+            <div class="evo-card">
+              <div class="manual-sprite-chip"><canvas id="canvas-evo-kuchipatchi" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
+              <div class="evo-info">
+                <strong>Kuchipatchi</strong> <span class="badge">Adult</span>
+                <div id="manual-evo-kuchipatchi-desc" class="evo-desc"></div>
+              </div>
+            </div>
+            <div class="evo-card">
+              <div class="manual-sprite-chip"><canvas id="canvas-evo-nyorotchi" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
+              <div class="evo-info">
+                <strong>Nyorotchi</strong> <span class="badge">Adult</span>
+                <div id="manual-evo-nyorotchi-desc" class="evo-desc"></div>
+              </div>
+            </div>
+            <div class="evo-card">
+              <div class="manual-sprite-chip"><canvas id="canvas-evo-tarakotchi" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
+              <div class="evo-info">
+                <strong>Tarakotchi</strong> <span class="badge">Adult</span>
+                <div id="manual-evo-tarakotchi-desc" class="evo-desc"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Departure -->
+        <div class="evo-group">
+          <div id="manual-evo-departure-title" class="evo-stage-title">🛸 Departure (UFO)</div>
+          <div class="evo-card">
+            <div class="manual-sprite-chip"><canvas id="canvas-evo-departed" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
+            <div class="evo-info">
+              <strong id="manual-evo-departed-name">Home Planet Return</strong> <span class="badge">End</span>
+              <div id="manual-evo-departed-desc" class="evo-desc"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Installation on Mobile Section -->
       <div class="manual-section">
         <h3 id="manual-sec-install-title">📱 Install on Mobile</h3>
@@ -963,6 +1152,6 @@
     </div>
   </div>
 
-  <script type="module" src="./app.js?v=31"></script>
+  <script type="module" src="./app.js?v=32"></script>
 </body>
 </html>
