@@ -69,7 +69,7 @@ export const TRANSLATIONS = {
       evolutionHeader: "🧬 Evolution Matrix",
       evolutionDesc: "Evolution branching is determined by Care Mistakes (neglected calls for 15 min, 15 min at 0 hunger/happiness, or lights left on while sleeping) and Discipline level.",
       evoEarlyTitle: "🌱 Early Stages (Linear)",
-      evoBabyDesc: "5 min Egg → 65 min. Requires continuous attention and feeding.",
+      evoBabyDesc: "Egg 5 min → Babytchi 65 min. Requires continuous attention and feeding.",
       evoChildDesc: "2 days. Care mistakes reset to 0 upon entering this stage.",
       evoBranchATitle: "⭐ Branch A: Good Care (Tamatchi)",
       evoTamatchiDesc: "≤ 2 care mistakes as Child. Stage duration: 3 days.",
@@ -90,7 +90,8 @@ export const TRANSLATIONS = {
       creditsHeader: "✨ Credits & Repository",
       creditsAuthorLabel: "Created by",
       creditsAuthor: "Camilo",
-      creditsRepoLabel: "Repository"
+      creditsRepoLabel: "Repository",
+      stages: { baby: "Baby", child: "Child", teen: "Teen", adult: "Adult" }
     },
     update: {
       available: "✨ New version available!",
@@ -120,7 +121,7 @@ export const TRANSLATIONS = {
       soundOff: "🔇 Audio: SILENCIADO",
       export: "💾 Exportar partida (Tama)",
       import: "📂 Importar partida (Tama)",
-      reset: "🥚 Eclosionar Nuevo Huevo"
+      reset: "🥚 Incubar Nuevo Huevo"
     },
     icons: {
       0: "Comida",
@@ -145,38 +146,38 @@ export const TRANSLATIONS = {
       reset: "🥚 Nuevo"
     },
     dialogs: {
-      confirmReset: "¿Deseas reiniciar un nuevo huevo de Tamagotchi?",
+      confirmReset: "¿Quieres empezar con un nuevo huevo de Tamagotchi?",
       importError: "Error al importar partida: "
     },
     manual: {
       title: "📖 Manual del Tamagotchi",
       buttonsHeader: "🔘 Botones del Llavero (De izquierda a derecha: A, B, C)",
-      btnA: "Botón A (Izquierdo): Seleccionar / Navegar. Navega entre los iconos superiores e inferiores, pasa páginas de estado o elige opción izquierda en el juego.",
-      btnB: "Botón B (Central): Confirmar / Acción. Confirma la acción seleccionada o salta de alegría. Elige opción derecha en el juego.",
+      btnA: "Botón A (Izquierdo): Seleccionar / Navegar. Navega entre los iconos superiores e inferiores, pasa páginas de estado o elige Izquierda en el juego.",
+      btnB: "Botón B (Central): Confirmar / Acción. Confirma la acción seleccionada o salta de alegría. Elige Derecha en el juego.",
       btnC: "Botón C (Derecho): Cancelar / Reloj. Cancela menús y vuelve a la pantalla principal. En reposo, muestra el reloj en tiempo real.",
       iconsHeader: "📟 Los 8 Iconos de Cuidado",
-      icon0: "1. Comida: Meal (Carne: +1 hambre, +1 lb) o Snack (Dulce: +1 felicidad, +2 lb). ¡Ojo! Más de 4 dulces seguidos provoca caries y enfermedad.",
-      icon1: "2. Luz: Cambia opciones con Botón A: LUZ ON o LUZ OFF. Pulsa Botón B para confirmar. Apágala al dormir para evitar descuidos.",
+      icon0: "1. Comida: MEAL (carne: +1 hambre, +1 lb) o SNACK (dulce: +1 felicidad, +2 lb). ¡Ojo! Dar más de 4 dulces seguidos provoca caries y enfermedad.",
+      icon1: "2. Luz: Cambia opciones con Botón A: LIGHT ON o LIGHT OFF. Pulsa Botón B para confirmar. Apágala cuando duerma para evitar fallos de cuidado.",
       icon2: "3. Juego: Adivina hacia dónde mirará la mascota (A: Izquierda, B: Derecha). Ganar 3 de 5 rondas otorga +1 felicidad y quema 1 lb.",
       icon3: "4. Medicina: Cúralo cuando aparezca el icono de cráneo ☠️ (puede requerir 1 o 2 dosis).",
-      icon4: "5. Higiene: Limpia la suciedad. Si acumula 4 cacas sin limpiar, contraerá una infección.",
+      icon4: "5. Limpiar: Arrastra las cacas con una ola de agua. Si acumula 4 cacas sin limpiar, se enfermará.",
       icon5: "6. Báscula (Métricas): 4 páginas con Botón A: 1) Edad y Peso, 2) Barra de Disciplina, 3) Corazones de Hambre, 4) Corazones de Felicidad.",
-      icon6: "7. Disciplina: Regáñalo cuando llame teniendo comida y felicidad llenas (llamada caprichosa). Incrementa +25% de disciplina.",
-      icon7: "8. Atención: Parpadea cuando tu mascota tiene hambre/tristeza en 0, está enferma o pide disciplina.",
+      icon6: "7. Disciplina: Regáñalo cuando llame con los corazones de hambre y felicidad llenos (llamada caprichosa). Aumenta la disciplina un 25%.",
+      icon7: "8. Atención: Parpadea cuando tu mascota tiene hambre/felicidad en 0, está enferma o pide disciplina.",
       lifecycleHeader: "🌱 Ciclo de Vida y Consejos",
       lifecycleDesc: "El huevo tarda 5 minutos en eclosionar. Etapas: Bebé (65 min) → Niño (2 días) → Adolescente (3 días) → Adulto (hasta 14 días adicionales).",
-      sitterDesc: "Modo Niñera: Actívalo en el menú de Opciones (⚙️) de la esquina superior izquierda. Congela el hambre, felicidad y suciedad durante horas de estudio o trabajo (07:00 a 18:00).",
+      sitterDesc: "Modo Niñera: Actívalo en el menú de Ajustes (⚙️) de la esquina superior izquierda. Congela el hambre, la felicidad y la suciedad durante las horas de estudio o trabajo (07:00 a 18:00).",
       evolutionHeader: "🧬 Matriz de Evolución",
-      evolutionDesc: "La evolución depende de los Fallos de Cuidado (atención no atendida en 15 min, 15 min con hambre/felicidad en 0, o luces encendidas al dormir) y el nivel de Disciplina.",
+      evolutionDesc: "La evolución depende de los Fallos de Cuidado (llamadas sin atender durante 15 min, 15 min con hambre/felicidad en 0 o luz encendida al dormir) y el nivel de Disciplina.",
       evoEarlyTitle: "🌱 Etapas Tempranas (Lineal)",
-      evoBabyDesc: "Huevo 5 min → Bebé 65 min. Requiere atención y alimentación constante.",
+      evoBabyDesc: "Huevo 5 min → Bebé 65 min. Requiere atención y alimentación constantes.",
       evoChildDesc: "2 días. Los fallos de cuidado se reinician a 0 al entrar a esta etapa.",
       evoBranchATitle: "⭐ Rama A: Buen Cuidado (Tamatchi)",
       evoTamatchiDesc: "≤ 2 fallos de cuidado en etapa de Niño. Duración: 3 días.",
       evoMametchiDesc: "0–1 fallos, ≥ 90% disciplina. El adulto más brillante y perfecto.",
       evoGinjirotchiDesc: "0–3 fallos, ≥ 75% disciplina. Muy sociable, leal y activo.",
       evoMaskutchiDesc: "Demás combinaciones (4+ fallos o < 75% disciplina). Introvertido.",
-      evoBranchBTitle: "🍂 Rama B: Cuidado Bajo (Kuchitamatchi)",
+      evoBranchBTitle: "🍂 Rama B: Poco Cuidado (Kuchitamatchi)",
       evoKuchitamatchiDesc: "≥ 3 fallos de cuidado en etapa de Niño. Duración: 3 días.",
       evoKuchipatchiDesc: "0–4 fallos, ≥ 50% disciplina. Glotón bonachón y simpático.",
       evoNyorotchiDesc: "5–6 fallos. Muy delicado y sensible, enferma con facilidad.",
@@ -190,7 +191,8 @@ export const TRANSLATIONS = {
       creditsHeader: "✨ Créditos y Repositorio",
       creditsAuthorLabel: "Creado por",
       creditsAuthor: "Camilo",
-      creditsRepoLabel: "Repositorio"
+      creditsRepoLabel: "Repositorio",
+      stages: { baby: "Bebé", child: "Niño", teen: "Adolescente", adult: "Adulto" }
     },
     update: {
       available: "✨ ¡Nueva versión disponible!",
@@ -251,8 +253,8 @@ export const TRANSLATIONS = {
     manual: {
       title: "📖 拓麻歌子培养手册",
       buttonsHeader: "🔘 实体按键指南（从左到右：A, B, C）",
-      btnA: "A 键（左侧按钮）：选择 / 浏览。在屏幕上下8个图标之间轮换切换，翻阅状态页面，或在小游戏中向左转。",
-      btnB: "B 键（中间按钮）：确认 / 互动。执行选中的菜单；在待机时按键会让宠物开心地跳跃；小游戏中向右转。",
+      btnA: "A 键（左侧按钮）：选择 / 浏览。在屏幕上下8个图标之间轮换切换，翻阅状态页面，或在小游戏中选择「左」。",
+      btnB: "B 键（中间按钮）：确认 / 互动。执行选中的菜单；在待机时按键会让宠物开心地跳跃；小游戏中选择「右」。",
       btnC: "C 键（右侧按钮）：取消 / 时钟。返回主待机界面；在待机时按下可查看24小时实时时钟。",
       iconsHeader: "📟 8项照料功能图标",
       icon0: "1. 喂食：主食 (肉：+1饱食度，+1磅) 或 零食 (糖果：+1快乐度，+2磅)。注意：连续吃超过4颗糖果会引起蛀牙生病！",
@@ -262,7 +264,7 @@ export const TRANSLATIONS = {
       icon4: "5. 清扫：冲水清理排泄物。如果累计4坨便便不清理，宠物会感染细菌生病。",
       icon5: "6. 状态 (秤)：通过A键切换4个页面：1) 年龄与体重，2) 训导值进度条，3) 饱食心，4) 快乐心。",
       icon6: "7. 训导：当宠物饱食度和快乐度全满却任性呼叫时进行批评教育，每次增加25%训导值。",
-      icon7: "8. 呼叫指示灯：被动警报灯，当宠物饥饿度归零、快乐度归零、生病或任性呼叫时闪烁鸣叫。",
+      icon7: "8. 呼叫：当宠物饱食度归零、快乐度归零、生病或任性呼叫时闪烁鸣叫。",
       lifecycleHeader: "🌱 进化周期与秘诀",
       lifecycleDesc: "蛋孵化耗时5分钟。成长阶段：婴儿期 (65分钟) → 幼儿期 (2天) → 青年期 (3天) → 成年期 (最长达14天)。",
       sitterDesc: "保姆模式：可在左上角设置菜单 (⚙️) 中开启。在工作或学习时间（07:00 - 18:00）冻结代谢衰减。",
@@ -280,7 +282,7 @@ export const TRANSLATIONS = {
       evoKuchitamatchiDesc: "幼儿期照顾失误 ≥ 3 次。青年期持续 3 天。",
       evoKuchipatchiDesc: "0–4次失误，训导 ≥ 50%。Kuchipatchi 嘴巴智（悠闲贪吃的小吃货）。",
       evoNyorotchiDesc: "5–6次失误。Nyorotchi 细长智（体质娇弱，极易生病）。",
-      evoTarakotchiDesc: "≥ 7次失误。Tarakotchi 厚唇智（大嘴鱼，缺乏照料的产物）。",
+      evoTarakotchiDesc: "≥ 7次失误。Tarakotchi 厚唇智（嘴唇厚大，疏于照料的结果）。",
       evoDepartureTitle: "🛸 乘飞碟离开 (UFO)",
       evoDepartedName: "返回母星",
       evoDepartedDesc: "成为健康成年体 14 天后，将乘坐飞碟安详返回拓麻歌子母星。",
@@ -290,7 +292,8 @@ export const TRANSLATIONS = {
       creditsHeader: "✨ 致谢与开源仓库",
       creditsAuthorLabel: "开发者",
       creditsAuthor: "Camilo",
-      creditsRepoLabel: "代码仓库"
+      creditsRepoLabel: "代码仓库",
+      stages: { baby: "婴儿期", child: "幼儿期", teen: "青年期", adult: "成年期" }
     },
     update: {
       available: "✨ 发现新版本！",
@@ -302,7 +305,7 @@ export const TRANSLATIONS = {
   pt: {
     title: "Tamagotchi PWA",
     topControls: {
-      settings: "⚙️ Ajustes",
+      settings: "⚙️ Configurações",
       manual: "📖 Manual"
     },
     settings: {
@@ -355,17 +358,17 @@ export const TRANSLATIONS = {
       btnB: "Botão B (Central): Confirmar / Ação. Executa a ação selecionada ou dá um pulo de alegria. Escolhe Direita no minijogo.",
       btnC: "Botão C (Direito): Cancelar / Relógio. Cancela menus e retorna à tela principal. No modo ocioso, exibe o relógio em tempo real.",
       iconsHeader: "📟 Os 8 Ícones de Cuidado",
-      icon0: "1. Comida: Refeição (Carne: +1 fome, +1 lb) ou Lanche (Doce: +1 felicidade, +2 lb). Atenção: dar mais de 4 doces seguidos causa dor de dente e doença!",
+      icon0: "1. Alimentar: Refeição (Carne: +1 fome, +1 lb) ou Lanche (Doce: +1 felicidade, +2 lb). Atenção: dar mais de 4 doces seguidos causa dor de dente e doença!",
       icon1: "2. Luz: Alterne opções com o Botão A: LUZ ON ou LUZ OFF. Pressione Botão B para confirmar. Apague quando dormir para evitar descuidos.",
       icon2: "3. Jogo: Jogo de adivinhação de 5 rodadas (A: Esquerda, B: Direita). Vencer 3 ou mais rodadas dá +1 felicidade e queima 1 lb.",
       icon3: "4. Remédio: Cura a doença quando o ícone de caveira ☠️ aparece (pode requerer 1 ou 2 doses).",
-      icon4: "5. Higiene: Limpa as sujeiras com uma onda de água. Acumular 4 cocôs causa infecção.",
+      icon4: "5. Limpar: Limpa as sujeiras com uma onda de água. Acumular 4 cocôs causa infecção.",
       icon5: "6. Balança (Status): 4 páginas com Botão A: 1) Idade e Peso, 2) Barra de Disciplina, 3) Corações de Fome, 4) Corações de Felicidade.",
       icon6: "7. Disciplina: Dê bronca quando ele chamar manhoso com fome e felicidade cheias. Aumenta +25% de disciplina.",
       icon7: "8. Atenção: Pisca quando seu pet está com fome/felicidade zeradas, doente ou pedindo disciplina.",
       lifecycleHeader: "🌱 Ciclo de Vida e Dicas",
       lifecycleDesc: "O ovo leva 5 minutos para chocar. Fases: Bebê (65 min) → Criança (2 dias) → Adolescente (3 dias) → Adulto (até 14 dias adicionais).",
-      sitterDesc: "Modo Babá: Ative no menu de Ajustes (⚙️) no canto superior esquerdo. Congela a fome, felicidade e sujeira durante o horário de trabalho/estudo (07:00 às 18:00).",
+      sitterDesc: "Modo Babá: Ative no menu de Configurações (⚙️) no canto superior esquerdo. Congela a fome, felicidade e sujeira durante o horário de trabalho/estudo (07:00 às 18:00).",
       evolutionHeader: "🧬 Matriz de Evolução",
       evolutionDesc: "A evolução depende das Falhas de Cuidado (chamados não atendidos em 15 min, 15 min com fome/felicidade zerada ou luz acesa ao dormir) e do nível de Disciplina.",
       evoEarlyTitle: "🌱 Estágios Iniciais (Linear)",
@@ -390,7 +393,8 @@ export const TRANSLATIONS = {
       creditsHeader: "✨ Créditos e Repositório",
       creditsAuthorLabel: "Criado por",
       creditsAuthor: "Camilo",
-      creditsRepoLabel: "Repositório"
+      creditsRepoLabel: "Repositório",
+      stages: { baby: "Bebê", child: "Criança", teen: "Adolescente", adult: "Adulto" }
     },
     update: {
       available: "✨ Nova versão disponível!",
@@ -467,7 +471,7 @@ export const TRANSLATIONS = {
       "lifecycleDesc": "たまごは5分で孵化します。ベビー期（65分）→ こども期（2日）→ ティーン期（3日）→ アダルト期（最長14日）。",
       "sitterDesc": "たまシッターモード：左上の設定メニュー（⚙️）から有効化できます。日中（07:00〜18:00）のおなか・ごきげん・うんちの進行を一時停止します。",
       "evolutionHeader": "🧬 へんしんマトリクス（進化分岐）",
-      "evolutionDesc": "たまごっちの進化はお世話ミス（15分以上の放置、おなか・ごきげん0のまま15分放置、就寝中の電気消し忘れ）としつけ度で決まります。",
+      "evolutionDesc": "たまごっちの進化はお世話ミス（よびだしを15分放置、おなか・ごきげん0のまま15分放置、就寝中の電気消し忘れ）としつけ度で決まります。",
       "evoEarlyTitle": "🌱 幼少期（一連の成長）",
       "evoBabyDesc": "たまご5分 → ベビっち（65分）。お腹が減りやすく付きっきりのお世話が必要です。",
       "evoChildDesc": "まるっち（こども期、2日間）。この段階に成長するとお世話ミスは0にリセットされます。",
@@ -490,7 +494,8 @@ export const TRANSLATIONS = {
       "creditsHeader": "✨ クレジット & リポジトリ",
       "creditsAuthorLabel": "制作者",
       "creditsAuthor": "Camilo",
-      "creditsRepoLabel": "GitHubリポジトリ"
+      "creditsRepoLabel": "GitHubリポジトリ",
+      "stages": { "baby": "ベビー", "child": "こども", "teen": "ティーン", "adult": "アダルト" }
     },
     "update": {
       "available": "✨ 新しいバージョンが利用可能です！",
@@ -549,7 +554,7 @@ export const TRANSLATIONS = {
       "importError": "Fehler beim Laden des Spielstands: "
     },
     "manual": {
-      "title": "📖 Tamagotchi Handbuch",
+      "title": "📖 Tamagotchi-Handbuch",
       "buttonsHeader": "🔘 Tasten am Gehäuse (Von links nach rechts: A, B, C)",
       "btnA": "Taste A (Links): Auswählen / Blättern. Symbole durchschalten, Statusseiten wechseln oder im Minispiel links raten.",
       "btnB": "Taste B (Mitte): Bestätigen / Aktion. Aktion ausführen oder Freudensprung machen. Im Minispiel rechts raten.",
@@ -567,7 +572,7 @@ export const TRANSLATIONS = {
       "lifecycleDesc": "Das Ei schlüpft in 5 Minuten. Stufen: Baby (65 Min.) → Kind (2 Tage) → Teenager (3 Tage) → Erwachsener (bis zu 14 Tage).",
       "sitterDesc": "Tama-Sitter-Modus: Im Einstellungsmenü (⚙️) aktivierbar. Friert den Verfall von Hunger, Glück und Schmutz tagsüber (07:00 - 18:00) ein.",
       "evolutionHeader": "🧬 Evolutionsmatrix",
-      "evolutionDesc": "Die Entwicklung hängt von Pflegefehlern (15 Min. ungehörter Ruf, 15 Min. bei 0 Hunger/Glück oder brennendes Licht beim Schlafen) und der Disziplin ab.",
+      "evolutionDesc": "Die Entwicklung hängt von Pflegefehlern (15 Min. unbeantworteter Ruf, 15 Min. bei 0 Hunger/Glück oder brennendes Licht beim Schlafen) und der Disziplin ab.",
       "evoEarlyTitle": "🌱 Frühe Phasen (Linear)",
       "evoBabyDesc": "Ei 5 Min. → Babytchi 65 Min. Benötigt ständige Aufmerksamkeit und Fütterung.",
       "evoChildDesc": "Marutchi (Kind, 2 Tage). Pflegefehler werden beim Erreichen dieser Stufe auf 0 zurückgesetzt.",
@@ -582,7 +587,7 @@ export const TRANSLATIONS = {
       "evoNyorotchiDesc": "5–6 Fehler. Nyorotchi (Empfindlich und wird leicht krank).",
       "evoTarakotchiDesc": "≥ 7 Fehler. Tarakotchi (Große Lippen; Resultat größter Vernachlässigung).",
       "evoDepartureTitle": "🛸 Abreise (UFO)",
-      "evoDepartedName": "Heimkehr zum Heimatplaneten",
+      "evoDepartedName": "Rückkehr zum Heimatplaneten",
       "evoDepartedDesc": "Nach 14 Tagen als gesunder Erwachsener kehrt es friedlich im UFO zum Planeten Tamagotchi zurück.",
       "installHeader": "📱 Als App installieren (PWA)",
       "installAndroid": "Android (Chrome): Tippe oben rechts auf das Dreipunkt-Menü (⋮) und wähle 'App installieren' (oder 'Zum Startbildschirm hinzufügen').",
@@ -590,7 +595,8 @@ export const TRANSLATIONS = {
       "creditsHeader": "✨ Mitwirkende & Repository",
       "creditsAuthorLabel": "Erstellt von",
       "creditsAuthor": "Camilo",
-      "creditsRepoLabel": "Repository"
+      "creditsRepoLabel": "Repository",
+      "stages": { "baby": "Baby", "child": "Kind", "teen": "Teenager", "adult": "Erwachsener" }
     },
     "update": {
       "available": "✨ Neue Version verfügbar!",
@@ -660,7 +666,7 @@ export const TRANSLATIONS = {
       "icon2": "3. Jeu : Deviner la direction (A : Gauche, B : Droite). Remporter 3 manches sur 5 donne +1 bonheur et brûle 1 lb.",
       "icon3": "4. Médicament : Soigne quand l'icône de crâne ☠️ apparaît (peut nécessiter 1 ou 2 piqûres).",
       "icon4": "5. Propreté : Évacue les déjections par une vague d'eau. 4 crottes accumulées rendent l'animal malade.",
-      "icon5": "6. Balance (Mètres) : 4 pages avec le bouton A : 1) Âge & Poids, 2) Jauge de discipline, 3) Cœurs de faim, 4) Cœurs de bonheur.",
+      "icon5": "6. Balance (Jauges) : 4 pages avec le bouton A : 1) Âge & Poids, 2) Jauge de discipline, 3) Cœurs de faim, 4) Cœurs de bonheur.",
       "icon6": "7. Discipline : Gronder quand il appelle alors que ses jauges sont pleines. Augmente la discipline de +25%.",
       "icon7": "8. Appel : Clignote et sonne quand la faim/bonheur est à 0, qu'il est malade ou réclame de la discipline.",
       "lifecycleHeader": "🌱 Cycle de vie et astuces",
@@ -690,7 +696,8 @@ export const TRANSLATIONS = {
       "creditsHeader": "✨ Crédits & Dépôt",
       "creditsAuthorLabel": "Créé par",
       "creditsAuthor": "Camilo",
-      "creditsRepoLabel": "Dépôt GitHub"
+      "creditsRepoLabel": "Dépôt GitHub",
+      "stages": { "baby": "Bébé", "child": "Enfant", "teen": "Ado", "adult": "Adulte" }
     },
     "update": {
       "available": "✨ Nouvelle version disponible !",
@@ -723,7 +730,7 @@ export const TRANSLATIONS = {
       "reset": "🥚 Schiudi un nuovo uovo"
     },
     "icons": {
-      "0": "Nutri",
+      "0": "Cibo",
       "1": "Luce",
       "2": "Gioco",
       "3": "Medicina",
@@ -765,7 +772,7 @@ export const TRANSLATIONS = {
       "icon7": "8. Attenzione: Lampeggia e suona quando fame/felicità è a 0, è malato o richiede disciplina.",
       "lifecycleHeader": "🌱 Ciclo di vita e consigli",
       "lifecycleDesc": "L'uovo si schiude in 5 minuti. Fasi: Neonato (65 min) → Bambino (2 giorni) → Teenager (3 giorni) → Adulto (fino a 14 giorni).",
-      "sitterDesc": "Modalità Tama-Sitter: Attivabile nelle Impostazioni (⚙️). Congela la fame, felicità e sporcizia durante il giorno (07:00 - 18:00).",
+      "sitterDesc": "Modalità Tama-Sitter: Attivabile nelle Impostazioni (⚙️). Congela fame, felicità e sporcizia durante il giorno (07:00 - 18:00).",
       "evolutionHeader": "🧬 Matrice di evoluzione",
       "evolutionDesc": "L'evoluzione dipende dagli errori di cura (chiamate ignorate per 15 min, 15 min a 0 fame/felicità, o luce accesa di notte) e dalla disciplina.",
       "evoEarlyTitle": "🌱 Prime fasi (Lineare)",
@@ -773,7 +780,7 @@ export const TRANSLATIONS = {
       "evoChildDesc": "Marutchi (Bambino, 2 giorni). Gli errori di cura vengono azzerati all'inizio di questa fase.",
       "evoBranchATitle": "⭐ Ramo A: Buona cura (Tamatchi)",
       "evoTamatchiDesc": "≤ 2 errori di cura da Bambino. Durata: 3 giorni.",
-      "evoMametchiDesc": "0–1 errori, disciplina ≥ 90%. Mametchi (Il più saggio e perfetto adulto).",
+      "evoMametchiDesc": "0–1 errori, disciplina ≥ 90%. Mametchi (L'adulto più saggio e perfetto).",
       "evoGinjirotchiDesc": "0–3 errori, disciplina ≥ 75%. Ginjirotchi (Attivo, leale e allegro).",
       "evoMaskutchiDesc": "Altri casi (4+ errori o disciplina < 75%). Maskutchi (Introverso e misterioso).",
       "evoBranchBTitle": "🍂 Ramo B: Poca cura (Kuchitamatchi)",
@@ -786,11 +793,12 @@ export const TRANSLATIONS = {
       "evoDepartedDesc": "Dopo 14 giorni da adulto sano, riparte serenamente a bordo di un disco volante verso il pianeta Tamagotchi.",
       "installHeader": "📱 Installa su dispositivo (PWA)",
       "installAndroid": "Android (Chrome): Tocca il menu (⋮) in alto a destra e seleziona 'Installa applicazione' (o 'Aggiungi a schermata Home').",
-      "installIos": "iOS / iPhone (Safari): Tocca l'icona Condividi (quadrato con freccia ↑) in basso e seleziona 'Aggiungi a Home'.",
+      "installIos": "iOS / iPhone (Safari): Tocca l'icona Condividi (quadrato con freccia ↑) in basso e seleziona 'Aggiungi alla schermata Home'.",
       "creditsHeader": "✨ Crediti & Repository",
       "creditsAuthorLabel": "Creato da",
       "creditsAuthor": "Camilo",
-      "creditsRepoLabel": "Repository GitHub"
+      "creditsRepoLabel": "Repository GitHub",
+      "stages": { "baby": "Neonato", "child": "Bambino", "teen": "Teenager", "adult": "Adulto" }
     },
     "update": {
       "available": "✨ Nuova versione disponibile!",
@@ -803,7 +811,7 @@ export const TRANSLATIONS = {
     "title": "Тамагочи PWA",
     "topControls": {
       "settings": "⚙️ Настройки",
-      "manual": "📖 Руководство"
+      "manual": "📖 Инструкция"
     },
     "settings": {
       "title": "⚙️ Настройки",
@@ -865,9 +873,9 @@ export const TRANSLATIONS = {
       "icon7": "8. Внимание: Мигает и пищит, если сытость/счастье на нуле, питомец заболел или капризничает.",
       "lifecycleHeader": "🌱 Жизненный цикл и советы",
       "lifecycleDesc": "Яйцо вылупляется за 5 минут. Стадии: Малыш (65 мин) → Ребенок (2 дня) → Подросток (3 дня) → Взрослый (до 14 дней).",
-      "sitterDesc": "Режим Тама-Няни: Включается в меню Настроек (⚙️). Замораживает голод, грусть и грязь днем (07:00 - 18:00).",
+      "sitterDesc": "Режим Тама-Няни: Включается в меню Настроек (⚙️). Приостанавливает снижение сытости и счастья и появление грязи днём (07:00 - 18:00).",
       "evolutionHeader": "🧬 Матрица эволюции",
-      "evolutionDesc": "Эволюция зависит от ошибок ухода (неотвеченный зов за 15 мин, 15 мин с голодом/счастьем на 0, или включенный свет во время сна) и дисциплины.",
+      "evolutionDesc": "Эволюция зависит от ошибок ухода (зов без ответа в течение 15 мин, 15 мин с голодом/счастьем на 0, или включенный свет во время сна) и дисциплины.",
       "evoEarlyTitle": "🌱 Ранние стадии (Линейные)",
       "evoBabyDesc": "Яйцо 5 мин → Бэбитчи 65 мин. Требует непрерывного внимания и кормления.",
       "evoChildDesc": "Марутчи (Ребенок, 2 дня). Ошибки ухода обнуляются при переходе в эту стадию.",
@@ -890,7 +898,8 @@ export const TRANSLATIONS = {
       "creditsHeader": "✨ Создатели и Репозиторий",
       "creditsAuthorLabel": "Автор проекта",
       "creditsAuthor": "Camilo",
-      "creditsRepoLabel": "Репозиторий GitHub"
+      "creditsRepoLabel": "Репозиторий GitHub",
+      "stages": { "baby": "Малыш", "child": "Ребёнок", "teen": "Подросток", "adult": "Взрослый" }
     },
     "update": {
       "available": "✨ Доступна новая версия!",
@@ -909,8 +918,8 @@ export const TRANSLATIONS = {
       "title": "⚙️ الإعدادات",
       "langLabel": "🌐 اللغة / Language",
       "sitterHeader": "👶 وضع الجليسة (تاما سيتر)",
-      "sitterOn": "👶 الجليسة: مفعّل (07:00 - 18:00)",
-      "sitterOff": "👶 الجليسة: معطّل",
+      "sitterOn": "👶 الجليسة: مفعّلة (07:00 - 18:00)",
+      "sitterOff": "👶 الجليسة: معطّلة",
       "displayHeader": "📺 الشاشة",
       "audioHeader": "🔊 الصوت الإلكتروني",
       "dataHeader": "💾 حفظ البيانات وإعادة الضبط",
@@ -953,9 +962,9 @@ export const TRANSLATIONS = {
       "buttonsHeader": "🔘 أزرار الميدالية (من اليسار إلى اليمين: A، B، C)",
       "btnA": "الزر A (اليسار): اختيار / تنقل. التنقل بين الرموز وصفحات الحالة، أو الاتجاه يساراً في اللعبة.",
       "btnB": "الزر B (الوسط): تأكيد / تنفيذ. تأكيد الأمر أو القفز فرحاً. الاتجاه يميناً في اللعبة.",
-      "btnC": "الزر C (اليمين): إلغاء / الساعة. العودة للشاشة الرئيسية أو عرض الساعة 24 في وضع الاستعداد.",
+      "btnC": "الزر C (اليمين): إلغاء / الساعة. العودة للشاشة الرئيسية أو عرض الساعة بنظام 24 ساعة في وضع الاستعداد.",
       "iconsHeader": "📟 رموز الرعاية الثمانية",
-      "icon0": "1. الإطعام: وجبة (لحم: +1 شبع، +1 رطل) أو حلوى (حلوى: +1 سعادة، +2 رطل). احذر: أكثر من 4 حلويات متتالية تسبب تسوس الأسنان والمرض.",
+      "icon0": "1. الإطعام: وجبة (لحم: +1 شبع، +1 رطل) أو وجبة خفيفة (حلوى: +1 سعادة، +2 رطل). احذر: أكثر من 4 حلويات متتالية تسبب تسوس الأسنان والمرض.",
       "icon1": "2. الإضاءة: التبديل بالزر A: تشغيل أو إطفاء. التأكيد بالزر B. أطفئ النور أثناء النوم لتجنب أخطاء الرعاية.",
       "icon2": "3. اللعب: تخمين الاتجاه (A: يسار، B: يمين). الفوز في 3 جولات من 5 يمنح +1 سعادة ويحرق 1 رطل.",
       "icon3": "4. العلاج: علاج المرض فور ظهور الجمجمة ☠️ (قد يتطلب جرعة أو جرعتين).",
@@ -967,7 +976,7 @@ export const TRANSLATIONS = {
       "lifecycleDesc": "تفقس البيضة خلال 5 دقائق. المراحل: رضيع (65 دقيقة) ← طفل (يومان) ← مراهق (3 أيام) ← بالغ (حتى 14 يوماً).",
       "sitterDesc": "وضع الجليسة: يمكن تفعيله من الإعدادات (⚙️). يوقف استهلاك الشبع والسعادة واتساخ المكان نهاراً (07:00 - 18:00).",
       "evolutionHeader": "🧬 مصفوفة التطور",
-      "evolutionDesc": "يعتمد التطور على أخطاء الرعاية (تجاهل النداء 15 دقيقة، البقاء 15 دقيقة بدون طعام/سعادة، أو ترك الضوء مشعلاً أثناء النوم) ونسبة التأديب.",
+      "evolutionDesc": "يعتمد التطور على أخطاء الرعاية (تجاهل النداء 15 دقيقة، البقاء 15 دقيقة بدون طعام/سعادة، أو ترك الضوء مضاءً أثناء النوم) ونسبة التأديب.",
       "evoEarlyTitle": "🌱 المراحل المبكرة (خطية)",
       "evoBabyDesc": "بيضة 5 دقائق ← بابيتشي 65 دقيقة. يحتاج إلى عناية وإطعام مستمر.",
       "evoChildDesc": "ماروتشي (طفل، يومان). تتم إعادة ضبط أخطاء الرعاية إلى صفر عند بلوغ هذه المرحلة.",
@@ -985,12 +994,13 @@ export const TRANSLATIONS = {
       "evoDepartedName": "العودة إلى الكوكب الأم",
       "evoDepartedDesc": "بعد قضاء 14 يوماً كبالغ سليم، يغادر بسلام في صحن طائر عائداً إلى كوكب تاماغوتشي.",
       "installHeader": "📱 التثبيت كتطبيق على الهاتف (PWA)",
-      "installAndroid": "أندرويد (Chrome): انقر على قائمة الثلاث نقاط (⋮) في الأعلى واختر 'تثبيت التطبيق' (أو 'إضافة إلى الشاشة الرئيسية').",
+      "installAndroid": "أندرويد (Chrome): انقر على قائمة النقاط الثلاث (⋮) في الأعلى واختر 'تثبيت التطبيق' (أو 'إضافة إلى الشاشة الرئيسية').",
       "installIos": "آيفون (Safari): انقر على زر المشاركة (مربع مع سهم ↑) بالأسفل واختر 'إضافة إلى الصفحة الرئيسية'.",
       "creditsHeader": "✨ فريق العمل والمستودع",
       "creditsAuthorLabel": "تطوير",
       "creditsAuthor": "Camilo",
-      "creditsRepoLabel": "المستودع البرمجي (GitHub)"
+      "creditsRepoLabel": "المستودع البرمجي (GitHub)",
+      "stages": { "baby": "رضيع", "child": "طفل", "teen": "مراهق", "adult": "بالغ" }
     },
     "update": {
       "available": "✨ إصدار جديد متوفر الآن!",
@@ -1020,7 +1030,7 @@ export const TRANSLATIONS = {
       "soundOff": "🔇 ऑडियो: म्यूट",
       "export": "💾 गेम सेव एक्सपोर्ट करें",
       "import": "📂 गेम सेव इम्पोर्ट करें",
-      "reset": "🥚 नया अंडा सेएं"
+      "reset": "🥚 नया अंडा शुरू करें"
     },
     "icons": {
       "0": "भोजन",
@@ -1045,7 +1055,7 @@ export const TRANSLATIONS = {
       "reset": "🥚 नया अंडा"
     },
     "dialogs": {
-      "confirmReset": "क्या आप नया तामागोची अंडा सेहना चाहते हैं?",
+      "confirmReset": "क्या आप नया तामागोची अंडा शुरू करना चाहते हैं?",
       "importError": "सेव फ़ाइल इम्पोर्ट करने में विफल: "
     },
     "manual": {
@@ -1055,11 +1065,11 @@ export const TRANSLATIONS = {
       "btnB": "बटन B (मध्य): पुष्टि / एक्शन। एक्शन पूरा करें या खुशी से कूदें। गेम में दायां चुनें।",
       "btnC": "बटन C (दायां): रद्द / घड़ी। मेनू से बाहर निकलें या स्टैंडबाय में 24-घंटे की घड़ी देखें।",
       "iconsHeader": "📟 8 देखभाल आइकन्स",
-      "icon0": "1. भोजन: मील (मीट: +1 भूख, +1 lb) या स्नैक (कैंडी: +1 खुशी, +2 lb)। ध्यान दें: लगातार 4 से अधिक कैंडी देने से दांत दर्द और बीमारी होती है।",
+      "icon0": "1. भोजन: खाना (मांस: +1 भूख, +1 lb) या स्नैक (कैंडी: +1 खुशी, +2 lb)। ध्यान दें: लगातार 4 से अधिक कैंडी देने से दांत दर्द और बीमारी होती है।",
       "icon1": "2. रोशनी: बटन A से ऑन/ऑफ बदलें, B से पुष्टि करें। सोते समय लाइट बंद करें ताकि देखभाल में गलती न हो।",
       "icon2": "3. खेल: दिशा का अनुमान लगाएं (A: बायां, B: दायां)। 5 में से 3 राउंड जीतने पर +1 खुशी मिलती है और 1 lb वजन घटता है।",
       "icon3": "4. दवाई: खोपड़ी का निशान ☠️ दिखने पर तुरंत सुई लगाकर इलाज करें (1 या 2 खुराक लग सकती हैं)।",
-      "icon4": "5. सफाई: पानी की लहर से गंदगी साफ करें। 4 गंदगी जमा होने पर पेट बीमार हो जाता है।",
+      "icon4": "5. सफाई: पानी की लहर से गंदगी साफ करें। 4 गंदगी जमा होने पर पालतू बीमार हो जाता है।",
       "icon5": "6. स्केल (मीटर): बटन A से 4 पेज: 1) उम्र और वजन, 2) अनुशासन बार, 3) भूख के दिल, 4) खुशी के दिल।",
       "icon6": "7. अनुशासन: पेट भरा होने पर भी बेवजह पुकारने पर डांटें। अनुशासन +25% बढ़ता है।",
       "icon7": "8. पुकार (अटेंशन): भूख/खुशी 0 होने, बीमार पड़ने या अनुशासन की जरूरत पर चमकता और बीप करता है।",
@@ -1067,7 +1077,7 @@ export const TRANSLATIONS = {
       "lifecycleDesc": "अंडा 5 मिनट में फूटता है। चरण: शिशु (65 मिनट) → बच्चा (2 दिन) → किशोर (3 दिन) → वयस्क (14 दिन तक)।",
       "sitterDesc": "तामा सिटर मोड: सेटिंग्स (⚙️) से सक्रिय करें। दिन के समय (07:00 - 18:00) भूख, खुशी और गंदगी में गिरावट रोक देता है।",
       "evolutionHeader": "🧬 विकास मैट्रिक्स (इवोल्यूशन)",
-      "evolutionDesc": "विकास देखभाल की गलतियों (15 मिनट तक पुकार अनसुनी करना, 15 मिनट 0 भूख/खुशी रहना, या सोते समय लाइट खुली छोड़ना) और अनुशासन पर निर्भर करता है।",
+      "evolutionDesc": "विकास देखभाल की गलतियों (15 मिनट तक पुकार अनसुनी करना, 15 मिनट 0 भूख/खुशी रहना, या सोते समय लाइट जलती छोड़ना) और अनुशासन पर निर्भर करता है।",
       "evoEarlyTitle": "🌱 प्रारंभिक चरण (रैखिक)",
       "evoBabyDesc": "अंडा 5 मिनट → बेबीत्ची 65 मिनट। लगातार देखभाल और भोजन की जरूरत होती है।",
       "evoChildDesc": "मारुत्ची (बच्चा, 2 दिन)। इस चरण में आते ही देखभाल की गलतियां शून्य हो जाती हैं।",
@@ -1090,7 +1100,8 @@ export const TRANSLATIONS = {
       "creditsHeader": "✨ क्रेडिट और रिपॉजिटरी",
       "creditsAuthorLabel": "निर्माता",
       "creditsAuthor": "Camilo",
-      "creditsRepoLabel": "GitHub रिपॉजिटरी"
+      "creditsRepoLabel": "GitHub रिपॉजिटरी",
+      "stages": { "baby": "शिशु", "child": "बच्चा", "teen": "किशोर", "adult": "वयस्क" }
     },
     "update": {
       "available": "✨ नया संस्करण उपलब्ध है!",
@@ -1150,7 +1161,7 @@ export const TRANSLATIONS = {
     },
     "manual": {
       "title": "📖 তামাগোচি নির্দেশিকা",
-      "buttonsHeader": "🔘 কিচেন বাটন (বাম থেকে ডানে: A, B, C)",
+      "buttonsHeader": "🔘 কি-চেইনের বাটন (বাম থেকে ডানে: A, B, C)",
       "btnA": "বাটন A (বাম): নির্বাচন / নেভিগেট। আইকন পরিবর্তন, স্ট্যাটাস পেজ দেখা বা খেলায় বাম নির্বাচন।",
       "btnB": "বাটন B (মাঝের): নিশ্চিত / অ্যাকশন। অ্যাকশন সম্পন্ন করা বা আনন্দে লাফানো। খেলায় ডান নির্বাচন।",
       "btnC": "বাটন C (ডান): বাতিল / ঘড়ি। মেনু থেকে বের হওয়া বা স্ট্যান্ডবাই অবস্থায় ২৪-ঘণ্টার ঘড়ি দেখা।",
@@ -1159,7 +1170,7 @@ export const TRANSLATIONS = {
       "icon1": "২. আলো: বাটন A দিয়ে অন/অফ পরিবর্তন, বাটন B দিয়ে নিশ্চিত করুন। ঘুমের সময় আলো বন্ধ রাখুন।",
       "icon2": "৩. খেলা: দিক অনুমান করার খেলা (A: বাম, B: ডান)। ৫ বারের মধ্যে ৩ বার জিতলে +১ আনন্দ ও ১ lb ওজন কমে।",
       "icon3": "৪. ওষুধ: মাথার খুলি চিহ্ন ☠️ দেখলে ইনজেকশন দিয়ে চিকিৎসা করুন (১ বা ২ বার লাগতে পারে)।",
-      "icon4": "৫. পরিচ্ছন্নতা: জলের ঢেউ দিয়ে নোংরা পরিষ্কার করুন। ৪টি নোংরা জমলে পেট অসুস্থ হয়ে পড়ে।",
+      "icon4": "৫. পরিচ্ছন্নতা: জলের ঢেউ দিয়ে নোংরা পরিষ্কার করুন। ৪টি নোংরা জমলে পোষ্যটি অসুস্থ হয়ে পড়ে।",
       "icon5": "৬. মিটার (স্কেল): বাটন A দিয়ে ৪টি পেজ: ১) বয়স ও ওজন, ২) শাসন বার, ৩) ক্ষুধার হৃদয়, ৪) আনন্দের হৃদয়।",
       "icon6": "৭. শাসন: পেট ভরা থাকা সত্ত্বেও অকারণে ডাকলে শাসন করুন। এতে শাসন মান +২৫% বাড়ে।",
       "icon7": "৮. সতর্কবার্তা: ক্ষুধা/আনন্দ শূন্য হলে, অসুস্থ হলে বা শাসনের প্রয়োজন হলে জ্বলে ওঠে ও বিপ করে।",
@@ -1179,7 +1190,7 @@ export const TRANSLATIONS = {
       "evoBranchBTitle": "🍂 শাখা B: কম যত্ন (কুচিতামাতচি)",
       "evoKuchitamatchiDesc": "বাচ্চা অবস্থায় ভুল সংখ্যা ≥ ৩। সময়কাল: ৩ দিন।",
       "evoKuchipatchiDesc": "০–৪ ভুল, শাসন ≥ ৫০%। কুচিপাতচি (শান্ত স্বভাবের প্রিয় ভোজনরসিক)।",
-      "evoNyorotchiDesc": "৫–৬ ভুল। নোরোতচি (দুর্বল স্বাস্থ্য, সহজেই রোগাক্রান্ত হয়)।",
+      "evoNyorotchiDesc": "৫–৬ ভুল। নিয়োরোতচি (দুর্বল স্বাস্থ্য, সহজেই রোগাক্রান্ত হয়)।",
       "evoTarakotchiDesc": "≥ ৭ ভুল। তারাকোতচি (মোটা ঠোঁট; চরম অবহেলার ফল)।",
       "evoDepartureTitle": "🛸 বিদায় (UFO)",
       "evoDepartedName": "স্বদেশ গ্রহে প্রত্যাবর্তন",
@@ -1190,7 +1201,8 @@ export const TRANSLATIONS = {
       "creditsHeader": "✨ কৃতজ্ঞতা ও রিপোজিটরি",
       "creditsAuthorLabel": "নির্মাতা",
       "creditsAuthor": "Camilo",
-      "creditsRepoLabel": "GitHub রিপোজিটরি"
+      "creditsRepoLabel": "GitHub রিপোজিটরি",
+      "stages": { "baby": "শিশু", "child": "বাচ্চা", "teen": "কিশোর", "adult": "প্রাপ্তবয়স্ক" }
     },
     "update": {
       "available": "✨ নতুন সংস্করণ উপলব্ধ!",
@@ -1290,12 +1302,114 @@ export const TRANSLATIONS = {
       "creditsHeader": "✨ Kredit & Repositori",
       "creditsAuthorLabel": "Dibuat oleh",
       "creditsAuthor": "Camilo",
-      "creditsRepoLabel": "Repositori GitHub"
+      "creditsRepoLabel": "Repositori GitHub",
+      "stages": { "baby": "Bayi", "child": "Anak", "teen": "Remaja", "adult": "Dewasa" }
     },
     "update": {
       "available": "✨ Versi baru tersedia!",
       "action": "Perbarui",
       "updating": "Memperbarui..."
+    }
+  },
+
+  th: {
+    "title": "ทามาก็อตจิ PWA",
+    "topControls": {
+      "settings": "⚙️ ตั้งค่า",
+      "manual": "📖 คู่มือ"
+    },
+    "settings": {
+      "title": "⚙️ ตั้งค่า",
+      "langLabel": "🌐 ภาษา / Language",
+      "sitterHeader": "👶 โหมดพี่เลี้ยง (Tama Sitter)",
+      "sitterOn": "👶 พี่เลี้ยง: เปิด (07:00 - 18:00)",
+      "sitterOff": "👶 พี่เลี้ยง: ปิด",
+      "displayHeader": "📺 หน้าจอ",
+      "audioHeader": "🔊 เสียงสังเคราะห์",
+      "dataHeader": "💾 บันทึกข้อมูลและรีเซ็ต",
+      "backlightClassic": "☀️ จอ LCD คลาสสิก",
+      "backlightNight": "🌙 ไฟพื้นหลัง LED",
+      "soundOn": "🔊 เสียง: เปิด",
+      "soundOff": "🔇 เสียง: ปิด",
+      "export": "💾 ส่งออกเซฟ (Tama)",
+      "import": "📂 นำเข้าเซฟ (Tama)",
+      "reset": "🥚 ฟักไข่ใบใหม่"
+    },
+    "icons": {
+      "0": "ให้อาหาร",
+      "1": "ไฟ",
+      "2": "เกม",
+      "3": "ยา",
+      "4": "ทำความสะอาด",
+      "5": "มาตรวัด",
+      "6": "ฝึกวินัย",
+      "7": "เรียกหา"
+    },
+    "toolbar": {
+      "manual": "📖 คู่มือ",
+      "sitterOn": "👶 พี่เลี้ยง: เปิด",
+      "sitterOff": "👶 พี่เลี้ยง: ปิด",
+      "backlightNight": "🌙 ไฟ LED",
+      "backlightClassic": "☀️ คลาสสิก",
+      "export": "💾 ส่งออก",
+      "import": "📂 นำเข้า",
+      "soundOn": "🔊 เสียง",
+      "soundOff": "🔇 ปิดเสียง",
+      "reset": "🥚 ไข่ใหม่"
+    },
+    "dialogs": {
+      "confirmReset": "ต้องการฟักไข่ทามาก็อตจิใบใหม่หรือไม่?",
+      "importError": "นำเข้าไฟล์เซฟไม่สำเร็จ: "
+    },
+    "manual": {
+      "title": "📖 คู่มือทามาก็อตจิ",
+      "buttonsHeader": "🔘 ปุ่มบนตัวเครื่อง (จากซ้ายไปขวา: A, B, C)",
+      "btnA": "ปุ่ม A (ซ้าย): เลือก / เลื่อน เลื่อนดูไอคอนแถวบนและแถวล่าง เปลี่ยนหน้าสถานะ หรือทายซ้ายในมินิเกม",
+      "btnB": "ปุ่ม B (กลาง): ยืนยัน / ทำงาน ยืนยันเมนูที่เลือกหรือกระโดดดีใจ ทายขวาในมินิเกม",
+      "btnC": "ปุ่ม C (ขวา): ยกเลิก / นาฬิกา กลับสู่หน้าหลัก หรือดูนาฬิกาแบบ 24 ชั่วโมงขณะอยู่หน้าหลัก",
+      "iconsHeader": "📟 ไอคอนดูแล 8 อย่าง",
+      "icon0": "1. ให้อาหาร: MEAL (เนื้อ: ความอิ่ม +1, น้ำหนัก +1 ปอนด์) หรือ SNACK (ขนม: ความสุข +1, น้ำหนัก +2 ปอนด์) ระวัง: ให้ขนมติดต่อกันเกิน 4 ครั้งจะทำให้ปวดฟันและป่วย!",
+      "icon1": "2. ไฟ: กดปุ่ม A เพื่อสลับ LIGHT ON หรือ LIGHT OFF แล้วกดปุ่ม B เพื่อยืนยัน ปิดไฟตอนนอนเพื่อเลี่ยงความผิดพลาดในการดูแล",
+      "icon2": "3. เกม: เกมทายทิศทาง 5 รอบ (A: ซ้าย, B: ขวา) ชนะ 3 รอบขึ้นไปจะได้ความสุข +1 และลดน้ำหนัก 1 ปอนด์",
+      "icon3": "4. ยา: รักษาอาการป่วยเมื่อมีไอคอนหัวกะโหลก ☠️ ปรากฏ (อาจต้องให้ยา 1 หรือ 2 ครั้ง)",
+      "icon4": "5. ทำความสะอาด: ล้างอึออกด้วยคลื่นน้ำ หากสะสมอึครบ 4 กองจะทำให้ป่วย",
+      "icon5": "6. มาตรวัด (ตาชั่ง): กดปุ่ม A เพื่อดู 4 หน้า: 1) อายุและน้ำหนัก 2) แถบวินัย 3) หัวใจความอิ่ม 4) หัวใจความสุข",
+      "icon6": "7. ฝึกวินัย: ดุเมื่อมันเรียกหาทั้งที่มาตรวัดเต็ม (เรียกโดยไม่มีเหตุผล) เพิ่มวินัย 25%",
+      "icon7": "8. เรียกหา: กะพริบและส่งเสียงเมื่อความอิ่ม/ความสุขเป็น 0 ป่วย หรือต้องการการฝึกวินัย",
+      "lifecycleHeader": "🌱 วงจรชีวิตและเคล็ดลับ",
+      "lifecycleDesc": "ไข่ฟักใน 5 นาที ช่วงวัย: ทารก (65 นาที) → เด็ก (2 วัน) → วัยรุ่น (3 วัน) → ผู้ใหญ่ (สูงสุด 14 วัน)",
+      "sitterDesc": "โหมดพี่เลี้ยง: เปิดได้ในเมนูตั้งค่า (⚙️) มุมบนซ้าย จะหยุดการลดลงของความอิ่ม ความสุข และการขับถ่ายในช่วงเวลาทำงาน/เรียน (07:00 - 18:00)",
+      "evolutionHeader": "🧬 ตารางวิวัฒนาการ",
+      "evolutionDesc": "เส้นทางวิวัฒนาการขึ้นอยู่กับความผิดพลาดในการดูแล (ไม่ตอบสนองการเรียก 15 นาที, ความอิ่ม/ความสุขเป็น 0 นาน 15 นาที หรือเปิดไฟทิ้งไว้ขณะนอน) และระดับวินัย",
+      "evoEarlyTitle": "🌱 ช่วงแรก (เส้นตรง)",
+      "evoBabyDesc": "ไข่ 5 นาที → Babytchi 65 นาที ต้องการการดูแลและให้อาหารอย่างต่อเนื่อง",
+      "evoChildDesc": "2 วัน ความผิดพลาดในการดูแลจะถูกรีเซ็ตเป็น 0 เมื่อเข้าสู่ช่วงนี้",
+      "evoBranchATitle": "⭐ สาย A: ดูแลดี (Tamatchi)",
+      "evoTamatchiDesc": "ผิดพลาดในการดูแล ≤ 2 ครั้งในช่วงวัยเด็ก ระยะเวลา: 3 วัน",
+      "evoMametchiDesc": "ผิดพลาด 0–1 ครั้ง, วินัย ≥ 90% อัจฉริยะจากการดูแลที่สมบูรณ์แบบ",
+      "evoGinjirotchiDesc": "ผิดพลาด 0–3 ครั้ง, วินัย ≥ 75% ร่าเริง ขี้เล่น และซื่อสัตย์",
+      "evoMaskutchiDesc": "กรณีที่เหลือ (ผิดพลาด 4 ครั้งขึ้นไป หรือวินัย < 75%) ขี้อายและลึกลับ",
+      "evoBranchBTitle": "🍂 สาย B: ดูแลไม่ดี (Kuchitamatchi)",
+      "evoKuchitamatchiDesc": "ผิดพลาดในการดูแล ≥ 3 ครั้งในช่วงวัยเด็ก ระยะเวลา: 3 วัน",
+      "evoKuchipatchiDesc": "ผิดพลาด 0–4 ครั้ง, วินัย ≥ 50% นักกินสบาย ๆ น่ารักน่าเอ็นดู",
+      "evoNyorotchiDesc": "ผิดพลาด 5–6 ครั้ง ร่างกายอ่อนแอ ป่วยง่าย",
+      "evoTarakotchiDesc": "ผิดพลาด ≥ 7 ครั้ง ปากหนาใหญ่ ผลจากการถูกละเลยมากที่สุด",
+      "evoDepartureTitle": "🛸 การจากลา (UFO)",
+      "evoDepartedName": "กลับสู่ดาวบ้านเกิด",
+      "evoDepartedDesc": "หลังจากเป็นผู้ใหญ่ที่แข็งแรงครบ 14 วัน จะกลับสู่ดาวทามาก็อตจิอย่างสงบด้วยจานบิน",
+      "installHeader": "📱 ติดตั้งเป็นแอปมือถือ (PWA)",
+      "installAndroid": "Android (Chrome): แตะเมนูสามจุด (⋮) มุมบนขวา แล้วเลือก 'ติดตั้งแอป' (หรือ 'เพิ่มไปยังหน้าจอหลัก') แอปจะเปิดแบบเต็มจอโดยไม่มีแถบที่อยู่",
+      "installIos": "iOS / iPhone (Safari): แตะปุ่มแชร์ (สี่เหลี่ยมมีลูกศร ↑) ด้านล่าง แล้วเลือก 'เพิ่มไปยังหน้าจอโฮม' แอปจะเปิดเหมือนแอปเนทีฟ",
+      "creditsHeader": "✨ เครดิตและที่เก็บโค้ด",
+      "creditsAuthorLabel": "สร้างโดย",
+      "creditsAuthor": "Camilo",
+      "creditsRepoLabel": "ที่เก็บโค้ด GitHub",
+      "stages": { "baby": "ทารก", "child": "เด็ก", "teen": "วัยรุ่น", "adult": "ผู้ใหญ่" }
+    },
+    "update": {
+      "available": "✨ มีเวอร์ชันใหม่!",
+      "action": "อัปเดต",
+      "updating": "กำลังอัปเดต..."
     }
   }
 };
@@ -1304,18 +1418,8 @@ export function detectLanguage() {
   const saved = localStorage.getItem('tama_lang');
   if (saved && TRANSLATIONS[saved]) return saved;
 
-  const browserLang = (navigator.language || navigator.userLanguage || '').toLowerCase();
-  if (browserLang.startsWith('es')) return 'es';
-  if (browserLang.startsWith('zh')) return 'zh';
-  if (browserLang.startsWith('pt')) return 'pt';
-  if (browserLang.startsWith('ja')) return 'ja';
-  if (browserLang.startsWith('de')) return 'de';
-  if (browserLang.startsWith('fr')) return 'fr';
-  if (browserLang.startsWith('it')) return 'it';
-  if (browserLang.startsWith('ru')) return 'ru';
-  if (browserLang.startsWith('ar')) return 'ar';
-  if (browserLang.startsWith('hi')) return 'hi';
-  if (browserLang.startsWith('bn')) return 'bn';
-  if (browserLang.startsWith('id')) return 'id';
-  return 'en';
+  // navigator.languages is the user's ordered preference list; language alone is just its first entry
+  const prefs = navigator.languages || [navigator.language || ''];
+  const code = prefs.map((l) => l.slice(0, 2).toLowerCase()).find((c) => TRANSLATIONS[c]);
+  return code || 'en';
 }

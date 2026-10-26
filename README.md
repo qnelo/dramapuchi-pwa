@@ -24,8 +24,8 @@ A faithful, 100% client-side recreation of the original **1996 Generation 1 (P1)
   * Generates pure square waves matching exact integer submultiples of a **32.768 kHz** quartz crystal oscillator (`1024 Hz`, `2048 Hz`, `3277 Hz`, `4096 Hz`), eliminating external MP3/WAV files.
 * **Complete Generation 1 (P1) Evolution Tree**:
   * Egg hatching $\to$ Babytchi $\to$ Marutchi $\to$ Tamatchi or Kuchitamatchi $\to$ 6 adult species (Mametchi, Ginjirotchi, Maskutchi, Kuchipatchi, Nyorotchi, Tarakotchi) $\to$ Peaceful departure to the home planet (*DEPARTED*).
-* **Multi-Language Support (13 Languages)**:
-  * Complete in-game translations for 13 major world languages with automatic browser language detection and full right-to-left (RTL) layout support for Arabic.
+* **Multi-Language Support (14 Languages)**:
+  * Complete in-game translations for 14 major world languages with automatic browser language detection and full right-to-left (RTL) layout support for Arabic.
 * **5-Round Directional Mini-Game**:
   * Guess which direction the pet will turn (Button A: Left / Button B: Right). Winning 3 or more rounds restores happiness and burns weight.
 * **Modern Quality of Life (QoL) Enhancements**:
@@ -85,7 +85,7 @@ A faithful, 100% client-side recreation of the original **1996 Generation 1 (P1)
 
 ---
 
-## 🌐 Supported Languages (13 Languages)
+## 🌐 Supported Languages (14 Languages)
 
 The game provides 100% native localization across all interface elements, care icons, settings, full instruction manual, evolution guide, and PWA prompts:
 
@@ -104,6 +104,7 @@ The game provides 100% native localization across all interface elements, care i
 | 🇮🇳 | **Hindi** | हिन्दी | `hi` | LTR |
 | 🇧🇩 | **Bengali** | বাংলা | `bn` | LTR |
 | 🇮🇩 | **Indonesian** | Bahasa Indonesia | `id` | LTR |
+| 🇹🇭 | **Thai** | ไทย | `th` | LTR |
 
 ---
 
@@ -114,7 +115,7 @@ Tamagotchi/
 ├── config/
 │   └── petConfig.js           # Biological stage durations, rates, and death thresholds
 ├── constants/
-│   ├── i18n.js                # Full dictionaries for 13 languages & auto-detection
+│   ├── i18n.js                # Full dictionaries for 14 languages & auto-detection
 │   └── menu.js                # UI mode (UI_MODE) and icon index (ICONS) enums
 ├── engine/
 │   ├── timeEngine.js          # Deterministic minute-by-minute simulation engine

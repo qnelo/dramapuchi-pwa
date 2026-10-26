@@ -397,9 +397,9 @@ assert(mockLcd.buffer.size > 0);
 console.log('✓ StatusRenderer verified.');
 
 // 12. i18n Translations
-console.log('Testing i18n Translations (13 languages)...');
-const { TRANSLATIONS } = await import('../constants/i18n.js');
-const requiredLanguages = ['en', 'es', 'zh', 'pt', 'ja', 'de', 'fr', 'it', 'ru', 'ar', 'hi', 'bn', 'id'];
+console.log('Testing i18n Translations (14 languages)...');
+const { TRANSLATIONS, detectLanguage } = await import('../constants/i18n.js');
+const requiredLanguages = ['en', 'es', 'zh', 'pt', 'ja', 'de', 'fr', 'it', 'ru', 'ar', 'hi', 'bn', 'id', 'th'];
 for (const lang of requiredLanguages) {
   assert(TRANSLATIONS[lang], `Missing language ${lang}`);
   assert(TRANSLATIONS[lang].title, `Missing title in ${lang}`);
@@ -410,6 +410,7 @@ for (const lang of requiredLanguages) {
   assert(TRANSLATIONS[lang].settings.sitterOn, `Missing settings.sitterOn in ${lang}`);
   assert(TRANSLATIONS[lang].settings.sitterOff, `Missing settings.sitterOff in ${lang}`);
   assert(TRANSLATIONS[lang].manual.title, `Missing manual.title in ${lang}`);
+  for (const s of ['baby', 'child', 'teen', 'adult']) assert(TRANSLATIONS[lang].manual.stages[s], `Missing manual.stages.${s} in ${lang}`);
   assert(TRANSLATIONS[lang].manual.installHeader, `Missing manual.installHeader in ${lang}`);
   assert(TRANSLATIONS[lang].manual.installAndroid, `Missing manual.installAndroid in ${lang}`);
   assert(TRANSLATIONS[lang].manual.installIos, `Missing manual.installIos in ${lang}`);
@@ -438,6 +439,17 @@ for (const lang of requiredLanguages) {
   assert(TRANSLATIONS[lang].update.action, `Missing update.action in ${lang}`);
   assert(TRANSLATIONS[lang].update.updating, `Missing update.updating in ${lang}`);
 }
+// Auto-detection: no saved choice -> first supported entry of the browser's preference list, else 'en'
+const stubNav = (languages) => Object.defineProperty(globalThis, 'navigator', { value: { languages, language: languages[0] }, configurable: true, writable: true });
+Object.defineProperty(globalThis, 'localStorage', { value: { getItem: () => null }, configurable: true, writable: true });
+stubNav(['ca-ES', 'th-TH']);
+assert(detectLanguage() === 'th', 'detectLanguage should skip unsupported languages and pick the next supported one');
+stubNav(['pt-BR']);
+assert(detectLanguage() === 'pt', 'detectLanguage should map regional variants to the base language');
+stubNav(['xx']);
+assert(detectLanguage() === 'en', 'detectLanguage should fall back to en');
+globalThis.localStorage.getItem = () => 'ja';
+assert(detectLanguage() === 'ja', 'detectLanguage should honor the saved choice');
 console.log('✓ i18n Translations verified.');
 
 console.log('\nALL 12 TEST SUITES PASSED SUCCESSFULLY! 🎯');

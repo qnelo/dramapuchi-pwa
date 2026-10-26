@@ -484,6 +484,7 @@ function applyTranslations(lang) {
   setElText('manual-sec-credits-title', t.manual.creditsHeader);
   setElText('manual-credits-author-label', t.manual.creditsAuthorLabel);
   setElText('manual-credits-repo-label', t.manual.creditsRepoLabel);
+  document.querySelectorAll('[data-stage]').forEach((el) => { el.textContent = t.manual.stages[el.dataset.stage]; });
 
   // Update notification toast
   if (t.update) {
