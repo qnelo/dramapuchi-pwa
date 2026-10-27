@@ -324,6 +324,23 @@ export const SPRITES = {
     "................"
   ]),
 
+  // DramaPuchi Species Sprites
+  get BABYPUCHI_IDLE() { return this.BABYTCHI_IDLE; },
+  get BABYPUCHI_IDLE_2() { return this.BABYTCHI_IDLE_2; },
+  get ROLLI_IDLE() { return this.MARUTCHI_IDLE; },
+  get ROLLI_IDLE_2() { return this.MARUTCHI_IDLE_2; },
+  get CHIRPY_IDLE() { return this.TAMATCHI_IDLE; },
+  get CHIRPY_IDLE_2() { return this.TAMATCHI_IDLE_2; },
+  get POUTY_IDLE() { return this.KUCHITAMATCHI_IDLE; },
+  get POUTY_IDLE_2() { return this.KUCHITAMATCHI_IDLE_2; },
+  get SMARTY_IDLE() { return this.MAMETCHI_IDLE; },
+  get SMARTY_IDLE_2() { return this.MAMETCHI_IDLE_2; },
+  get PINGU_IDLE() { return this.GINJIROTCHI_IDLE; },
+  get SHADOW_IDLE() { return this.MASKUTCHI_IDLE; },
+  get CHOMPY_IDLE() { return this.KUCHIPATCHI_IDLE; },
+  get NOODLE_IDLE() { return this.NYOROTCHI_IDLE; },
+  get DIVALIPS_IDLE() { return this.TARAKOTCHI_IDLE; },
+
   DEAD_TOMB: toBits([
     "......XXXX......",
     ".....X....X.....",

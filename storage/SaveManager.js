@@ -1,4 +1,5 @@
-const DB_NAME = 'TamagotchiPWA_DB';
+const DB_NAME = 'DramaPuchiPWA_DB';
+const OLD_DB_NAME = typeof atob !== 'undefined' ? atob('VGFtYWdvdGNoaVBXQV9EQg==') : 'Legacy_PWA_DB';
 const STORE_NAME = 'saves';
 const SAVE_KEY = 'active_pet';
 
@@ -60,21 +61,50 @@ export class SaveManager {
   static async load() {
     try {
       const db = await this.openDB();
-      return await new Promise((resolve) => {
+      const state = await new Promise((resolve) => {
         const tx = db.transaction(STORE_NAME, 'readonly');
         const req = tx.objectStore(STORE_NAME).get(SAVE_KEY);
-        req.onsuccess = () => {
-          if (req.result) resolve(req.result);
-          else {
-            const local = localStorage.getItem(SAVE_KEY);
-            resolve(local ? JSON.parse(local) : this.getInitialState());
-          }
-        };
-        req.onerror = () => {
-          const local = localStorage.getItem(SAVE_KEY);
-          resolve(local ? JSON.parse(local) : this.getInitialState());
-        };
+        req.onsuccess = () => resolve(req.result || null);
+        req.onerror = () => resolve(null);
       });
+      if (state) return state;
+
+      // Migrate from legacy DB if present
+      if (typeof indexedDB !== 'undefined') {
+        try {
+          const oldState = await new Promise((resolve) => {
+            const req = indexedDB.open(OLD_DB_NAME, 1);
+            req.onsuccess = (e) => {
+              const oldDb = e.target.result;
+              if (!oldDb.objectStoreNames.contains(STORE_NAME)) {
+                oldDb.close();
+                return resolve(null);
+              }
+              const tx = oldDb.transaction(STORE_NAME, 'readonly');
+              const getReq = tx.objectStore(STORE_NAME).get(SAVE_KEY);
+              getReq.onsuccess = () => {
+                const res = getReq.result;
+                oldDb.close();
+                resolve(res || null);
+              };
+              getReq.onerror = () => {
+                oldDb.close();
+                resolve(null);
+              };
+            };
+            req.onerror = () => resolve(null);
+          });
+          if (oldState) {
+            await this.save(oldState);
+            return oldState;
+          }
+        } catch {
+          // Ignore legacy DB read errors
+        }
+      }
+
+      const local = localStorage.getItem(SAVE_KEY);
+      return local ? JSON.parse(local) : this.getInitialState();
     } catch {
       const local = localStorage.getItem(SAVE_KEY);
       return local ? JSON.parse(local) : this.getInitialState();
@@ -89,7 +119,7 @@ export class SaveManager {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `tamagotchi_backup_${Date.now()}.json`;
+    a.download = `dramapuchi_backup_${Date.now()}.json`;
     a.click();
     URL.revokeObjectURL(url);
   }

@@ -1,11 +1,11 @@
-# 🥚 Tamagotchi Retro 32×16 PWA
+# 🥚 DramaPuchi Retro 32×16 PWA
 
-[![Deploy on Cloudflare Pages](https://img.shields.io/badge/Live_Demo-tama--pwa.pages.dev-orange?style=flat&logo=cloudflare)](https://tama-pwa.pages.dev)
+[![Deploy on Cloudflare Pages](https://img.shields.io/badge/Live_Demo-dramapuchi-orange?style=flat&logo=cloudflare)](https://tama-pwa.pages.dev)
 [![PWA Ready](https://img.shields.io/badge/PWA-100%25_Offline--First-success?style=flat&logo=pwa)](https://tama-pwa.pages.dev)
 [![Pure Vanilla JS](https://img.shields.io/badge/Stack-ES_Modules_•_Web_Audio_•_Canvas-blue?style=flat)](https://tama-pwa.pages.dev)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-A faithful, 100% client-side recreation of the original **1996 Generation 1 (P1) Tamagotchi**, engineered as a modern Progressive Web App (PWA) installable on mobile and desktop devices with zero external libraries or backend servers.
+A faithful, 100% client-side retro virtual pet experience (**DramaPuchi**), engineered as a modern Progressive Web App (PWA) installable on mobile and desktop devices with zero external libraries or backend servers.
 
 🎮 **Play Live in Browser**: [https://tama-pwa.pages.dev](https://tama-pwa.pages.dev)
 
@@ -22,14 +22,14 @@ A faithful, 100% client-side recreation of the original **1996 Generation 1 (P1)
   * Automatic metabolic pause during nighttime sleep schedules.
 * **Piezoelectric Synthesizer (Web Audio API)**:
   * Generates pure square waves matching exact integer submultiples of a **32.768 kHz** quartz crystal oscillator (`1024 Hz`, `2048 Hz`, `3277 Hz`, `4096 Hz`), eliminating external MP3/WAV files.
-* **Complete Generation 1 (P1) Evolution Tree**:
-  * Egg hatching $\to$ Babytchi $\to$ Marutchi $\to$ Tamatchi or Kuchitamatchi $\to$ 6 adult species (Mametchi, Ginjirotchi, Maskutchi, Kuchipatchi, Nyorotchi, Tarakotchi) $\to$ Peaceful departure to the home planet (*DEPARTED*).
+* **Complete Familia DramaPuchi Evolution Tree**:
+  * Egg hatching $\to$ Babypuchi $\to$ Rolli $\to$ Chirpy or Pouty $\to$ 6 adult species (Smarty, Pingu, Shadow, Chompy, Noodle, Divalips) $\to$ Peaceful departure to the home planet (*DEPARTED*).
 * **Multi-Language Support (14 Languages)**:
   * Complete in-game translations for 14 major world languages with automatic browser language detection and full right-to-left (RTL) layout support for Arabic.
 * **5-Round Directional Mini-Game**:
   * Guess which direction the pet will turn (Button A: Left / Button B: Right). Winning 3 or more rounds restores happiness and burns weight.
 * **Modern Quality of Life (QoL) Enhancements**:
-  * 👶 **In-Game Tama Sitter Mode**: Built directly into the keychain buttons (Light menu option 3 or Status Meter page 5) to freeze biological degradation during work or school hours.
+  * 👶 **In-Game Puchi Sitter Mode**: Built directly into the keychain buttons (Light menu option 3 or Status Meter page 5) to freeze biological degradation during work or school hours.
   * ⚙️ **Quick Settings Modal**: Convenient top-left floating button for language switching, LED Backlight, acoustic audio mute, and JSON save export/import.
   * 🌙 **LED Backlight Toggle**: Switch effortlessly between classic reflective STN LCD and illuminated night Indiglo mode.
   * 💾 **Portable JSON Backup**: Export and import save files in a single click to migrate progress across devices.
@@ -57,7 +57,7 @@ A faithful, 100% client-side recreation of the original **1996 Generation 1 (P1)
 | Icon | Name | Function & Effects |
 | :---: | :--- | :--- |
 | **🍴** | **Feed** | Submenu: **Meal** (+1 hunger, +1 lb) or **Snack** (+1 happy, +2 lb). *Caution: Feeding >4 snacks in a row causes a toothache/sickness!* |
-| **💡** | **Light** | Submenu options: **LIGHT ON**, **LIGHT OFF**, or **SITTER** (toggles built-in Tama Sitter mode). Sleeping with lights on counts as a Care Mistake after 1 hour. |
+| **💡** | **Light** | Submenu options: **LIGHT ON**, **LIGHT OFF**, or **SITTER** (toggles built-in Puchi Sitter mode). Sleeping with lights on counts as a Care Mistake after 1 hour. |
 | **⚾** | **Game** | 5-round heading prediction mini-game. Winning $\ge 3$ rounds awards +1 happiness and burns 1 lb. |
 | **💉** | **Medicine** | Treats illness when the skull icon appears ☠️ (may require 1–2 doses). |
 | **🚿** | **Flush** | Cleans accumulated poop with a sweeping ocean wave animation. 4 poops left uncleaned causes disease. |
@@ -67,20 +67,20 @@ A faithful, 100% client-side recreation of the original **1996 Generation 1 (P1)
 
 ---
 
-## 🧬 Evolution Matrix (P1)
+## 🧬 Evolution Matrix (Familia DramaPuchi)
 
 ```
-[Egg] ──(5 min)──> [Babytchi] ──(65 min)──> [Marutchi]
+[Egg] ──(5 min)──> [Babypuchi] ──(65 min)──> [Rolli]
                                                │
                       ┌─── (0-2 Care Mistakes) ┴─── (3+ Care Mistakes) ───┐
                       ▼                                                   ▼
-                 [Tamatchi]                                        [Kuchitamatchi]
+                  [Chirpy]                                             [Pouty]
                       │                                                   │
        ┌──────────────┼──────────────┐                     ┌──────────────┼──────────────┐
        ▼              ▼              ▼                     ▼              ▼              ▼
-  [Mametchi]    [Ginjirotchi]   [Maskutchi]           [Kuchipatchi]   [Nyorotchi]   [Tarakotchi]
-  (0-1 err,     (2-3 err,       (4+ err or            (0-2 err,       (3-4 err)     (5+ err)
-  >=90% disc)   >=75% disc)     <50% disc)            >=50% disc)
+    [Smarty]       [Pingu]        [Shadow]              [Chompy]       [Noodle]      [Divalips]
+   (0-1 err,      (2-3 err,       (4+ err or            (0-2 err,       (3-4 err)     (5+ err)
+   >=90% disc)    >=75% disc)     <50% disc)            >=50% disc)
 ```
 
 ---
@@ -111,7 +111,7 @@ The game provides 100% native localization across all interface elements, care i
 ## 🛠️ Codebase Structure
 
 ```
-Tamagotchi/
+DramaPuchi/
 ├── config/
 │   └── petConfig.js           # Biological stage durations, rates, and death thresholds
 ├── constants/
@@ -126,7 +126,7 @@ Tamagotchi/
 │   ├── StatusRenderer.js      # Status meter screens (scale) and real-time clock
 │   └── GameRenderer.js        # Scene compositor for animations, idle, and mini-game
 ├── audio/
-│   └── TamagotchiAudio.js     # Piezoelectric square-wave acoustic synthesizer
+│   └── RetroAudio.js          # Piezoelectric square-wave acoustic synthesizer
 ├── controllers/
 │   ├── MenuController.js      # 3-button (A, B, C) finite state machine
 │   └── MiniGameController.js  # 5-round guessing game controller
@@ -136,7 +136,7 @@ Tamagotchi/
 ├── app.js                     # Main application bootstrap and 60 FPS animation loop
 ├── sw.js                      # Offline-first Service Worker cache
 └── test/
-    └── suite.js               # Automated unit test suite (12 test suites)
+    └── suite.js               # Automated unit test suite (13 test suites)
 ```
 
 ---
@@ -187,4 +187,4 @@ Before committing a content change, bump `CACHE_NAME` in `sw.js` so installed PW
 
 ## 📄 License
 
-Distributed under the MIT License. Inspired by the original Tamagotchi virtual pet created by Bandai / WiZ (1996).
+Distributed under the MIT License. Inspired by classic 1996 Generation 1 virtual pets.

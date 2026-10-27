@@ -1,4 +1,4 @@
-const CACHE_NAME = 'tama-pwa-v22';
+const CACHE_NAME = 'dramapuchi-pwa-v23';
 const ASSETS = [
   '/',
   '/index.html',
@@ -10,7 +10,7 @@ const ASSETS = [
   '/ui/sprites.js',
   '/ui/StatusRenderer.js',
   '/ui/GameRenderer.js',
-  '/audio/TamagotchiAudio.js',
+  '/audio/RetroAudio.js',
   '/constants/menu.js',
   '/constants/i18n.js',
   '/controllers/MenuController.js',

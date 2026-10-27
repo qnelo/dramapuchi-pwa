@@ -10,14 +10,14 @@ export class EvolutionResolver {
     // 1. Baby -> Child
     if (state.stage === 'BABY' && state.ageMinutes >= tBaby) {
       state.stage = 'CHILD';
-      state.species = 'MARUTCHI';
+      state.species = 'ROLLI';
       state.weight = Math.max(state.weight, STAGE_CONFIG.CHILD.baseWeight);
       state.careMistakes = 0; // Mistakes reset for child stage evaluation
     }
     // 2. Child -> Teen
     else if (state.stage === 'CHILD' && state.ageMinutes >= tChild) {
       state.stage = 'TEEN';
-      state.species = state.careMistakes <= 2 ? 'TAMATCHI' : 'KUCHITAMATCHI';
+      state.species = state.careMistakes <= 2 ? 'CHIRPY' : 'POUTY';
       state.weight = Math.max(state.weight, STAGE_CONFIG.TEEN.baseWeight);
       state.teenCareMistakes = 0;
     }
@@ -28,22 +28,22 @@ export class EvolutionResolver {
       const mistakes = state.careMistakes;
       const disc = state.discipline;
 
-      if (state.species === 'TAMATCHI') {
+      if (state.species === 'CHIRPY' || state.species === 'TAMATCHI') {
         if (mistakes <= 1 && disc >= 90) {
-          state.species = 'MAMETCHI';
+          state.species = 'SMARTY';
         } else if (mistakes <= 3 && disc >= 75) {
-          state.species = 'GINJIROTCHI';
+          state.species = 'PINGU';
         } else {
-          state.species = 'MASKUTCHI';
+          state.species = 'SHADOW';
         }
       } else {
-        // Kuchitamatchi branch
+        // Pouty branch
         if (mistakes <= 4 && disc >= 50) {
-          state.species = 'KUCHIPATCHI';
+          state.species = 'CHOMPY';
         } else if (mistakes <= 6) {
-          state.species = 'NYOROTCHI';
+          state.species = 'NOODLE';
         } else {
-          state.species = 'TARAKOTCHI';
+          state.species = 'DIVALIPS';
         }
       }
     }

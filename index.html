@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Tamagotchi PWA</title>
+  <title>DramaPuchi Retro 32×16 PWA</title>
   <link rel="manifest" href="manifest.json">
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -73,13 +73,13 @@
      * All overlay geometry is expressed in --u units (1/320 of the device width),
      * so the whole keychain scales proportionally on any screen size.
      */
-    .tama-device {
+    .pet-device {
       position: relative;
       width: min(340px, 90vw, calc((100dvh - 110px) * 320 / 446));
       aspect-ratio: 320 / 446;
       container-type: inline-size;
     }
-    .tama-body {
+    .pet-body {
       position: absolute;
       inset: 0;
       width: 100%;
@@ -90,25 +90,25 @@
         drop-shadow(0 16px 20px rgba(0, 0, 0, 0.6))
         drop-shadow(0 3px 4px rgba(0, 0, 0, 0.45));
     }
-    .tama-ui {
+    .pet-ui {
       --u: calc(100cqw / 320);
       position: absolute;
       inset: 0;
     }
 
-    /* "Tama" pad-printed white brush logo */
+    /* "DramaPuchi" pad-printed white brush logo */
     .shell-brand {
       position: absolute;
       left: 0;
       right: 0;
-      top: calc(var(--u) * 92);
+      top: calc(var(--u) * 94);
       text-align: center;
       font-family: 'Permanent Marker', cursive, sans-serif;
-      font-size: calc(var(--u) * 27);
+      font-size: calc(var(--u) * 20);
       line-height: 1;
       color: #fffaf2;
-      letter-spacing: calc(var(--u) * 2);
-      transform: rotate(-4deg);
+      letter-spacing: calc(var(--u) * 1.2);
+      transform: rotate(-3deg);
       text-shadow:
         0 calc(var(--u) * 0.8) 0 rgba(110, 0, 10, 0.55),
         0 0 calc(var(--u) * 1) rgba(255, 255, 255, 0.2);
@@ -263,7 +263,7 @@
     }
 
     /* Native modal dialogs (Manual & Settings) */
-    dialog.tamamodal {
+    dialog.petmodal {
       background: #1c1e24;
       color: #eee;
       border: 1px solid #3e4249;
@@ -277,13 +277,13 @@
       overflow: hidden;
       flex-direction: column;
     }
-    dialog.tamamodal[open] {
+    dialog.petmodal[open] {
       display: flex;
     }
-    dialog.tamamodal:not([open]) {
+    dialog.petmodal:not([open]) {
       display: none;
     }
-    dialog.tamamodal::backdrop {
+    dialog.petmodal::backdrop {
       background: rgba(0, 0, 0, 0.72);
       backdrop-filter: blur(5px);
       -webkit-backdrop-filter: blur(5px);
@@ -641,8 +641,8 @@
   </div>
 
   <!-- Keychain device: layered SVG plastic body + interactive overlay -->
-  <div class="tama-device">
-    <svg class="tama-body" viewBox="0 0 320 446" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <div class="pet-device">
+    <svg class="pet-body" viewBox="0 0 320 446" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <defs>
         <!-- Egg silhouette shared by fills, clips and strokes -->
         <path id="egg" d="M160,46 C242,46 307,144 309,264 C311,372 246,438 160,438 C74,438 9,372 11,264 C13,144 78,46 160,46 Z" />
@@ -810,9 +810,9 @@
       <path d="M158.4,5 A10,17.5 0 0 0 150.4,24" fill="none" stroke="#fff" stroke-opacity="0.85" stroke-width="0.8" stroke-linecap="round" />
     </svg>
 
-    <div class="tama-ui">
-      <!-- White pad-printed "Tama" brand -->
-      <div class="shell-brand">Tama</div>
+    <div class="pet-ui">
+      <!-- White pad-printed "DramaPuchi" brand -->
+      <div class="shell-brand">DramaPuchi</div>
 
       <!--
         Gen 1 icon shapes, drawn like 90s etched LCD segments: chunky solid polygons with
@@ -882,7 +882,7 @@
   </div>
 
   <!-- Settings Modal -->
-  <dialog id="modal-settings" class="tamamodal" closedby="any" aria-labelledby="settings-title">
+  <dialog id="modal-settings" class="petmodal" closedby="any" aria-labelledby="settings-title">
     <div class="modal-header">
       <h2 id="settings-title">⚙️ Settings</h2>
       <button id="btn-close-settings" class="btn-close-modal" aria-label="Close">✕</button>
@@ -909,9 +909,9 @@
         </select>
       </div>
 
-      <!-- Tama Sitter Mode -->
+      <!-- Puchi Sitter Mode -->
       <div class="settings-group">
-        <div id="setting-sitter-header" class="settings-group-title">👶 Tama Sitter</div>
+        <div id="setting-sitter-header" class="settings-group-title">👶 Puchi Sitter</div>
         <button id="setting-sitter" class="settings-btn">👶 Sitter: OFF</button>
       </div>
 
@@ -931,8 +931,8 @@
       <div class="settings-group">
         <div id="setting-data-header" class="settings-group-title">💾 Save Data & Reset</div>
         <div class="settings-btn-row">
-          <button id="setting-export" class="settings-btn">💾 Exportar partida (Tama)</button>
-          <button id="setting-import" class="settings-btn">📂 Importar partida (Tama)</button>
+          <button id="setting-export" class="settings-btn">💾 Exportar partida (JSON)</button>
+          <button id="setting-import" class="settings-btn">📂 Importar partida (JSON)</button>
         </div>
         <button id="setting-reset" class="settings-btn btn-danger">🥚 Hatch New Egg</button>
         <input type="file" id="file-import" accept=".json" style="display:none">
@@ -941,9 +941,9 @@
   </dialog>
 
   <!-- Instruction Manual Modal -->
-  <dialog id="modal-manual" class="tamamodal" closedby="any" aria-labelledby="manual-title">
+  <dialog id="modal-manual" class="petmodal" closedby="any" aria-labelledby="manual-title">
     <div class="modal-header">
-      <h2 id="manual-title">📖 Tamagotchi Manual</h2>
+      <h2 id="manual-title">📖 DramaPuchi Manual</h2>
       <button id="btn-close-manual" class="btn-close-modal" aria-label="Close">✕</button>
     </div>
     <div class="modal-body">
@@ -1022,87 +1022,87 @@
           <div id="manual-evo-early-title" class="evo-stage-title">🌱 Early Stages (Linear)</div>
           <div class="evo-cards">
             <div class="evo-card">
-              <div class="manual-sprite-chip"><canvas id="canvas-evo-babytchi" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
+              <div class="manual-sprite-chip"><canvas id="canvas-evo-babypuchi" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
               <div class="evo-info">
-                <strong>Babytchi</strong> <span class="badge" data-stage="baby">Baby</span>
+                <strong>Babypuchi</strong> <span class="badge" data-stage="baby">Baby</span>
                 <div id="manual-evo-baby-desc" class="evo-desc"></div>
               </div>
             </div>
             <div class="evo-card">
-              <div class="manual-sprite-chip"><canvas id="canvas-evo-marutchi" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
+              <div class="manual-sprite-chip"><canvas id="canvas-evo-rolli" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
               <div class="evo-info">
-                <strong>Marutchi</strong> <span class="badge" data-stage="child">Child</span>
+                <strong>Rolli</strong> <span class="badge" data-stage="child">Child</span>
                 <div id="manual-evo-child-desc" class="evo-desc"></div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Branch A: Tamatchi -->
+        <!-- Branch A: Chirpy -->
         <div class="evo-group">
-          <div id="manual-evo-branch-a-title" class="evo-stage-title">⭐ Branch A: Good Care (Tamatchi)</div>
+          <div id="manual-evo-branch-a-title" class="evo-stage-title">⭐ Branch A: Good Care (Chirpy)</div>
           <div class="evo-card evo-card-teen">
-            <div class="manual-sprite-chip"><canvas id="canvas-evo-tamatchi" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
+            <div class="manual-sprite-chip"><canvas id="canvas-evo-chirpy" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
             <div class="evo-info">
-              <strong>Tamatchi</strong> <span class="badge" data-stage="teen">Teen</span>
-              <div id="manual-evo-tamatchi-desc" class="evo-desc"></div>
+              <strong>Chirpy</strong> <span class="badge" data-stage="teen">Teen</span>
+              <div id="manual-evo-chirpy-desc" class="evo-desc"></div>
             </div>
           </div>
           <div class="evo-subcards">
             <div class="evo-card">
-              <div class="manual-sprite-chip"><canvas id="canvas-evo-mametchi" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
+              <div class="manual-sprite-chip"><canvas id="canvas-evo-smarty" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
               <div class="evo-info">
-                <strong>Mametchi</strong> <span class="badge badge-gold" data-stage="adult">Adult</span>
-                <div id="manual-evo-mametchi-desc" class="evo-desc"></div>
+                <strong>Smarty</strong> <span class="badge badge-gold" data-stage="adult">Adult</span>
+                <div id="manual-evo-smarty-desc" class="evo-desc"></div>
               </div>
             </div>
             <div class="evo-card">
-              <div class="manual-sprite-chip"><canvas id="canvas-evo-ginjirotchi" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
+              <div class="manual-sprite-chip"><canvas id="canvas-evo-pingu" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
               <div class="evo-info">
-                <strong>Ginjirotchi</strong> <span class="badge" data-stage="adult">Adult</span>
-                <div id="manual-evo-ginjirotchi-desc" class="evo-desc"></div>
+                <strong>Pingu</strong> <span class="badge" data-stage="adult">Adult</span>
+                <div id="manual-evo-pingu-desc" class="evo-desc"></div>
               </div>
             </div>
             <div class="evo-card">
-              <div class="manual-sprite-chip"><canvas id="canvas-evo-maskutchi" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
+              <div class="manual-sprite-chip"><canvas id="canvas-evo-shadow" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
               <div class="evo-info">
-                <strong>Maskutchi</strong> <span class="badge" data-stage="adult">Adult</span>
-                <div id="manual-evo-maskutchi-desc" class="evo-desc"></div>
+                <strong>Shadow</strong> <span class="badge" data-stage="adult">Adult</span>
+                <div id="manual-evo-shadow-desc" class="evo-desc"></div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Branch B: Kuchitamatchi -->
+        <!-- Branch B: Pouty -->
         <div class="evo-group">
-          <div id="manual-evo-branch-b-title" class="evo-stage-title">🍂 Branch B: Poor Care (Kuchitamatchi)</div>
+          <div id="manual-evo-branch-b-title" class="evo-stage-title">🍂 Branch B: Poor Care (Pouty)</div>
           <div class="evo-card evo-card-teen">
-            <div class="manual-sprite-chip"><canvas id="canvas-evo-kuchitamatchi" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
+            <div class="manual-sprite-chip"><canvas id="canvas-evo-pouty" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
             <div class="evo-info">
-              <strong>Kuchitamatchi</strong> <span class="badge" data-stage="teen">Teen</span>
-              <div id="manual-evo-kuchitamatchi-desc" class="evo-desc"></div>
+              <strong>Pouty</strong> <span class="badge" data-stage="teen">Teen</span>
+              <div id="manual-evo-pouty-desc" class="evo-desc"></div>
             </div>
           </div>
           <div class="evo-subcards">
             <div class="evo-card">
-              <div class="manual-sprite-chip"><canvas id="canvas-evo-kuchipatchi" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
+              <div class="manual-sprite-chip"><canvas id="canvas-evo-chompy" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
               <div class="evo-info">
-                <strong>Kuchipatchi</strong> <span class="badge" data-stage="adult">Adult</span>
-                <div id="manual-evo-kuchipatchi-desc" class="evo-desc"></div>
+                <strong>Chompy</strong> <span class="badge" data-stage="adult">Adult</span>
+                <div id="manual-evo-chompy-desc" class="evo-desc"></div>
               </div>
             </div>
             <div class="evo-card">
-              <div class="manual-sprite-chip"><canvas id="canvas-evo-nyorotchi" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
+              <div class="manual-sprite-chip"><canvas id="canvas-evo-noodle" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
               <div class="evo-info">
-                <strong>Nyorotchi</strong> <span class="badge" data-stage="adult">Adult</span>
-                <div id="manual-evo-nyorotchi-desc" class="evo-desc"></div>
+                <strong>Noodle</strong> <span class="badge" data-stage="adult">Adult</span>
+                <div id="manual-evo-noodle-desc" class="evo-desc"></div>
               </div>
             </div>
             <div class="evo-card">
-              <div class="manual-sprite-chip"><canvas id="canvas-evo-tarakotchi" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
+              <div class="manual-sprite-chip"><canvas id="canvas-evo-divalips" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
               <div class="evo-info">
-                <strong>Tarakotchi</strong> <span class="badge" data-stage="adult">Adult</span>
-                <div id="manual-evo-tarakotchi-desc" class="evo-desc"></div>
+                <strong>Divalips</strong> <span class="badge" data-stage="adult">Adult</span>
+                <div id="manual-evo-divalips-desc" class="evo-desc"></div>
               </div>
             </div>
           </div>
@@ -1144,7 +1144,7 @@
         </p>
         <p style="margin:0;">
           <span id="manual-credits-repo-label">Repository</span>: 
-          <a href="https://github.com/qnelo/tama-pwa" target="_blank" rel="noopener noreferrer" class="manual-link">https://github.com/qnelo/tama-pwa</a>
+          <a href="https://github.com/qnelo/dramapuchi-pwa" target="_blank" rel="noopener noreferrer" class="manual-link">https://github.com/qnelo/dramapuchi-pwa</a>
         </p>
       </div>
     </div>

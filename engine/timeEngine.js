@@ -1,7 +1,7 @@
 import { STAGE_CONFIG, THRESHOLDS } from '../config/petConfig.js';
 import { EvolutionResolver } from './evolutionResolver.js';
 
-export class TamagotchiEngine {
+export class PetEngine {
   /**
    * Reconciles pet state from the last saved timestamp to the current time.
    */
@@ -60,7 +60,7 @@ export class TamagotchiEngine {
       return; // Metabolic degradation pauses while sleeping
     }
 
-    // 3. Tama Sitter mode active during daytime (07:00 - 18:00)
+    // 3. Puchi Sitter mode active during daytime (07:00 - 18:00)
     if (state.sitterModeActive) {
       if (hour >= 7 && hour < 18) {
         return; // Sitter maintains stats frozen
@@ -162,7 +162,7 @@ export class TamagotchiEngine {
     const elapsed = currentTimestamp - state.bornTimestamp;
     if (elapsed >= STAGE_CONFIG.EGG.durationMin * 60 * 1000) {
       state.stage = 'BABY';
-      state.species = 'BABYTCHI';
+      state.species = 'BABYPUCHI';
       state.hunger = 2;
       state.happiness = 2;
       state.weight = STAGE_CONFIG.BABY.baseWeight;

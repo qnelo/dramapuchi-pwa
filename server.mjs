@@ -47,5 +47,5 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(PORT, '0.0.0.0', () => {
-  console.log(`Tamagotchi server running on http://0.0.0.0:${PORT} with Cache-Control: no-cache`);
+  console.log(`DramaPuchi server running on http://0.0.0.0:${PORT} with Cache-Control: no-cache`);
 });

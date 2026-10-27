@@ -1,6 +1,6 @@
-import { TamagotchiEngine } from './engine/timeEngine.js';
+import { PetEngine } from './engine/timeEngine.js';
 import { LcdMatrix } from './ui/LcdMatrix.js';
-import { TamagotchiAudio } from './audio/TamagotchiAudio.js?v=28';
+import { RetroAudio } from './audio/RetroAudio.js?v=23';
 import { MenuController } from './controllers/MenuController.js';
 import { SaveManager } from './storage/SaveManager.js';
 import { GameRenderer } from './ui/GameRenderer.js';
@@ -20,13 +20,13 @@ async function init() {
   state = await SaveManager.load();
 
   // 2. Immediate temporal reconciliation upon launch/reopen
-  TamagotchiEngine.reconcile(state, Date.now());
+  PetEngine.reconcile(state, Date.now());
 
   // 3. Initialize LCD matrix and audio synthesizer
   const canvas = document.getElementById('lcdScreen');
   lcd = new LcdMatrix(canvas);
   applyLcdPalette();
-  audio = new TamagotchiAudio();
+  audio = new RetroAudio();
 
   // 4. Initialize menu controller
   menu = new MenuController(state, audio, () => updateIconBezel());
@@ -54,7 +54,7 @@ async function init() {
     if (document.hidden) {
       SaveManager.save(state);
     } else {
-      TamagotchiEngine.reconcile(state, Date.now());
+      PetEngine.reconcile(state, Date.now());
     }
   });
 
@@ -277,13 +277,13 @@ function setupQolListeners() {
     settingLang.value = currentLang;
     settingLang.addEventListener('change', (e) => {
       currentLang = e.target.value;
-      localStorage.setItem('tama_lang', currentLang);
+      localStorage.setItem('dramapuchi_lang', currentLang);
       applyTranslations(currentLang);
       audio.playClick();
     });
   }
 
-  // Tama Sitter Mode Toggle
+  // Puchi Sitter Mode Toggle
   if (settingSitter) {
     settingSitter.addEventListener('click', async () => {
       if (!state) return;
@@ -362,21 +362,21 @@ function setupQolListeners() {
 
 function renderEvolutionSprites() {
   const mapping = [
-    { id: 'canvas-evo-babytchi', sprite: SPRITES.BABYTCHI_IDLE },
-    { id: 'canvas-evo-marutchi', sprite: SPRITES.MARUTCHI_IDLE },
-    { id: 'canvas-evo-tamatchi', sprite: SPRITES.TAMATCHI_IDLE },
-    { id: 'canvas-evo-kuchitamatchi', sprite: SPRITES.KUCHITAMATCHI_IDLE },
-    { id: 'canvas-evo-mametchi', sprite: SPRITES.MAMETCHI_IDLE },
-    { id: 'canvas-evo-ginjirotchi', sprite: SPRITES.GINJIROTCHI_IDLE },
-    { id: 'canvas-evo-maskutchi', sprite: SPRITES.MASKUTCHI_IDLE },
-    { id: 'canvas-evo-kuchipatchi', sprite: SPRITES.KUCHIPATCHI_IDLE },
-    { id: 'canvas-evo-nyorotchi', sprite: SPRITES.NYOROTCHI_IDLE },
-    { id: 'canvas-evo-tarakotchi', sprite: SPRITES.TARAKOTCHI_IDLE },
+    { id: 'canvas-evo-babypuchi', legacyId: 'canvas-evo-babytchi', sprite: SPRITES.BABYPUCHI_IDLE },
+    { id: 'canvas-evo-rolli', legacyId: 'canvas-evo-marutchi', sprite: SPRITES.ROLLI_IDLE },
+    { id: 'canvas-evo-chirpy', legacyId: 'canvas-evo-tamatchi', sprite: SPRITES.CHIRPY_IDLE },
+    { id: 'canvas-evo-pouty', legacyId: 'canvas-evo-kuchitamatchi', sprite: SPRITES.POUTY_IDLE },
+    { id: 'canvas-evo-smarty', legacyId: 'canvas-evo-mametchi', sprite: SPRITES.SMARTY_IDLE },
+    { id: 'canvas-evo-pingu', legacyId: 'canvas-evo-ginjirotchi', sprite: SPRITES.PINGU_IDLE },
+    { id: 'canvas-evo-shadow', legacyId: 'canvas-evo-maskutchi', sprite: SPRITES.SHADOW_IDLE },
+    { id: 'canvas-evo-chompy', legacyId: 'canvas-evo-kuchipatchi', sprite: SPRITES.CHOMPY_IDLE },
+    { id: 'canvas-evo-noodle', legacyId: 'canvas-evo-nyorotchi', sprite: SPRITES.NOODLE_IDLE },
+    { id: 'canvas-evo-divalips', legacyId: 'canvas-evo-tarakotchi', sprite: SPRITES.DIVALIPS_IDLE },
     { id: 'canvas-evo-departed', sprite: SPRITES.DEPARTED_UFO }
   ];
 
   for (const item of mapping) {
-    const canvas = document.getElementById(item.id);
+    const canvas = document.getElementById(item.id) || (item.legacyId ? document.getElementById(item.legacyId) : null);
     if (!canvas || !item.sprite) continue;
     const ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, 16, 16);
@@ -464,15 +464,23 @@ function applyTranslations(lang) {
   setElText('manual-evo-baby-desc', t.manual.evoBabyDesc);
   setElText('manual-evo-child-desc', t.manual.evoChildDesc);
   setElText('manual-evo-branch-a-title', t.manual.evoBranchATitle);
-  setElText('manual-evo-tamatchi-desc', t.manual.evoTamatchiDesc);
-  setElText('manual-evo-mametchi-desc', t.manual.evoMametchiDesc);
-  setElText('manual-evo-ginjirotchi-desc', t.manual.evoGinjirotchiDesc);
-  setElText('manual-evo-maskutchi-desc', t.manual.evoMaskutchiDesc);
+  setElText('manual-evo-chirpy-desc', t.manual.evoChirpyDesc || t.manual.evoTamatchiDesc);
+  setElText('manual-evo-tamatchi-desc', t.manual.evoChirpyDesc || t.manual.evoTamatchiDesc);
+  setElText('manual-evo-smarty-desc', t.manual.evoSmartyDesc || t.manual.evoMametchiDesc);
+  setElText('manual-evo-mametchi-desc', t.manual.evoSmartyDesc || t.manual.evoMametchiDesc);
+  setElText('manual-evo-pingu-desc', t.manual.evoPinguDesc || t.manual.evoGinjirotchiDesc);
+  setElText('manual-evo-ginjirotchi-desc', t.manual.evoPinguDesc || t.manual.evoGinjirotchiDesc);
+  setElText('manual-evo-shadow-desc', t.manual.evoShadowDesc || t.manual.evoMaskutchiDesc);
+  setElText('manual-evo-maskutchi-desc', t.manual.evoShadowDesc || t.manual.evoMaskutchiDesc);
   setElText('manual-evo-branch-b-title', t.manual.evoBranchBTitle);
-  setElText('manual-evo-kuchitamatchi-desc', t.manual.evoKuchitamatchiDesc);
-  setElText('manual-evo-kuchipatchi-desc', t.manual.evoKuchipatchiDesc);
-  setElText('manual-evo-nyorotchi-desc', t.manual.evoNyorotchiDesc);
-  setElText('manual-evo-tarakotchi-desc', t.manual.evoTarakotchiDesc);
+  setElText('manual-evo-pouty-desc', t.manual.evoPoutyDesc || t.manual.evoKuchitamatchiDesc);
+  setElText('manual-evo-kuchitamatchi-desc', t.manual.evoPoutyDesc || t.manual.evoKuchitamatchiDesc);
+  setElText('manual-evo-chompy-desc', t.manual.evoChompyDesc || t.manual.evoKuchipatchiDesc);
+  setElText('manual-evo-kuchipatchi-desc', t.manual.evoChompyDesc || t.manual.evoKuchipatchiDesc);
+  setElText('manual-evo-noodle-desc', t.manual.evoNoodleDesc || t.manual.evoNyorotchiDesc);
+  setElText('manual-evo-nyorotchi-desc', t.manual.evoNoodleDesc || t.manual.evoNyorotchiDesc);
+  setElText('manual-evo-divalips-desc', t.manual.evoDivalipsDesc || t.manual.evoTarakotchiDesc);
+  setElText('manual-evo-tarakotchi-desc', t.manual.evoDivalipsDesc || t.manual.evoTarakotchiDesc);
   setElText('manual-evo-departure-title', t.manual.evoDepartureTitle);
   setElText('manual-evo-departed-name', t.manual.evoDepartedName);
   setElText('manual-evo-departed-desc', t.manual.evoDepartedDesc);
@@ -522,7 +530,7 @@ function updateSettingsUI() {
 
 function tickEngine() {
   if (!state) return;
-  TamagotchiEngine.reconcile(state, Date.now());
+  PetEngine.reconcile(state, Date.now());
 
   // Acoustic alert when the pet calls for attention
   if (state.isCalling && !state.isSleeping && state.stage !== 'DEAD' && state.stage !== 'DEPARTED') {

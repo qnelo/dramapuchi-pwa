@@ -1,4 +1,4 @@
-export class TamagotchiAudio {
+export class RetroAudio {
   constructor() {
     this.ctx = null;
     this.masterGain = null;
@@ -15,7 +15,7 @@ export class TamagotchiAudio {
     // Restore persisted sound mute setting
     try {
       if (typeof localStorage !== 'undefined') {
-        const saved = localStorage.getItem('tama_audio_muted');
+        const saved = localStorage.getItem('dramapuchi_audio_muted') ?? localStorage.getItem('tama_audio_muted');
         if (saved !== null) {
           this.muted = saved === 'true';
         }
@@ -43,7 +43,7 @@ export class TamagotchiAudio {
     this.muted = isMuted;
     try {
       if (typeof localStorage !== 'undefined') {
-        localStorage.setItem('tama_audio_muted', isMuted ? 'true' : 'false');
+        localStorage.setItem('dramapuchi_audio_muted', isMuted ? 'true' : 'false');
       }
     } catch {
       // Fallback

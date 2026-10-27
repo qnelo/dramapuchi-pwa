@@ -1,6 +1,6 @@
 import assert from 'node:assert';
 import { STAGE_CONFIG, THRESHOLDS } from '../config/petConfig.js';
-import { TamagotchiEngine } from '../engine/timeEngine.js';
+import { PetEngine } from '../engine/timeEngine.js';
 import { EvolutionResolver } from '../engine/evolutionResolver.js';
 import { SaveManager } from '../storage/SaveManager.js';
 import { ICONS, UI_MODE } from '../constants/menu.js';
@@ -9,7 +9,7 @@ import { StatusRenderer } from '../ui/StatusRenderer.js';
 import { MenuController } from '../controllers/MenuController.js';
 import { MiniGameController } from '../controllers/MiniGameController.js';
 
-console.log('--- RUNNING TAMAGOTCHI TEST SUITE ---');
+console.log('--- RUNNING DRAMAPUCHI TEST SUITE ---');
 
 // 1. Initial State
 console.log('Testing Initial State...');
@@ -29,12 +29,12 @@ console.log('✓ Initial State valid.');
 // 2. Egg Hatching
 console.log('Testing Egg Hatching...');
 const bornTime = state.bornTimestamp;
-TamagotchiEngine.reconcile(state, bornTime + 4 * 60 * 1000);
+PetEngine.reconcile(state, bornTime + 4 * 60 * 1000);
 assert.strictEqual(state.stage, 'EGG');
 
-TamagotchiEngine.reconcile(state, bornTime + 5 * 60 * 1000);
+PetEngine.reconcile(state, bornTime + 5 * 60 * 1000);
 assert.strictEqual(state.stage, 'BABY');
-assert.strictEqual(state.species, 'BABYTCHI');
+assert.strictEqual(state.species, 'BABYPUCHI');
 assert.strictEqual(state.hunger, 2);
 assert.strictEqual(state.happiness, 2);
 assert.strictEqual(state.weight, STAGE_CONFIG.BABY.baseWeight);
@@ -44,30 +44,30 @@ console.log('✓ Egg Hatching verified.');
 console.log('Testing Degradation & Care...');
 const babyBornTime = state.lastTickTimestamp;
 // Simulate 15 minutes: baby hungerRateMin = 15, happyRateMin = 15
-TamagotchiEngine.reconcile(state, babyBornTime + 15 * 60 * 1000);
+PetEngine.reconcile(state, babyBornTime + 15 * 60 * 1000);
 assert.strictEqual(state.hunger, 1);
 assert.strictEqual(state.happiness, 1);
 
 // Another 15 min: hunger -> 0, happiness -> 0
-TamagotchiEngine.reconcile(state, babyBornTime + 30 * 60 * 1000);
+PetEngine.reconcile(state, babyBornTime + 30 * 60 * 1000);
 assert.strictEqual(state.hunger, 0);
 assert.strictEqual(state.happiness, 0);
 assert.strictEqual(state.isCalling, true);
 console.log('✓ Degradation & Attention verified.');
 
 // 4. Sitter Mode
-console.log('Testing Sitter Mode (Tama Sitter)...');
+console.log('Testing Sitter Mode (Puchi Sitter)...');
 const sitterState = {
   ...SaveManager.getInitialState(),
   stage: 'CHILD',
-  species: 'MARUTCHI',
+  species: 'ROLLI',
   hunger: 4,
   happiness: 4,
   sitterModeActive: true,
   lastTickTimestamp: new Date('2026-10-25T08:00:00Z').getTime()
 };
 // 120 minutes during daytime (08:00 - 10:00) with sitter
-TamagotchiEngine.reconcile(sitterState, sitterState.lastTickTimestamp + 120 * 60 * 1000);
+PetEngine.reconcile(sitterState, sitterState.lastTickTimestamp + 120 * 60 * 1000);
 // Child degradation rates are 45min hunger, 40min happiness, but sitter keeps them steady!
 assert.strictEqual(sitterState.hunger, 4);
 assert.strictEqual(sitterState.happiness, 4);
@@ -78,14 +78,14 @@ console.log('Testing Starvation Death...');
 const starvingPet = {
   ...SaveManager.getInitialState(),
   stage: 'BABY',
-  species: 'BABYTCHI',
+  species: 'BABYPUCHI',
   hunger: 0,
   happiness: 0,
   starvationMinutes: 0,
   lastTickTimestamp: new Date('2026-10-25T10:00:00').getTime()
 };
 // 360 minutes at 0 hunger while awake -> DEATH
-TamagotchiEngine.reconcile(starvingPet, starvingPet.lastTickTimestamp + 360 * 60 * 1000);
+PetEngine.reconcile(starvingPet, starvingPet.lastTickTimestamp + 360 * 60 * 1000);
 assert.strictEqual(starvingPet.stage, 'DEAD');
 assert.strictEqual(starvingPet.deathReason, 'STARVATION');
 console.log('✓ Starvation Death verified.');
@@ -95,7 +95,7 @@ console.log('Testing Sickness Death...');
 const sickPet = {
   ...SaveManager.getInitialState(),
   stage: 'BABY',
-  species: 'BABYTCHI',
+  species: 'BABYPUCHI',
   hunger: 4,
   happiness: 4,
   isSick: true,
@@ -103,133 +103,133 @@ const sickPet = {
   lastTickTimestamp: new Date('2026-10-25T10:00:00').getTime()
 };
 // 360 minutes sick without treatment -> DEATH
-TamagotchiEngine.reconcile(sickPet, sickPet.lastTickTimestamp + 360 * 60 * 1000);
+PetEngine.reconcile(sickPet, sickPet.lastTickTimestamp + 360 * 60 * 1000);
 assert.strictEqual(sickPet.stage, 'DEAD');
 assert.strictEqual(sickPet.deathReason, 'SICKNESS');
 console.log('✓ Sickness Death verified.');
 
 // 7. Evolution Tree Logic
-console.log('Testing Evolution Tree Logic...');
-// Test Baby -> Child
+console.log('Testing Evolution Tree Logic (Familia DramaPuchi)...');
+// Test Baby -> Child (Rolli)
 const mockStateChild = {
   stage: 'BABY',
-  species: 'BABYTCHI',
+  species: 'BABYPUCHI',
   ageMinutes: 65,
   weight: 5,
   careMistakes: 1
 };
 EvolutionResolver.checkAndEvolve(mockStateChild);
 assert.strictEqual(mockStateChild.stage, 'CHILD');
-assert.strictEqual(mockStateChild.species, 'MARUTCHI');
+assert.strictEqual(mockStateChild.species, 'ROLLI');
 assert.strictEqual(mockStateChild.weight, 10);
 assert.strictEqual(mockStateChild.careMistakes, 0);
 
-// Test Child -> Teen (Tamatchi with <= 2 mistakes)
+// Test Child -> Teen (Chirpy with <= 2 mistakes)
 const mockStateTeenGood = {
   stage: 'CHILD',
-  species: 'MARUTCHI',
+  species: 'ROLLI',
   ageMinutes: 65 + 1440 * 2,
   weight: 10,
   careMistakes: 1
 };
 EvolutionResolver.checkAndEvolve(mockStateTeenGood);
 assert.strictEqual(mockStateTeenGood.stage, 'TEEN');
-assert.strictEqual(mockStateTeenGood.species, 'TAMATCHI');
+assert.strictEqual(mockStateTeenGood.species, 'CHIRPY');
 
-// Test Child -> Teen (Kuchitamatchi with > 2 mistakes)
+// Test Child -> Teen (Pouty with > 2 mistakes)
 const mockStateTeenBad = {
   stage: 'CHILD',
-  species: 'MARUTCHI',
+  species: 'ROLLI',
   ageMinutes: 65 + 1440 * 2,
   weight: 10,
   careMistakes: 3
 };
 EvolutionResolver.checkAndEvolve(mockStateTeenBad);
 assert.strictEqual(mockStateTeenBad.stage, 'TEEN');
-assert.strictEqual(mockStateTeenBad.species, 'KUCHITAMATCHI');
+assert.strictEqual(mockStateTeenBad.species, 'POUTY');
 
-// Test Teen -> Adult (Mametchi: Tamatchi, <= 1 mistake, >= 90 discipline)
-const mockMametchi = {
+// Test Teen -> Adult (Smarty: Chirpy, <= 1 mistake, >= 90 discipline)
+const mockSmarty = {
   stage: 'TEEN',
-  species: 'TAMATCHI',
+  species: 'CHIRPY',
   ageMinutes: 65 + 1440 * 2 + 1440 * 3,
   weight: 20,
   careMistakes: 0,
   discipline: 100
 };
-EvolutionResolver.checkAndEvolve(mockMametchi);
-assert.strictEqual(mockMametchi.stage, 'ADULT');
-assert.strictEqual(mockMametchi.species, 'MAMETCHI');
+EvolutionResolver.checkAndEvolve(mockSmarty);
+assert.strictEqual(mockSmarty.stage, 'ADULT');
+assert.strictEqual(mockSmarty.species, 'SMARTY');
 
-// Test Teen -> Adult (Ginjirotchi: Tamatchi, <= 3 mistakes, >= 75 discipline)
-const mockGinji = {
+// Test Teen -> Adult (Pingu: Chirpy, <= 3 mistakes, >= 75 discipline)
+const mockPingu = {
   stage: 'TEEN',
-  species: 'TAMATCHI',
+  species: 'CHIRPY',
   ageMinutes: 65 + 1440 * 2 + 1440 * 3,
   weight: 20,
   careMistakes: 2,
   discipline: 80
 };
-EvolutionResolver.checkAndEvolve(mockGinji);
-assert.strictEqual(mockGinji.stage, 'ADULT');
-assert.strictEqual(mockGinji.species, 'GINJIROTCHI');
+EvolutionResolver.checkAndEvolve(mockPingu);
+assert.strictEqual(mockPingu.stage, 'ADULT');
+assert.strictEqual(mockPingu.species, 'PINGU');
 
-// Test Teen -> Adult (Maskutchi: Tamatchi, fails Mametchi & Ginjirotchi)
-const mockMask = {
+// Test Teen -> Adult (Shadow: Chirpy, fails Smarty & Pingu)
+const mockShadow = {
   stage: 'TEEN',
-  species: 'TAMATCHI',
+  species: 'CHIRPY',
   ageMinutes: 65 + 1440 * 2 + 1440 * 3,
   weight: 20,
   careMistakes: 4,
   discipline: 50
 };
-EvolutionResolver.checkAndEvolve(mockMask);
-assert.strictEqual(mockMask.stage, 'ADULT');
-assert.strictEqual(mockMask.species, 'MASKUTCHI');
+EvolutionResolver.checkAndEvolve(mockShadow);
+assert.strictEqual(mockShadow.stage, 'ADULT');
+assert.strictEqual(mockShadow.species, 'SHADOW');
 
-// Test Teen -> Adult (Kuchipatchi: Kuchitamatchi, <= 4 mistakes, >= 50 disc)
-const mockKuchi = {
+// Test Teen -> Adult (Chompy: Pouty, <= 4 mistakes, >= 50 disc)
+const mockChompy = {
   stage: 'TEEN',
-  species: 'KUCHITAMATCHI',
+  species: 'POUTY',
   ageMinutes: 65 + 1440 * 2 + 1440 * 3,
   weight: 20,
   careMistakes: 3,
   discipline: 60
 };
-EvolutionResolver.checkAndEvolve(mockKuchi);
-assert.strictEqual(mockKuchi.stage, 'ADULT');
-assert.strictEqual(mockKuchi.species, 'KUCHIPATCHI');
+EvolutionResolver.checkAndEvolve(mockChompy);
+assert.strictEqual(mockChompy.stage, 'ADULT');
+assert.strictEqual(mockChompy.species, 'CHOMPY');
 
-// Test Teen -> Adult (Nyorotchi: Kuchitamatchi, <= 6 mistakes)
-const mockNyoro = {
+// Test Teen -> Adult (Noodle: Pouty, <= 6 mistakes)
+const mockNoodle = {
   stage: 'TEEN',
-  species: 'KUCHITAMATCHI',
+  species: 'POUTY',
   ageMinutes: 65 + 1440 * 2 + 1440 * 3,
   weight: 20,
   careMistakes: 5,
   discipline: 40
 };
-EvolutionResolver.checkAndEvolve(mockNyoro);
-assert.strictEqual(mockNyoro.stage, 'ADULT');
-assert.strictEqual(mockNyoro.species, 'NYOROTCHI');
+EvolutionResolver.checkAndEvolve(mockNoodle);
+assert.strictEqual(mockNoodle.stage, 'ADULT');
+assert.strictEqual(mockNoodle.species, 'NOODLE');
 
-// Test Teen -> Adult (Tarakotchi: Kuchitamatchi, > 6 mistakes)
-const mockTara = {
+// Test Teen -> Adult (Divalips: Pouty, > 6 mistakes)
+const mockDivalips = {
   stage: 'TEEN',
-  species: 'KUCHITAMATCHI',
+  species: 'POUTY',
   ageMinutes: 65 + 1440 * 2 + 1440 * 3,
   weight: 20,
   careMistakes: 7,
   discipline: 20
 };
-EvolutionResolver.checkAndEvolve(mockTara);
-assert.strictEqual(mockTara.stage, 'ADULT');
-assert.strictEqual(mockTara.species, 'TARAKOTCHI');
+EvolutionResolver.checkAndEvolve(mockDivalips);
+assert.strictEqual(mockDivalips.stage, 'ADULT');
+assert.strictEqual(mockDivalips.species, 'DIVALIPS');
 
 // Test Adult -> Departed
 const mockDeparted = {
   stage: 'ADULT',
-  species: 'MAMETCHI',
+  species: 'SMARTY',
   ageMinutes: 65 + 1440 * 2 + 1440 * 3 + 1440 * 14,
   weight: 30,
   careMistakes: 0,
@@ -429,6 +429,14 @@ for (const lang of requiredLanguages) {
   assert(TRANSLATIONS[lang].manual.evoKuchipatchiDesc, `Missing manual.evoKuchipatchiDesc in ${lang}`);
   assert(TRANSLATIONS[lang].manual.evoNyorotchiDesc, `Missing manual.evoNyorotchiDesc in ${lang}`);
   assert(TRANSLATIONS[lang].manual.evoTarakotchiDesc, `Missing manual.evoTarakotchiDesc in ${lang}`);
+  assert(TRANSLATIONS[lang].manual.evoChirpyDesc, `Missing manual.evoChirpyDesc in ${lang}`);
+  assert(TRANSLATIONS[lang].manual.evoPoutyDesc, `Missing manual.evoPoutyDesc in ${lang}`);
+  assert(TRANSLATIONS[lang].manual.evoSmartyDesc, `Missing manual.evoSmartyDesc in ${lang}`);
+  assert(TRANSLATIONS[lang].manual.evoPinguDesc, `Missing manual.evoPinguDesc in ${lang}`);
+  assert(TRANSLATIONS[lang].manual.evoShadowDesc, `Missing manual.evoShadowDesc in ${lang}`);
+  assert(TRANSLATIONS[lang].manual.evoChompyDesc, `Missing manual.evoChompyDesc in ${lang}`);
+  assert(TRANSLATIONS[lang].manual.evoNoodleDesc, `Missing manual.evoNoodleDesc in ${lang}`);
+  assert(TRANSLATIONS[lang].manual.evoDivalipsDesc, `Missing manual.evoDivalipsDesc in ${lang}`);
   assert(TRANSLATIONS[lang].manual.evoDepartureTitle, `Missing manual.evoDepartureTitle in ${lang}`);
   assert(TRANSLATIONS[lang].manual.evoDepartedName, `Missing manual.evoDepartedName in ${lang}`);
   assert(TRANSLATIONS[lang].manual.evoDepartedDesc, `Missing manual.evoDepartedDesc in ${lang}`);
@@ -452,4 +460,17 @@ globalThis.localStorage.getItem = () => 'ja';
 assert(detectLanguage() === 'ja', 'detectLanguage should honor the saved choice');
 console.log('✓ i18n Translations verified.');
 
-console.log('\nALL 12 TEST SUITES PASSED SUCCESSFULLY! 🎯');
+// 13. Trademark Zero-Leak Audit
+console.log('Testing Trademark Zero-Leak Audit...');
+const allJson = JSON.stringify(TRANSLATIONS).toLowerCase();
+assert(!allJson.includes('tamagotchi'), 'Zero-leak failure: found "tamagotchi" in translations');
+assert(!allJson.includes('たまごっち'), 'Zero-leak failure: found Japanese tamagotchi in translations');
+assert(!allJson.includes('拓麻歌子'), 'Zero-leak failure: found Chinese tamagotchi in translations');
+assert(!allJson.includes('тамагочи'), 'Zero-leak failure: found Russian tamagotchi in translations');
+assert(!allJson.includes('ทามาก็อต'), 'Zero-leak failure: found Thai tamagotchi in translations');
+assert(!allJson.includes('تاماغوتشي'), 'Zero-leak failure: found Arabic tamagotchi in translations');
+assert(!allJson.includes('तामागोची'), 'Zero-leak failure: found Hindi tamagotchi in translations');
+assert(!allJson.includes('তামাগোচি'), 'Zero-leak failure: found Bengali tamagotchi in translations');
+console.log('✓ Trademark Zero-Leak Audit verified (0 occurrences).');
+
+console.log('\nALL 13 TEST SUITES PASSED SUCCESSFULLY! 🎯');

@@ -1,6 +1,6 @@
 # Engineering & AI Agent Architecture Guide (AGENTS.md)
 
-This document provides a comprehensive technical reference detailing the system architecture, component responsibilities, deterministic business rules, and invariants for maintaining and extending this **Generation 1 (32×16) Tamagotchi emulator**.
+This document provides a comprehensive technical reference detailing the system architecture, component responsibilities, deterministic business rules, and invariants for maintaining and extending this **Generation 1 (32×16) DramaPuchi emulator**.
 
 ---
 
@@ -22,7 +22,7 @@ This document provides a comprehensive technical reference detailing the system 
 ## 2. Codebase Map & Responsibilities
 
 ```
-Tamagotchi/
+DramaPuchi/
 ├── config/
 │   └── petConfig.js           # Metabolic rates, lifecycle stage durations, and thresholds
 ├── engine/
@@ -34,7 +34,7 @@ Tamagotchi/
 │   ├── StatusRenderer.js      # Scale (Meter) pages (Age/Weight, Discipline, Hearts) and Clock
 │   └── GameRenderer.js        # Scene orchestrator for idle, animations, and mini-game states
 ├── audio/
-│   └── TamagotchiAudio.js     # Piezoelectric acoustic synthesizer (Web Audio API)
+│   └── RetroAudio.js          # Piezoelectric acoustic synthesizer (Web Audio API)
 ├── constants/
 │   └── menu.js                # UI mode (UI_MODE) and icon index (ICONS) enums
 ├── controllers/
@@ -71,12 +71,12 @@ Defines metabolic rates and biological stage parameters:
   - `MAX_POOP: 4`: Accumulating 4 poops triggers sickness (`isSick = true`).
   - `TICK_SIZE_MS: 60000`: Simulation resolution of exactly 1 minute per tick.
 
-### 3.2. `engine/timeEngine.js` (`TamagotchiEngine`)
+### 3.2. `engine/timeEngine.js` (`PetEngine`)
 - **`reconcile(state, currentTimestamp)`**: Calculates the elapsed time ($\Delta t$) since `lastTickTimestamp`. If the device was asleep or the tab was backgrounded, simulates elapsed time minute-by-minute (`stepOneMinute`) up to a 14-day safety cap.
 - **`stepOneMinute(state, currentSimTime)`**:
   1. Increments `ageMinutes` and checks evolution transitions (`EvolutionResolver.checkAndEvolve`).
   2. Evaluates sleep schedule (`isSleepTime`). If asleep, metabolic degradation pauses. If lights remain on (`lightsOn: true`), accumulates unaddressed light time; after 60 minutes, increments `careMistakes`.
-  3. Checks **Tama Sitter Mode** (`sitterModeActive`): If active between 07:00 and 18:00, freezes hunger, happiness, and poop degradation.
+  3. Checks **Puchi Sitter Mode** (`sitterModeActive`): If active between 07:00 and 18:00, freezes hunger, happiness, and poop degradation.
   4. Degrades hunger and happiness counters based on stage rates.
   5. Generates poop (up to a maximum of 4).
   6. Triggers discipline calls every 4 hours of waking time (`ageMinutes % 240 === 0`). If unaddressed after 15 minutes, increments `careMistakes`.
@@ -86,20 +86,20 @@ Defines metabolic rates and biological stage parameters:
   10. Updates the general attention call flag (`isCalling`).
 
 ### 3.3. `engine/evolutionResolver.js` (`EvolutionResolver`)
-Executes the Gen 1 branching evolution tree:
-- `BABY` $\to$ `CHILD`: After 65 minutes, evolves to `MARUTCHI`. Resets care mistakes for the child stage.
+Executes the Familia DramaPuchi branching evolution tree:
+- `BABY` $\to$ `CHILD`: After 65 minutes, evolves to `ROLLI`. Resets care mistakes for the child stage.
 - `CHILD` $\to$ `TEEN`: After 2 days:
-  - $\le 2$ mistakes $\to$ `TAMATCHI`.
-  - $\ge 3$ mistakes $\to$ `KUCHITAMATCHI`.
+  - $\le 2$ mistakes $\to$ `CHIRPY`.
+  - $\ge 3$ mistakes $\to$ `POUTY`.
 - `TEEN` $\to$ `ADULT`: After 3 days:
-  - **Tamatchi branch**:
-    - $\le 1$ mistake and $\ge 90\%$ discipline $\to$ `MAMETCHI`.
-    - $\le 3$ mistakes and $\ge 75\%$ discipline $\to$ `GINJIROTCHI`.
-    - Remaining combinations $\to$ `MASKUTCHI`.
-  - **Kuchitamatchi branch**:
-    - $\le 4$ mistakes and $\ge 50\%$ discipline $\to$ `KUCHIPATCHI`.
-    - $\le 6$ mistakes $\to$ `NYOROTCHI`.
-    - $\ge 7$ mistakes $\to$ `TARAKOTCHI`.
+  - **Chirpy branch**:
+    - $\le 1$ mistake and $\ge 90\%$ discipline $\to$ `SMARTY`.
+    - $\le 3$ mistakes and $\ge 75\%$ discipline $\to$ `PINGU`.
+    - Remaining combinations $\to$ `SHADOW`.
+  - **Pouty branch**:
+    - $\le 4$ mistakes and $\ge 50\%$ discipline $\to$ `CHOMPY`.
+    - $\le 6$ mistakes $\to$ `NOODLE`.
+    - $\ge 7$ mistakes $\to$ `DIVALIPS`.
 - `ADULT` $\to$ `DEPARTED`: After 14 days as an adult, returns peacefully to the home planet in a UFO (`stage = 'DEPARTED'`).
 
 ### 3.4. `ui/LcdMatrix.js` (`LcdMatrix`)
@@ -118,7 +118,7 @@ Executes the Gen 1 branching evolution tree:
   - **Page 2**: Hunger (`HUNGRY` with 4 full/empty hearts).
   - **Page 3**: Happiness (`HAPPY` with 4 full/empty hearts).
   - **Clock**: Real-time 24-hour clock with blinking colon (`TIME` / `HH:MM`).
-- *(Note: Tama Sitter mode is controlled from the top-left Settings modal, leaving the 4 Status pages true to the canonical Gen 1 hardware).*
+- *(Note: Puchi Sitter mode is controlled from the top-left Settings modal, leaving the 4 Status pages true to the canonical Gen 1 hardware).*
 
 ### 3.6. `controllers/MenuController.js` & `constants/menu.js`
 - Hardware button state machine (physical tactile white buttons from Left to Right: Button A, Button B, Button C):
@@ -136,12 +136,12 @@ Executes the Gen 1 branching evolution tree:
 
 ## 4. Invariants & Rules for Autonomous Agents
 
-1. **Strict Temporal Determinism**: Never use JavaScript timers (`setTimeout` or `setInterval`) to track biological aging or stat decay. All state transitions must be derived from UNIX timestamps and evaluated via `TamagotchiEngine.reconcile`.
+1. **Strict Temporal Determinism**: Never use JavaScript timers (`setTimeout` or `setInterval`) to track biological aging or stat decay. All state transitions must be derived from UNIX timestamps and evaluated via `PetEngine.reconcile`.
 2. **Fixed Display Dimensions**: The display is strictly **32 columns × 16 rows**. All sprites must conform to these bounds (characters: 16×16, auxiliary icons: 8×8).
-3. **No External Audio Files**: Do not add MP3, WAV, or external audio libraries. All acoustic feedback must be synthesized via Web Audio oscillators in `TamagotchiAudio.js` using canonical crystal quartz frequencies.
+3. **No External Audio Files**: Do not add MP3, WAV, or external audio libraries. All acoustic feedback must be synthesized via Web Audio oscillators in `RetroAudio.js` using canonical crystal quartz frequencies.
 4. **Mandatory Automated Verification**: After any modification to the engine, controllers, or storage layers, always run the test suite:
    ```bash
    npm test
    ```
-   All 12 test suites must pass without errors.
+   All 13 test suites must pass without errors.
 5. **Deploy Only From a Commit**: Publish with `npm run deploy`, which uploads a `git archive` of `HEAD`, so commit before deploying: uncommitted changes are not published. Never run `wrangler pages deploy` on the repo root: Cloudflare Pages reads no ignore file and would publish the private, git-ignored specs (`er.txt`, `er.docx`). Bump `CACHE_NAME` in `sw.js` with every content change.

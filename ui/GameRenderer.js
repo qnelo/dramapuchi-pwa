@@ -5,26 +5,36 @@ import { ICONS, UI_MODE } from '../constants/menu.js';
 export class GameRenderer {
   static getSpeciesSprite(species, frame = 0) {
     switch (species) {
+      case 'BABYPUCHI':
       case 'BABYTCHI':
-        return frame ? (SPRITES.BABYTCHI_IDLE_2 || SPRITES.BABYTCHI_IDLE) : SPRITES.BABYTCHI_IDLE;
+        return frame ? (SPRITES.BABYPUCHI_IDLE_2 || SPRITES.BABYPUCHI_IDLE) : SPRITES.BABYPUCHI_IDLE;
+      case 'ROLLI':
       case 'MARUTCHI':
-        return frame ? (SPRITES.MARUTCHI_IDLE_2 || SPRITES.MARUTCHI_IDLE) : SPRITES.MARUTCHI_IDLE;
+        return frame ? (SPRITES.ROLLI_IDLE_2 || SPRITES.ROLLI_IDLE) : SPRITES.ROLLI_IDLE;
+      case 'CHIRPY':
       case 'TAMATCHI':
-        return frame ? (SPRITES.TAMATCHI_IDLE_2 || SPRITES.TAMATCHI_IDLE) : SPRITES.TAMATCHI_IDLE;
+        return frame ? (SPRITES.CHIRPY_IDLE_2 || SPRITES.CHIRPY_IDLE) : SPRITES.CHIRPY_IDLE;
+      case 'POUTY':
       case 'KUCHITAMATCHI':
-        return frame ? (SPRITES.KUCHITAMATCHI_IDLE_2 || SPRITES.KUCHITAMATCHI_IDLE) : SPRITES.KUCHITAMATCHI_IDLE;
+        return frame ? (SPRITES.POUTY_IDLE_2 || SPRITES.POUTY_IDLE) : SPRITES.POUTY_IDLE;
+      case 'SMARTY':
       case 'MAMETCHI':
-        return frame ? (SPRITES.MAMETCHI_IDLE_2 || SPRITES.MAMETCHI_IDLE) : SPRITES.MAMETCHI_IDLE;
+        return frame ? (SPRITES.SMARTY_IDLE_2 || SPRITES.SMARTY_IDLE) : SPRITES.SMARTY_IDLE;
+      case 'PINGU':
       case 'GINJIROTCHI':
-        return SPRITES.GINJIROTCHI_IDLE || SPRITES.MAMETCHI_IDLE;
+        return SPRITES.PINGU_IDLE || SPRITES.SMARTY_IDLE;
+      case 'SHADOW':
       case 'MASKUTCHI':
-        return SPRITES.MASKUTCHI_IDLE || SPRITES.MAMETCHI_IDLE;
+        return SPRITES.SHADOW_IDLE || SPRITES.SMARTY_IDLE;
+      case 'CHOMPY':
       case 'KUCHIPATCHI':
-        return SPRITES.KUCHIPATCHI_IDLE || SPRITES.MAMETCHI_IDLE;
+        return SPRITES.CHOMPY_IDLE || SPRITES.SMARTY_IDLE;
+      case 'NOODLE':
       case 'NYOROTCHI':
-        return SPRITES.NYOROTCHI_IDLE || SPRITES.MAMETCHI_IDLE;
+        return SPRITES.NOODLE_IDLE || SPRITES.SMARTY_IDLE;
+      case 'DIVALIPS':
       case 'TARAKOTCHI':
-        return SPRITES.TARAKOTCHI_IDLE || SPRITES.MAMETCHI_IDLE;
+        return SPRITES.DIVALIPS_IDLE || SPRITES.SMARTY_IDLE;
       case 'EGG':
       default:
         return frame ? SPRITES.EGG_WIGGLE : SPRITES.EGG_IDLE;
@@ -253,7 +263,7 @@ export class GameRenderer {
       }
     }
 
-    // Tama Sitter indicator badge (top right)
+    // Puchi Sitter indicator badge (top right)
     if (petState.sitterModeActive) {
       StatusRenderer.drawText(lcd, "S", 28, 1);
     }

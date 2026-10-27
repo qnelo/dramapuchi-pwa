@@ -1,7 +1,7 @@
 {
-  "name": "Tamagotchi Retro 32x16 PWA",
-  "short_name": "Tamagotchi",
-  "description": "Authentic 1996 Generation 1 (32x16) Tamagotchi virtual pet emulator.",
+  "name": "DramaPuchi Retro 32x16 PWA",
+  "short_name": "DramaPuchi",
+  "description": "Authentic 1996 Generation 1 (32x16) DramaPuchi retro virtual pet emulator.",
   "id": "/",
   "start_url": "/",
   "scope": "/",
