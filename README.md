@@ -1,13 +1,15 @@
 # 🥚 DramaPuchi Retro 32×16 PWA
 
-[![Deploy on Cloudflare Pages](https://img.shields.io/badge/Live_Demo-dramapuchi-orange?style=flat&logo=cloudflare)](https://tama-pwa.pages.dev)
-[![PWA Ready](https://img.shields.io/badge/PWA-100%25_Offline--First-success?style=flat&logo=pwa)](https://tama-pwa.pages.dev)
-[![Pure Vanilla JS](https://img.shields.io/badge/Stack-ES_Modules_•_Web_Audio_•_Canvas-blue?style=flat)](https://tama-pwa.pages.dev)
+[![Deploy on Cloudflare Pages](https://img.shields.io/badge/Live_Demo-dramapuchi.pages.dev-orange?style=flat&logo=cloudflare)](https://dramapuchi.pages.dev)
+[![PWA Ready](https://img.shields.io/badge/PWA-100%25_Offline--First-success?style=flat&logo=pwa)](https://dramapuchi.pages.dev)
+[![Pure Vanilla JS](https://img.shields.io/badge/Stack-ES_Modules_•_Web_Audio_•_Canvas-blue?style=flat)](https://dramapuchi.pages.dev)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 A faithful, 100% client-side retro virtual pet experience (**DramaPuchi**), engineered as a modern Progressive Web App (PWA) installable on mobile and desktop devices with zero external libraries or backend servers.
 
-🎮 **Play Live in Browser**: [https://tama-pwa.pages.dev](https://tama-pwa.pages.dev)
+🎮 **Play Live in Browser**:
+* **Official**: [https://dramapuchi.pages.dev](https://dramapuchi.pages.dev)
+* **Legacy Mirror**: [https://tama-pwa.pages.dev](https://tama-pwa.pages.dev)
 
 ---
 
@@ -163,22 +165,26 @@ No build step or bundling required. Everything runs natively as standard ES Modu
 
 ## ☁️ Deployment (Cloudflare Pages)
 
-The live site is a Cloudflare Pages project (`tama-pwa`) published by direct upload. Always deploy with:
+The game is simultaneously published to two production Cloudflare Pages projects:
+1. **Primary Project**: `dramapuchi` ([https://dramapuchi.pages.dev](https://dramapuchi.pages.dev))
+2. **Legacy Mirror**: `tama-pwa` ([https://tama-pwa.pages.dev](https://tama-pwa.pages.dev))
+
+Deploy simultaneously to both domains with a single command:
 
 ```bash
 npx wrangler login   # once per machine
 npm run deploy
 ```
 
-`npm run deploy` exports the last commit with `git archive HEAD` into a temporary folder and uploads only that folder. Files ignored by git, such as the private specs `er.txt` and `er.docx`, never leave your machine. Uncommitted changes are not deployed either, so commit first.
+`npm run deploy` exports the last commit with `git archive HEAD` into a temporary folder and uploads only that folder to both Cloudflare Pages projects. Files ignored by git, such as the private specs `er.txt` and `er.docx`, never leave your machine. Uncommitted changes are not deployed either, so commit first.
 
 **Never run `wrangler pages deploy .` from the repo root.** Pages reads no ignore file: neither `.gitignore` nor `.assetsignore` apply. It uploads every file except a fixed list (`node_modules`, `.git`, `.DS_Store`, `.wrangler`, `_worker.js`, `functions`).
 
-Every deployment also stays reachable at its own URL (`<id>.tama-pwa.pages.dev`). If a private file is ever published, deploy a clean commit and then delete the old deployments:
+Every deployment also stays reachable at its own deployment URL. If a private file is ever published, deploy a clean commit and then delete old deployments:
 
 ```bash
-npx wrangler pages deployment list --project-name tama-pwa
-npx wrangler pages deployment delete <id> --project-name tama-pwa
+npx wrangler pages deployment list --project-name dramapuchi
+npx wrangler pages deployment delete <id> --project-name dramapuchi
 ```
 
 Before committing a content change, bump `CACHE_NAME` in `sw.js` so installed PWAs pick up the new version.

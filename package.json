@@ -5,6 +5,6 @@
   "scripts": {
     "start": "node server.mjs",
     "test": "node test/suite.js",
-    "deploy": "D=$(mktemp -d) && git archive HEAD | tar -x -C \"$D\" && npx --yes wrangler@4.86.0 pages deploy \"$D\" --project-name tama-pwa --branch main --commit-hash $(git rev-parse HEAD); s=$?; rm -rf \"$D\"; exit $s"
+    "deploy": "D=$(mktemp -d) && git archive HEAD | tar -x -C \"$D\" && npx --yes wrangler@4.86.0 pages deploy \"$D\" --project-name dramapuchi --branch main --commit-hash $(git rev-parse HEAD) && npx --yes wrangler@4.86.0 pages deploy \"$D\" --project-name tama-pwa --branch main --commit-hash $(git rev-parse HEAD); s=$?; rm -rf \"$D\"; exit $s"
   }
 }
