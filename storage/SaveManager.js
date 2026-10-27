@@ -2,12 +2,36 @@ const DB_NAME = 'DramaPuchiPWA_DB';
 const OLD_DB_NAME = typeof atob !== 'undefined' ? atob('VGFtYWdvdGNoaVBXQV9EQg==') : 'Legacy_PWA_DB';
 const STORE_NAME = 'saves';
 const SAVE_KEY = 'active_pet';
+const GEN2_KEY = 'dramapuchi_gen2_unlocked';
+const memoryFallback = {};
 
 export class SaveManager {
-  static getInitialState() {
+  static isGen2Unlocked() {
+    try {
+      if (typeof localStorage !== 'undefined') {
+        const val = localStorage.getItem(GEN2_KEY);
+        if (val !== null) return val === 'true';
+      }
+    } catch {}
+    return Boolean(memoryFallback[GEN2_KEY]);
+  }
+
+  static setGen2Unlocked(unlocked = true) {
+    memoryFallback[GEN2_KEY] = Boolean(unlocked);
+    try {
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem(GEN2_KEY, unlocked ? 'true' : 'false');
+      }
+    } catch {}
+  }
+
+  static getInitialState(generation = 1) {
     const now = Date.now();
+    const unlocked = this.isGen2Unlocked();
     return {
-      saveVersion: 1,
+      saveVersion: 2,
+      generation: Number(generation) || 1,
+      gen2Unlocked: unlocked,
       stage: 'EGG',
       species: 'EGG',
       bornTimestamp: now,
@@ -19,17 +43,26 @@ export class SaveManager {
       weight: 5,
       poopCount: 0,
       isSick: false,
+      sickDosesNeeded: 1,
       isSleeping: false,
       lightsOn: true,
       isCalling: false,
+      callReason: null,
+      callTimer: 0,
+      neglectTimer: 0,
+      lightMistakeTimer: 0,
       disciplineCallActive: false,
+      disciplineCallTimer: 0,
       careMistakes: 0,
+      teenCareMistakes: 0,
+      adultCareMistakes: 0,
       hungerTick: 0,
       happyTick: 0,
       poopTick: 0,
       starvationMinutes: 0,
       sickMinutes: 0,
-      sitterModeActive: false
+      sitterModeActive: false,
+      snacksFedRow: 0
     };
   }
 
@@ -48,29 +81,36 @@ export class SaveManager {
   }
 
   static async save(state) {
-    localStorage.setItem(SAVE_KEY, JSON.stringify(state)); // Synchronous fallback
+    if (state?.gen2Unlocked) {
+      this.setGen2Unlocked(true);
+    }
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem(SAVE_KEY, JSON.stringify(state)); // Synchronous fallback
+    }
     try {
       const db = await this.openDB();
       const tx = db.transaction(STORE_NAME, 'readwrite');
       tx.objectStore(STORE_NAME).put(state, SAVE_KEY);
     } catch (err) {
-      console.warn('Fallback to localStorage active:', err);
+      // Fallback to localStorage active
     }
   }
 
   static async load() {
     try {
-      const db = await this.openDB();
-      const state = await new Promise((resolve) => {
-        const tx = db.transaction(STORE_NAME, 'readonly');
-        const req = tx.objectStore(STORE_NAME).get(SAVE_KEY);
-        req.onsuccess = () => resolve(req.result || null);
-        req.onerror = () => resolve(null);
-      });
-      if (state) return state;
+      let state = null;
+      if (typeof indexedDB !== 'undefined') {
+        const db = await this.openDB();
+        state = await new Promise((resolve) => {
+          const tx = db.transaction(STORE_NAME, 'readonly');
+          const req = tx.objectStore(STORE_NAME).get(SAVE_KEY);
+          req.onsuccess = () => resolve(req.result || null);
+          req.onerror = () => resolve(null);
+        });
+      }
 
       // Migrate from legacy DB if present
-      if (typeof indexedDB !== 'undefined') {
+      if (!state && typeof indexedDB !== 'undefined') {
         try {
           const oldState = await new Promise((resolve) => {
             const req = indexedDB.open(OLD_DB_NAME, 1);
@@ -96,18 +136,32 @@ export class SaveManager {
           });
           if (oldState) {
             await this.save(oldState);
-            return oldState;
+            state = oldState;
           }
         } catch {
           // Ignore legacy DB read errors
         }
       }
 
-      const local = localStorage.getItem(SAVE_KEY);
-      return local ? JSON.parse(local) : this.getInitialState();
+      if (!state && typeof localStorage !== 'undefined') {
+        const local = localStorage.getItem(SAVE_KEY);
+        state = local ? JSON.parse(local) : null;
+      }
+
+      if (!state) {
+        state = this.getInitialState();
+      } else {
+        // Upgrade fields if missing
+        state.generation = state.generation || 1;
+        state.gen2Unlocked = state.gen2Unlocked || this.isGen2Unlocked();
+      }
+      return state;
     } catch {
-      const local = localStorage.getItem(SAVE_KEY);
-      return local ? JSON.parse(local) : this.getInitialState();
+      const local = typeof localStorage !== 'undefined' ? localStorage.getItem(SAVE_KEY) : null;
+      const state = local ? JSON.parse(local) : this.getInitialState();
+      state.generation = state.generation || 1;
+      state.gen2Unlocked = state.gen2Unlocked || this.isGen2Unlocked();
+      return state;
     }
   }
 
@@ -137,6 +191,8 @@ export class SaveManager {
             throw new Error('Invalid save file format');
           }
           parsed.lastTickTimestamp = Date.now();
+          parsed.generation = parsed.generation || 1;
+          parsed.gen2Unlocked = parsed.gen2Unlocked || this.isGen2Unlocked();
           await this.save(parsed);
           resolve(parsed);
         } catch (err) {

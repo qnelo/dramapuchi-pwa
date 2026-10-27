@@ -17,6 +17,7 @@ export class LcdMatrix {
       }
     };
     this.currentTheme = 'classic';
+    this.generation = options.generation || 1;
     this.pixelGap = options.pixelGap || 1;
     this.ghostingRate = options.ghosting ?? 0.35;
     this.targetBuffer = new Uint8Array(this.cols * this.rows);
@@ -28,6 +29,10 @@ export class LcdMatrix {
     if (this.palettes[themeName]) {
       this.currentTheme = themeName;
     }
+  }
+
+  setGeneration(gen) {
+    this.generation = Number(gen) || 1;
   }
 
   resize() {
@@ -67,6 +72,38 @@ export class LcdMatrix {
     }
   }
 
+  renderBackdrop(ctx, palette) {
+    const w = this.canvas.width;
+    const h = this.canvas.height;
+    ctx.save();
+    if (this.generation === 2) {
+      // Gen 2: Stylized swirl / wave pattern
+      ctx.strokeStyle = this.currentTheme === 'backlight' ? 'rgba(91, 254, 200, 0.08)' : 'rgba(27, 36, 22, 0.06)';
+      ctx.lineWidth = Math.max(2, this.cellSize * 0.7);
+      for (let offset = -w; offset < w * 2; offset += this.cellSize * 5) {
+        ctx.beginPath();
+        for (let x = 0; x <= w; x += 10) {
+          const y = h * 0.5 + Math.sin((x + offset) * 0.035) * (h * 0.35) + Math.cos(x * 0.02) * (h * 0.12);
+          if (x === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+      }
+    } else {
+      // Gen 1: Classic subtle checkerboard damero pattern
+      const sqSize = Math.max(4, this.cellSize * 2);
+      ctx.fillStyle = this.currentTheme === 'backlight' ? 'rgba(91, 254, 200, 0.04)' : 'rgba(27, 36, 22, 0.045)';
+      for (let y = 0; y < h; y += sqSize) {
+        for (let x = 0; x < w; x += sqSize) {
+          if ((Math.floor(x / sqSize) + Math.floor(y / sqSize)) % 2 === 0) {
+            ctx.fillRect(x, y, sqSize, sqSize);
+          }
+        }
+      }
+    }
+    ctx.restore();
+  }
+
   render() {
     const { ctx, cols, rows, cellSize, pixelGap, offsetX, offsetY } = this;
     const palette = this.palettes[this.currentTheme];
@@ -74,6 +111,9 @@ export class LcdMatrix {
 
     ctx.fillStyle = palette.bg;
     ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+    // Physical LCD film backdrop
+    this.renderBackdrop(ctx, palette);
 
     for (let y = 0; y < rows; y++) {
       for (let x = 0; x < cols; x++) {

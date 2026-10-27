@@ -1,6 +1,7 @@
 import { ICONS, UI_MODE } from '../constants/menu.js';
-import { STAGE_CONFIG } from '../config/petConfig.js';
+import { STAGE_CONFIG, FOOD_CONFIG } from '../config/petConfig.js';
 import { MiniGameController } from './MiniGameController.js';
+import { HighLowGameController } from './HighLowGameController.js';
 
 export class MenuController {
   constructor(petState, audioSystem, onStateChange) {
@@ -18,6 +19,16 @@ export class MenuController {
       () => this.notify(),
       () => this.resetToIdle()
     );
+    this.highLowGame = new HighLowGameController(
+      this.pet,
+      this.audio,
+      () => this.notify(),
+      () => this.resetToIdle()
+    );
+  }
+
+  getActiveMiniGame() {
+    return this.pet.generation === 2 ? this.highLowGame : this.miniGame;
   }
 
   triggerHaptic(ms = 15) {
@@ -29,7 +40,11 @@ export class MenuController {
     this.triggerHaptic();
 
     if (this.uiMode === UI_MODE.MINIGAME) {
-      this.miniGame.guess('LEFT');
+      if (this.pet.generation === 2) {
+        this.highLowGame.guess('LOW');
+      } else {
+        this.miniGame.guess('LEFT');
+      }
       return;
     }
 
@@ -57,7 +72,11 @@ export class MenuController {
     this.triggerHaptic();
 
     if (this.uiMode === UI_MODE.MINIGAME) {
-      this.miniGame.guess('RIGHT');
+      if (this.pet.generation === 2) {
+        this.highLowGame.guess('HIGH');
+      } else {
+        this.miniGame.guess('RIGHT');
+      }
       return;
     }
 
@@ -74,9 +93,6 @@ export class MenuController {
         this.executeSubmenuAction();
         break;
       case UI_MODE.STATUS_VIEW:
-        this.audio.playConfirm();
-        this.resetToIdle();
-        break;
       case UI_MODE.CLOCK:
         this.audio.playConfirm();
         this.resetToIdle();
@@ -91,7 +107,7 @@ export class MenuController {
     this.audio.playCancel();
 
     if (this.uiMode === UI_MODE.MINIGAME) {
-      this.miniGame.abort();
+      this.getActiveMiniGame().abort();
       this.resetToIdle();
       this.notify();
       return;
@@ -133,7 +149,7 @@ export class MenuController {
           this.triggerRefusalAnimation();
         } else {
           this.uiMode = UI_MODE.MINIGAME;
-          this.miniGame.start();
+          this.getActiveMiniGame().start();
         }
         break;
     }
@@ -144,6 +160,10 @@ export class MenuController {
       this.feedPet(this.submenuIndex === 1);
     } else if (this.selectedIcon === ICONS.LIGHT) {
       this.pet.lightsOn = (this.submenuIndex === 0);
+      if (!this.pet.lightsOn && this.pet.isSleeping) {
+        this.pet.lightCallActive = false;
+        this.pet.lightMistakeTimer = 0;
+      }
       this.resetToIdle();
     }
   }
@@ -153,14 +173,22 @@ export class MenuController {
       this.triggerRefusalAnimation();
       return;
     }
-    this.startAnimation(isCandy ? 'EATING_CANDY' : 'EATING_MEAT', 2000, () => {
+
+    const isGen2 = this.pet.generation === 2;
+    const anim = isCandy
+      ? (isGen2 ? 'EATING_CAKE' : 'EATING_CANDY')
+      : (isGen2 ? 'EATING_BURGER' : 'EATING_MEAT');
+
+    this.startAnimation(anim, 2000, () => {
       if (isCandy) {
         this.pet.happiness = Math.min(4, this.pet.happiness + 1);
         this.pet.weight += 2;
         this.pet.snacksFedRow = (this.pet.snacksFedRow || 0) + 1;
-        // Snack abuse (>4 in a row) triggers toothache and sickness
-        if (this.pet.snacksFedRow >= 5) {
+        // Gen 2 snack penalty: higher sensitivity (>= 4 triggers toothache/sickness)
+        const limit = isGen2 ? 4 : 5;
+        if (this.pet.snacksFedRow >= limit) {
           this.pet.isSick = true;
+          this.pet.sickDosesNeeded = (this.pet.sickDosesNeeded || 1);
           this.pet.snacksFedRow = 0;
         }
       } else {
@@ -168,6 +196,12 @@ export class MenuController {
         this.pet.weight += 1;
         this.pet.snacksFedRow = 0;
       }
+
+      if (this.pet.hunger > 0 && this.pet.happiness > 0 && !this.pet.disciplineCallActive && !this.pet.isSick) {
+        this.pet.isCalling = false;
+        this.pet.neglectTimer = 0;
+      }
+
       this.audio.playEat();
       this.resetToIdle();
     });
@@ -209,6 +243,11 @@ export class MenuController {
     this.uiMode = UI_MODE.ANIMATING;
     this.currentAnim = type;
     this.notify();
+    if (this.instantAnimation || durationMs <= 0) {
+      onComplete();
+      this.notify();
+      return;
+    }
     setTimeout(() => {
       onComplete();
       this.notify();
@@ -238,13 +277,14 @@ export class MenuController {
 
   notify() {
     if (this.onStateChange) {
+      const activeMini = this.getActiveMiniGame();
       this.onStateChange({
         uiMode: this.uiMode,
         selectedIcon: this.selectedIcon,
         submenuIndex: this.submenuIndex,
         statusPage: this.statusPage,
         currentAnim: this.currentAnim,
-        miniGameState: this.miniGame.getState()
+        miniGameState: activeMini ? activeMini.getState() : null
       });
     }
   }

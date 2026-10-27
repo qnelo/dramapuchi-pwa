@@ -1,6 +1,6 @@
 import { PetEngine } from './engine/timeEngine.js';
 import { LcdMatrix } from './ui/LcdMatrix.js';
-import { RetroAudio } from './audio/RetroAudio.js?v=23';
+import { RetroAudio } from './audio/RetroAudio.js?v=24';
 import { MenuController } from './controllers/MenuController.js';
 import { SaveManager } from './storage/SaveManager.js';
 import { GameRenderer } from './ui/GameRenderer.js';
@@ -25,6 +25,7 @@ async function init() {
   // 3. Initialize LCD matrix and audio synthesizer
   const canvas = document.getElementById('lcdScreen');
   lcd = new LcdMatrix(canvas);
+  syncGenerationAppearance();
   applyLcdPalette();
   audio = new RetroAudio();
 
@@ -239,6 +240,7 @@ function setupQolListeners() {
   if (btnManualOpen && modalManual) {
     btnManualOpen.addEventListener('click', () => {
       audio.init();
+      updateManualUnlockStatus();
       renderEvolutionSprites();
       modalManual.showModal();
       audio.playConfirm();
@@ -331,6 +333,7 @@ function setupQolListeners() {
       try {
         const loaded = await SaveManager.importFromFile(file);
         state = loaded;
+        syncGenerationAppearance();
         menu = new MenuController(state, audio, () => updateIconBezel());
         updateSettingsUI();
         audio.playConfirm();
@@ -342,6 +345,60 @@ function setupQolListeners() {
     });
   }
 
+  // Hatch Selection Modal & Tabs
+  const modalHatch = document.getElementById('modal-hatch');
+  const btnCloseHatch = document.getElementById('btn-close-hatch');
+  const btnHatchGen1 = document.getElementById('btn-hatch-gen1');
+  const btnHatchGen2 = document.getElementById('btn-hatch-gen2');
+
+  if (btnCloseHatch && modalHatch) {
+    btnCloseHatch.addEventListener('click', () => {
+      modalHatch.close();
+      audio.playCancel();
+    });
+  }
+  bindBackdropDismiss(modalHatch);
+
+  if (btnHatchGen1) {
+    btnHatchGen1.addEventListener('click', async () => {
+      if (modalHatch) modalHatch.close();
+      await performReset(1);
+    });
+  }
+
+  if (btnHatchGen2) {
+    btnHatchGen2.addEventListener('click', async () => {
+      if (modalHatch) modalHatch.close();
+      await performReset(2);
+    });
+  }
+
+  const tabManualGen1 = document.getElementById('tab-manual-gen1');
+  const tabManualGen2 = document.getElementById('tab-manual-gen2');
+  const manualPaneGen1 = document.getElementById('manual-pane-gen1');
+  const manualPaneGen2 = document.getElementById('manual-pane-gen2');
+
+  if (tabManualGen1 && tabManualGen2 && manualPaneGen1 && manualPaneGen2) {
+    tabManualGen1.addEventListener('click', () => {
+      tabManualGen1.classList.add('active');
+      tabManualGen2.classList.remove('active');
+      manualPaneGen1.classList.add('active');
+      manualPaneGen2.classList.remove('active');
+      renderEvolutionSprites();
+      audio.playClick();
+    });
+
+    tabManualGen2.addEventListener('click', () => {
+      tabManualGen2.classList.add('active');
+      tabManualGen1.classList.remove('active');
+      manualPaneGen2.classList.add('active');
+      manualPaneGen1.classList.remove('active');
+      updateManualUnlockStatus();
+      renderEvolutionSprites();
+      audio.playClick();
+    });
+  }
+
   // Hatch New Egg / Reset
   if (settingReset) {
     settingReset.addEventListener('click', async () => {
@@ -350,18 +407,50 @@ function setupQolListeners() {
         const ok = confirm(t.dialogs.confirmReset);
         if (!ok) return;
       }
-      state = SaveManager.getInitialState();
-      await SaveManager.save(state);
-      menu = new MenuController(state, audio, () => updateIconBezel());
-      updateSettingsUI();
-      audio.playEvolution();
-      if (modalSettings) modalSettings.close();
+      const isUnlocked = Boolean(state.gen2Unlocked || SaveManager.isGen2Unlocked());
+      if (isUnlocked && modalHatch) {
+        if (modalSettings) modalSettings.close();
+        modalHatch.showModal();
+        audio.playConfirm();
+      } else {
+        await performReset(1);
+      }
     });
   }
 }
 
+async function performReset(targetGeneration = 1) {
+  state = SaveManager.getInitialState(targetGeneration);
+  await SaveManager.save(state);
+  syncGenerationAppearance();
+  menu = new MenuController(state, audio, () => updateIconBezel());
+  updateSettingsUI();
+  audio.playEvolution();
+  const modalSettings = document.getElementById('modal-settings');
+  if (modalSettings) modalSettings.close();
+}
+
+function syncGenerationAppearance() {
+  if (!state) return;
+  const gen = Number(state.generation) || 1;
+  if (lcd) lcd.setGeneration(gen);
+  const deviceEl = document.querySelector('.pet-device');
+  if (deviceEl) {
+    deviceEl.classList.toggle('gen-2', gen === 2);
+  }
+  updateManualUnlockStatus();
+}
+
+function updateManualUnlockStatus() {
+  const noteEl = document.getElementById('manual-gen2-unlock-note');
+  if (!noteEl) return;
+  const isUnlocked = Boolean((state && state.gen2Unlocked) || SaveManager.isGen2Unlocked());
+  noteEl.style.display = isUnlocked ? 'none' : 'block';
+}
+
 function renderEvolutionSprites() {
   const mapping = [
+    // Gen 1
     { id: 'canvas-evo-babypuchi', legacyId: 'canvas-evo-babytchi', sprite: SPRITES.BABYPUCHI_IDLE },
     { id: 'canvas-evo-rolli', legacyId: 'canvas-evo-marutchi', sprite: SPRITES.ROLLI_IDLE },
     { id: 'canvas-evo-chirpy', legacyId: 'canvas-evo-tamatchi', sprite: SPRITES.CHIRPY_IDLE },
@@ -369,10 +458,24 @@ function renderEvolutionSprites() {
     { id: 'canvas-evo-smarty', legacyId: 'canvas-evo-mametchi', sprite: SPRITES.SMARTY_IDLE },
     { id: 'canvas-evo-pingu', legacyId: 'canvas-evo-ginjirotchi', sprite: SPRITES.PINGU_IDLE },
     { id: 'canvas-evo-shadow', legacyId: 'canvas-evo-maskutchi', sprite: SPRITES.SHADOW_IDLE },
+    { id: 'canvas-evo-oldy', sprite: SPRITES.OLDY_IDLE },
     { id: 'canvas-evo-chompy', legacyId: 'canvas-evo-kuchipatchi', sprite: SPRITES.CHOMPY_IDLE },
     { id: 'canvas-evo-noodle', legacyId: 'canvas-evo-nyorotchi', sprite: SPRITES.NOODLE_IDLE },
     { id: 'canvas-evo-divalips', legacyId: 'canvas-evo-tarakotchi', sprite: SPRITES.DIVALIPS_IDLE },
-    { id: 'canvas-evo-departed', sprite: SPRITES.DEPARTED_UFO }
+    { id: 'canvas-evo-departed', sprite: SPRITES.DEPARTED_UFO },
+    // Gen 2
+    { id: 'canvas-evo-snowpuchi', sprite: SPRITES.SNOWPUCHI_IDLE },
+    { id: 'canvas-evo-curly', sprite: SPRITES.CURLY_IDLE },
+    { id: 'canvas-evo-spiky', sprite: SPRITES.SPIKY_IDLE },
+    { id: 'canvas-evo-bunny', sprite: SPRITES.BUNNY_IDLE },
+    { id: 'canvas-evo-barky', sprite: SPRITES.BARKY_IDLE },
+    { id: 'canvas-evo-beaky', sprite: SPRITES.BEAKY_IDLE },
+    { id: 'canvas-evo-kitty', sprite: SPRITES.KITTY_IDLE },
+    { id: 'canvas-evo-ducky', sprite: SPRITES.DUCKY_IDLE },
+    { id: 'canvas-evo-leggy', sprite: SPRITES.LEGGY_IDLE },
+    { id: 'canvas-evo-octo', sprite: SPRITES.OCTO_IDLE },
+    { id: 'canvas-evo-flora', sprite: SPRITES.FLORA_IDLE },
+    { id: 'canvas-evo-abduction', sprite: SPRITES.UFO_BEAM }
   ];
 
   for (const item of mapping) {
@@ -457,7 +560,7 @@ function applyTranslations(lang) {
   setElText('manual-lifecycle-desc', t.manual.lifecycleDesc);
   setElText('manual-sitter-desc', t.manual.sitterDesc);
 
-  // Evolution Matrix
+  // Evolution Matrix (Gen 1)
   setElText('manual-sec-evolution-title', t.manual.evolutionHeader);
   setElText('manual-evolution-desc', t.manual.evolutionDesc);
   setElText('manual-evo-early-title', t.manual.evoEarlyTitle);
@@ -472,6 +575,7 @@ function applyTranslations(lang) {
   setElText('manual-evo-ginjirotchi-desc', t.manual.evoPinguDesc || t.manual.evoGinjirotchiDesc);
   setElText('manual-evo-shadow-desc', t.manual.evoShadowDesc || t.manual.evoMaskutchiDesc);
   setElText('manual-evo-maskutchi-desc', t.manual.evoShadowDesc || t.manual.evoMaskutchiDesc);
+  setElText('manual-evo-oldy-desc', t.manual.evoOldyDesc || "");
   setElText('manual-evo-branch-b-title', t.manual.evoBranchBTitle);
   setElText('manual-evo-pouty-desc', t.manual.evoPoutyDesc || t.manual.evoKuchitamatchiDesc);
   setElText('manual-evo-kuchitamatchi-desc', t.manual.evoPoutyDesc || t.manual.evoKuchitamatchiDesc);
@@ -484,6 +588,44 @@ function applyTranslations(lang) {
   setElText('manual-evo-departure-title', t.manual.evoDepartureTitle);
   setElText('manual-evo-departed-name', t.manual.evoDepartedName);
   setElText('manual-evo-departed-desc', t.manual.evoDepartedDesc);
+
+  // Manual Tabs
+  setElText('tab-manual-gen1', t.manual.tabGen1 || "Generation 1 (1996)");
+  setElText('tab-manual-gen2', t.manual.tabGen2 || "Generation 2 (1997)");
+
+  // Hatch Dialog
+  if (t.dialogs) {
+    setElText('hatch-title', t.dialogs.hatchTitle || "🥚 Hatch New Egg");
+    setElText('hatch-prompt', t.dialogs.hatchPrompt || "Select Generation / Selecciona Generación:");
+    setElText('lbl-hatch-gen1', t.dialogs.hatchGen1 || "Generation 1 (Classic Red)");
+    setElText('lbl-hatch-gen1-sub', t.dialogs.hatchGen1Sub || "Rice/Bread, Candy, Left/Right Game");
+    setElText('lbl-hatch-gen2', t.dialogs.hatchGen2 || "Generation 2 (Swirl Yellow)");
+    setElText('lbl-hatch-gen2-sub', t.dialogs.hatchGen2Sub || "Burger, Cake, High-Low Game");
+  }
+
+  // Generation 2 Manual Section
+  setElText('manual-gen2-unlock-note', t.manual.gen2UnlockNote || "");
+  updateManualUnlockStatus();
+  setElText('manual-gen2-features-title', t.manual.gen2FeaturesTitle || "");
+  setElText('manual-gen2-food-desc', t.manual.gen2FoodDesc || "");
+  setElText('manual-gen2-game-desc', t.manual.gen2GameDesc || "");
+  setElText('manual-gen2-evo-title', t.manual.gen2EvoTitle || "");
+  setElText('manual-gen2-early-title', t.manual.gen2EarlyTitle || "");
+  setElText('manual-evo-snowpuchi-desc', t.manual.evoSnowpuchiDesc || "");
+  setElText('manual-evo-curly-desc', t.manual.evoCurlyDesc || "");
+  setElText('manual-gen2-branch-a-title', t.manual.gen2BranchATitle || "");
+  setElText('manual-evo-spiky-desc', t.manual.evoSpikyDesc || "");
+  setElText('manual-evo-bunny-desc', t.manual.evoBunnyDesc || "");
+  setElText('manual-evo-barky-desc', t.manual.evoBarkyDesc || "");
+  setElText('manual-evo-beaky-desc', t.manual.evoBeakyDesc || "");
+  setElText('manual-evo-kitty-desc', t.manual.evoKittyDesc || "");
+  setElText('manual-gen2-branch-b-title', t.manual.gen2BranchBTitle || "");
+  setElText('manual-evo-ducky-desc', t.manual.evoDuckyDesc || "");
+  setElText('manual-evo-leggy-desc', t.manual.evoLeggyDesc || "");
+  setElText('manual-evo-octo-desc', t.manual.evoOctoDesc || "");
+  setElText('manual-evo-flora-desc', t.manual.evoFloraDesc || "");
+  setElText('manual-gen2-departure-title', t.manual.gen2DepartureTitle || "");
+  setElText('manual-gen2-departed-desc', t.manual.gen2DepartedDesc || "");
 
   setElText('manual-sec-install-title', t.manual.installHeader);
   setElText('manual-install-android', t.manual.installAndroid);

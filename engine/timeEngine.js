@@ -1,4 +1,4 @@
-import { STAGE_CONFIG, THRESHOLDS } from '../config/petConfig.js';
+import { STAGE_CONFIG, SPECIES_CONFIG, THRESHOLDS } from '../config/petConfig.js';
 import { EvolutionResolver } from './evolutionResolver.js';
 
 export class PetEngine {
@@ -34,30 +34,48 @@ export class PetEngine {
   static stepOneMinute(state, currentSimTime) {
     const config = STAGE_CONFIG[state.stage];
     if (!config) return;
+    const spec = SPECIES_CONFIG[state.species] || {};
     const dateObj = new Date(currentSimTime);
     const hour = dateObj.getHours();
     state.ageMinutes++;
 
     // 1. Check evolutionary transitions
     EvolutionResolver.checkAndEvolve(state);
-    if (state.stage === 'DEPARTED') return;
+    if (state.stage === 'DEPARTED' || state.stage === 'DEAD') return;
 
-    // 2. Evaluate sleep schedule
-    const sleepingNow = this.isSleepTime(hour, config.sleepStart, config.sleepEnd);
-    
-    // If pet just fell asleep and lights were left on, initialize light neglect timer
+    // 2. Evaluate sleep schedule (prefer species-specific schedule)
+    const sleepStart = spec.sleepStart !== undefined ? spec.sleepStart : config.sleepStart;
+    const sleepEnd = spec.sleepEnd !== undefined ? spec.sleepEnd : config.sleepEnd;
+    const sleepingNow = this.isSleepTime(hour, sleepStart, sleepEnd);
+
+    // Bedtime transition
     if (sleepingNow && !state.isSleeping) {
       state.lightMistakeTimer = 0;
+      if (state.lightsOn) {
+        state.lightCallActive = true;
+      }
     }
     state.isSleeping = sleepingNow;
+
     if (state.isSleeping) {
+      // Bedtime call window: 15 minutes to turn off light!
       if (state.lightsOn) {
         state.lightMistakeTimer = (state.lightMistakeTimer || 0) + 1;
-        if (state.lightMistakeTimer === 60) {
-          state.careMistakes++; // Lights left on during first hour of sleep
+        // Exactly 15 minutes unaddressed adds +1 Care Mistake and turns off call icon
+        if (state.lightMistakeTimer === THRESHOLDS.CARE_MISTAKE_WAIT_MIN) {
+          state.careMistakes = (state.careMistakes || 0) + 1;
+          if (state.stage === 'TEEN') state.teenCareMistakes = (state.teenCareMistakes || 0) + 1;
+          if (state.stage === 'ADULT') state.adultCareMistakes = (state.adultCareMistakes || 0) + 1;
+          state.lightCallActive = false; // Icon turns off automatically
         }
+      } else {
+        state.lightCallActive = false;
+        state.lightMistakeTimer = 0;
       }
       return; // Metabolic degradation pauses while sleeping
+    } else {
+      state.lightCallActive = false;
+      state.lightMistakeTimer = 0;
     }
 
     // 3. Puchi Sitter mode active during daytime (07:00 - 18:00)
@@ -69,21 +87,32 @@ export class PetEngine {
       }
     }
 
-    // 4. Hunger degradation
+    // 4. Senescence check (accelerated decay after day 15 as adult)
+    let hungerRate = config.hungerRateMin;
+    let happyRate = config.happyRateMin;
+    if (state.stage === 'ADULT') {
+      const adultDays = Math.max(0, (state.ageMinutes - (65 + 1440 * 5)) / 1440);
+      if (adultDays >= THRESHOLDS.SENESCENCE_START_DAYS) {
+        hungerRate = Math.max(10, Math.floor(hungerRate * 0.4));
+        happyRate = Math.max(10, Math.floor(happyRate * 0.4));
+      }
+    }
+
+    // 5. Hunger degradation
     state.hungerTick++;
-    if (state.hungerTick >= config.hungerRateMin) {
+    if (state.hungerTick >= hungerRate) {
       state.hungerTick = 0;
       if (state.hunger > 0) state.hunger--;
     }
 
-    // 5. Happiness degradation
+    // 6. Happiness degradation
     state.happyTick++;
-    if (state.happyTick >= config.happyRateMin) {
+    if (state.happyTick >= happyRate) {
       state.happyTick = 0;
       if (state.happiness > 0) state.happiness--;
     }
 
-    // 6. Poop generation
+    // 7. Poop generation
     state.poopTick++;
     if (state.poopTick >= config.poopRateMin) {
       state.poopTick = 0;
@@ -92,7 +121,7 @@ export class PetEngine {
       }
     }
 
-    // 7. Discipline calls (every 4 hours of waking time triggers a capricious call)
+    // 8. Discipline calls (every 4 hours of waking time triggers a capricious call)
     if (state.ageMinutes % 240 === 0 && state.hunger > 0 && state.happiness > 0) {
       state.disciplineCallActive = true;
       state.disciplineCallTimer = 0;
@@ -100,28 +129,33 @@ export class PetEngine {
     if (state.disciplineCallActive) {
       state.disciplineCallTimer++;
       if (state.disciplineCallTimer >= THRESHOLDS.CARE_MISTAKE_WAIT_MIN) {
-        state.careMistakes++;
+        state.careMistakes = (state.careMistakes || 0) + 1;
+        if (state.stage === 'TEEN') state.teenCareMistakes = (state.teenCareMistakes || 0) + 1;
+        if (state.stage === 'ADULT') state.adultCareMistakes = (state.adultCareMistakes || 0) + 1;
         state.disciplineCallActive = false;
       }
     }
 
-    // 8. Care Mistakes from 0 Hunger or 0 Happiness
+    // 9. Care Mistakes from 0 Hunger or 0 Happiness (15-min alert window)
     if (state.hunger === 0 || state.happiness === 0) {
       state.neglectTimer = (state.neglectTimer || 0) + 1;
       if (state.neglectTimer === THRESHOLDS.CARE_MISTAKE_WAIT_MIN) {
-        state.careMistakes++;
+        state.careMistakes = (state.careMistakes || 0) + 1;
+        if (state.stage === 'TEEN') state.teenCareMistakes = (state.teenCareMistakes || 0) + 1;
+        if (state.stage === 'ADULT') state.adultCareMistakes = (state.adultCareMistakes || 0) + 1;
       }
     } else {
       state.neglectTimer = 0;
     }
 
-    // 9. Sickness from accumulated filth
+    // 10. Sickness from accumulated filth
     if (state.poopCount >= THRESHOLDS.MAX_POOP && !state.isSick) {
       state.isSick = true;
-      state.sickDosesNeeded = 2;
+      const adultDays = state.stage === 'ADULT' ? Math.max(0, (state.ageMinutes - (65 + 1440 * 5)) / 1440) : 0;
+      state.sickDosesNeeded = (adultDays >= THRESHOLDS.SENESCENCE_START_DAYS) ? 3 : 2;
     }
 
-    // 10. Death evaluation
+    // 11. Death evaluation
     if (state.hunger === 0) {
       state.starvationMinutes++;
       if (state.starvationMinutes >= THRESHOLDS.MAX_STARVATION_MIN) {
@@ -145,16 +179,18 @@ export class PetEngine {
     }
 
     // Update general attention call flag (8th icon)
+    // Active when hunger/happiness is 0, sick, discipline call, or bedtime light call
     state.isCalling = (
       state.hunger === 0 ||
       state.happiness === 0 ||
       state.isSick ||
-      state.disciplineCallActive
+      Boolean(state.disciplineCallActive) ||
+      Boolean(state.lightCallActive)
     );
   }
 
   static isSleepTime(hour, start, end) {
-    if (start === null || end === null) return false;
+    if (start === null || end === null || start === undefined || end === undefined) return false;
     return start > end ? (hour >= start || hour < end) : (hour >= start && hour < end);
   }
 
@@ -162,7 +198,7 @@ export class PetEngine {
     const elapsed = currentTimestamp - state.bornTimestamp;
     if (elapsed >= STAGE_CONFIG.EGG.durationMin * 60 * 1000) {
       state.stage = 'BABY';
-      state.species = 'BABYPUCHI';
+      state.species = state.generation === 2 ? 'SNOWPUCHI' : 'BABYPUCHI';
       state.hunger = 2;
       state.happiness = 2;
       state.weight = STAGE_CONFIG.BABY.baseWeight;

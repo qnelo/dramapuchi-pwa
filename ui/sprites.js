@@ -1,6 +1,7 @@
 const toBits = (rows) => rows.map(r => r.replace(/\./g, '0').replace(/X/g, '1'));
 
 export const SPRITES = {
+  // --- GENERATION 1 EGGS & PETS ---
   EGG_IDLE: toBits([
     "....XXXXXXXX....",
     "...XX......XX...",
@@ -34,6 +35,45 @@ export const SPRITES = {
     "X...XX.........X",
     ".X............X.",
     "..X..........X..",
+    "...XX.......XX..",
+    "....XXXXXXXXX...",
+    "................"
+  ]),
+
+  // --- GENERATION 2 EGG (SWIRL PATTERN) ---
+  EGG_GEN2_IDLE: toBits([
+    "....XXXXXXXX....",
+    "...XX......XX...",
+    "..X...XXXX...X..",
+    ".X...XX..XX...X.",
+    ".X..XX....XX..X.",
+    "X...XX.XX.XX...X",
+    "X....XXXX.XX...X",
+    "X.........XX...X",
+    "X...XXXX..XX...X",
+    "X..XX..XX.XX...X",
+    "X..XX...XXXX...X",
+    ".X..XX........X.",
+    ".X...XXXX....X..",
+    "..XX........XX..",
+    "...XXXXXXXXXX...",
+    "................"
+  ]),
+
+  EGG_GEN2_WIGGLE: toBits([
+    ".....XXXXXXXX...",
+    "....XX......XX..",
+    "...X...XXXX...X.",
+    "..X...XX..XX...X",
+    "..X..XX....XX..X",
+    ".X...XX.XX.XX..X",
+    ".X....XXXX.XX..X",
+    ".X.........XX..X",
+    "X...XXXX..XX...X",
+    "X..XX..XX.XX...X",
+    "X..XX...XXXX...X",
+    ".X..XX........X.",
+    "..X..XXXX....X..",
     "...XX.......XX..",
     "....XXXXXXXXX...",
     "................"
@@ -110,84 +150,84 @@ export const SPRITES = {
     ".X...XXXXXX...X.",
     ".X............X.",
     "..X..........X..",
-    "...XX......XX...",
+    "...XX.XXXX.XX...",
     "...XX......XX...",
     "................"
   ]),
 
   TAMATCHI_IDLE: toBits([
-    ".....XX..XX.....",
-    "....XXXXXXXX....",
+    ".....XXXXXX.....",
     "...XX......XX...",
     "..X..........X..",
     ".X...XX..XX...X.",
     ".X...XX..XX...X.",
-    "X..............X",
-    "X.....XXXX.....X",
-    "X....X....X....X",
-    "X....XXXXXX....X",
     ".X............X.",
-    ".X............X.",
-    "..X..........X..",
-    "...XX.XXXX.XX...",
+    ".X...XXXXXX...X.",
+    "..X.X......X.X..",
+    "...XX......XX...",
+    "....X......X....",
+    "...X...XX...X...",
+    "..X...XXXX...X..",
+    "..X...XXXX...X..",
+    "...X...XX...X...",
     "....XX....XX....",
     "................"
   ]),
 
   TAMATCHI_IDLE_2: toBits([
-    ".....XX..XX.....",
-    "....XXXXXXXX....",
+    ".....XXXXXX.....",
     "...XX......XX...",
     "..X..........X..",
     ".X...XX..XX...X.",
     ".X...XX..XX...X.",
-    "X..............X",
-    "X.....XXXX.....X",
-    "X....X....X....X",
-    "X....XXXXXX....X",
     ".X............X.",
-    ".X............X.",
-    "..X..........X..",
+    ".X...XXXXXX...X.",
+    "..X.X......X.X..",
     "...XX......XX...",
-    "....XX....XX....",
+    "....X......X....",
+    "...X...XX...X...",
+    "..X...XXXX...X..",
+    "..X...XXXX...X..",
+    "...X...XX...X...",
+    "...XX......XX...",
     "................"
   ]),
 
   KUCHITAMATCHI_IDLE: toBits([
-    "................",
-    "....XXXXXXXX....",
-    "..XX........XX..",
-    ".X............X.",
-    "X....XX..XX....X",
-    "X....XX..XX....X",
-    "X..............X",
-    "X...XXXXXXXX...X",
-    "X..X........X..X",
-    ".X.X.XXXXXX.X.X.",
-    ".X..X......X..X.",
-    "..X..XXXXXX..X..",
+    ".....XXXXXX.....",
     "...XX......XX...",
-    "....XX....XX....",
+    "..X..........X..",
+    ".X...XX..XX...X.",
+    ".X...XX..XX...X.",
+    ".X............X.",
+    "..XXXXXXXXXXXX..",
+    ".X............X.",
+    ".X............X.",
+    "..XXXXXXXXXXXX..",
+    "...X........X...",
+    "...X........X...",
+    "....XXXXXXXX....",
+    "....X......X....",
     "...XX......XX...",
     "................"
   ]),
 
   KUCHITAMATCHI_IDLE_2: toBits([
-    "................",
-    "....XXXXXXXX....",
-    "..XX........XX..",
+    ".....XXXXXX.....",
+    "...XX......XX...",
+    "..X..........X..",
+    ".X...XX..XX...X.",
+    ".X...XX..XX...X.",
     ".X............X.",
-    "X....XX..XX....X",
-    "X....XX..XX....X",
-    "X..............X",
-    "X...XXXXXXXX...X",
-    "X..X........X..X",
-    ".X.X.XXXXXX.X.X.",
-    ".X..X......X..X.",
-    "..X..XXXXXX..X..",
+    "..XXXXXXXXXXXX..",
+    ".X............X.",
+    ".X............X.",
+    "..XXXXXXXXXXXX..",
+    "...X........X...",
+    "...X........X...",
+    "....XXXXXXXX....",
     "...XX......XX...",
     "....X......X....",
-    "....XX....XX....",
     "................"
   ]),
 
@@ -248,6 +288,25 @@ export const SPRITES = {
     "................"
   ]),
 
+  GINJIROTCHI_IDLE_2: toBits([
+    ".....XXXXXX.....",
+    "...XX......XX...",
+    "..X..........X..",
+    ".X...XX..XX...X.",
+    ".X...XX..XX...X.",
+    "X..............X",
+    "X.....XXXX.....X",
+    "X....XXXXXX....X",
+    "X.....XXXX.....X",
+    ".X..XXXXXXXX..X.",
+    ".X.X........X.X.",
+    "..X..........X..",
+    "...X........X...",
+    "....XXXXXXXX....",
+    "....XX....XX....",
+    "................"
+  ]),
+
   MASKUTCHI_IDLE: toBits([
     "....XXXXXXXX....",
     "...XX......XX...",
@@ -264,6 +323,25 @@ export const SPRITES = {
     "..X.X......X.X..",
     "...XX......XX...",
     "....XX....XX....",
+    "................"
+  ]),
+
+  MASKUTCHI_IDLE_2: toBits([
+    "....XXXXXXXX....",
+    "...XX......XX...",
+    "..X.XXXXXXXX.X..",
+    ".X..X......X..X.",
+    ".X..X.X..X.X..X.",
+    ".X..X.X..X.X..X.",
+    ".X..X......X..X.",
+    "..X.XXXXXXXX.X..",
+    "...XX......XX...",
+    "....XXXXXXXX....",
+    "...X........X...",
+    "..X..XXXXXX..X..",
+    "..X.X......X.X..",
+    "...XX......XX...",
+    "...XX......XX...",
     "................"
   ]),
 
@@ -286,6 +364,25 @@ export const SPRITES = {
     "....XX....XX...."
   ]),
 
+  KUCHIPATCHI_IDLE_2: toBits([
+    ".....XXXXXX.....",
+    "...XX......XX...",
+    "..X..........X..",
+    ".X...XX..XX...X.",
+    ".X...XX..XX...X.",
+    "X..............X",
+    "X...XXXXXXXX...X",
+    "X..X........X..X",
+    "X..X........X..X",
+    ".X..XXXXXXXX..X.",
+    ".X............X.",
+    "..XX.XXXXXX.XX..",
+    ".X..X......X..X.",
+    ".X..X......X..X.",
+    "..XX.XXXXXX.XX..",
+    "...XX......XX..."
+  ]),
+
   NYOROTCHI_IDLE: toBits([
     "......XXXX......",
     "....XX....XX....",
@@ -301,6 +398,25 @@ export const SPRITES = {
     "......X..X......",
     ".....X....X.....",
     "....X......X....",
+    "....XXXXXXXX....",
+    "................"
+  ]),
+
+  NYOROTCHI_IDLE_2: toBits([
+    "......XXXX......",
+    "....XX....XX....",
+    "...X..XX.X..X...",
+    "...X..XX.X..X...",
+    "...X........X...",
+    "....XX....XX....",
+    "......XXXX......",
+    "......X..X......",
+    ".....X....X.....",
+    ".....X....X.....",
+    "....X......X....",
+    "....X......X....",
+    ".....X....X.....",
+    "......X..X......",
     "....XXXXXXXX....",
     "................"
   ]),
@@ -324,7 +440,495 @@ export const SPRITES = {
     "................"
   ]),
 
-  // DramaPuchi Species Sprites
+  TARAKOTCHI_IDLE_2: toBits([
+    "....XXXXXXXX....",
+    "...XX......XX...",
+    "..X..........X..",
+    ".X...XX..XX...X.",
+    ".X...XX..XX...X.",
+    ".X............X.",
+    "..X.XXXXXXXX.X..",
+    "...X.XXXXXX.X...",
+    "...X.XXXXXX.X...",
+    "..X.XXXXXXXX.X..",
+    ".X............X.",
+    "..XX........XX..",
+    "...XXXXXXXXXX...",
+    "...XX......XX...",
+    "....XX....XX....",
+    "................"
+  ]),
+
+  // GEN 1 SECRET: OLDY (Oyajitchi counterpart)
+  OLDY_IDLE: toBits([
+    "......XX..XX....",
+    ".......X...X....",
+    ".....XXXXXXXX...",
+    "...XX........XX.",
+    "..X..XX....XX..X",
+    ".X...XX....XX...X",
+    ".X..............X",
+    ".X...XXXXXXXX...X",
+    "..X.X..XXXX..X.X",
+    "...X.XX....XX.X.",
+    "....XXXXXXXXXX..",
+    "....X...XX...X..",
+    "...X...XXXX...X.",
+    "..XX..X....X..XX",
+    ".....XX....XX...",
+    "................"
+  ]),
+
+  OLDY_IDLE_2: toBits([
+    "......XX..XX....",
+    ".......X...X....",
+    ".....XXXXXXXX...",
+    "...XX........XX.",
+    "..X..XX....XX..X",
+    ".X...XX....XX...X",
+    ".X..............X",
+    ".X...XXXXXXXX...X",
+    "..X.X..XXXX..X.X",
+    "...X.XX....XX.X.",
+    "....XXXXXXXXXX..",
+    "....X...XX...X..",
+    "...X...XXXX...X.",
+    "..XX..X....X..XX",
+    "....XX......XX..",
+    "................"
+  ]),
+
+  // --- GENERATION 2 PETS ---
+  // Baby Gen 2: SNOWPUCHI (Shirobabytchi)
+  SNOWPUCHI_IDLE: toBits([
+    "................",
+    "....XX....XX....",
+    "...X..XXXX..X...",
+    "..X..X....X..X..",
+    "..X.X..XX..X.X..",
+    ".X..X..XX..X..X.",
+    ".X..X......X..X.",
+    ".X...XXXXXX...X.",
+    "..X..........X..",
+    "...XX......XX...",
+    ".....XXXXXX.....",
+    "....X.X..X.X....",
+    "....XX....XX....",
+    "................",
+    "................",
+    "................"
+  ]),
+
+  SNOWPUCHI_IDLE_2: toBits([
+    "................",
+    "....XX....XX....",
+    "...X..XXXX..X...",
+    "..X..X....X..X..",
+    "..X.X..XX..X.X..",
+    ".X..X..XX..X..X.",
+    ".X..X......X..X.",
+    ".X...XXXXXX...X.",
+    "..X..........X..",
+    "...XX......XX...",
+    ".....XXXXXX.....",
+    "...XX......XX...",
+    "................",
+    "................",
+    "................",
+    "................"
+  ]),
+
+  // Child Gen 2: CURLY (Tonmarutchi)
+  CURLY_IDLE: toBits([
+    ".......XXX......",
+    "......X...X.....",
+    "......X.XX......",
+    ".....XXXXXX.....",
+    "...XX......XX...",
+    "..X...XXXX...X..",
+    ".X...X.XX.X...X.",
+    ".X...X.XX.X...X.",
+    "X.....XXXX.....X",
+    "X..............X",
+    ".X...XXXXXX...X.",
+    "..X..........X..",
+    "...XX......XX...",
+    "....XXXXXXXX....",
+    "....XX....XX....",
+    "................"
+  ]),
+
+  CURLY_IDLE_2: toBits([
+    ".......XXX......",
+    "......X...X.....",
+    "......X.XX......",
+    ".....XXXXXX.....",
+    "...XX......XX...",
+    "..X...XXXX...X..",
+    ".X...X.XX.X...X.",
+    ".X...X.XX.X...X.",
+    "X.....XXXX.....X",
+    "X..............X",
+    ".X...XXXXXX...X.",
+    "..X..........X..",
+    "...XX......XX...",
+    "....XXXXXXXX....",
+    "...XX......XX...",
+    "................"
+  ]),
+
+  // Teen A Gen 2: SPIKY (Tongaritchi)
+  SPIKY_IDLE: toBits([
+    ".......XX.......",
+    "......XXXX......",
+    ".....XX..XX.....",
+    "....XX....XX....",
+    "...XX......XX...",
+    "..XX..XXXX..XX..",
+    ".X...X.XX.X...X.",
+    "X....X.XX.X....X",
+    "X.....XXXX.....X",
+    "X..............X",
+    ".X...XXXXXX...X.",
+    "..X..........X..",
+    "...XXXXXXXXXX...",
+    "....X......X....",
+    "...XX......XX...",
+    "................"
+  ]),
+
+  SPIKY_IDLE_2: toBits([
+    ".......XX.......",
+    "......XXXX......",
+    ".....XX..XX.....",
+    "....XX....XX....",
+    "...XX......XX...",
+    "..XX..XXXX..XX..",
+    ".X...X.XX.X...X.",
+    "X....X.XX.X....X",
+    "X.....XXXX.....X",
+    "X..............X",
+    ".X...XXXXXX...X.",
+    "..X..........X..",
+    "...XXXXXXXXXX...",
+    "....XX....XX....",
+    "................",
+    "................"
+  ]),
+
+  // Teen B Gen 2: DUCKY (Hashitamatchi)
+  DUCKY_IDLE: toBits([
+    ".....XXXXXX.....",
+    "...XX......XX...",
+    "..X...XXXX...X..",
+    ".X...X.XX.X...X.",
+    "X....X.XX.X....X",
+    "XXXXXXXXXXXXXXX.",
+    "X.............X.",
+    "XXXXXXXXXXXXXXX.",
+    ".X...XXXXXX...X.",
+    "..X..........X..",
+    "...XXXXXXXXXX...",
+    "....X......X....",
+    "....X......X....",
+    "...XX......XX...",
+    "................",
+    "................"
+  ]),
+
+  DUCKY_IDLE_2: toBits([
+    ".....XXXXXX.....",
+    "...XX......XX...",
+    "..X...XXXX...X..",
+    ".X...X.XX.X...X.",
+    "X....X.XX.X....X",
+    "XXXXXXXXXXXXXXX.",
+    "X.............X.",
+    "XXXXXXXXXXXXXXX.",
+    ".X...XXXXXX...X.",
+    "..X..........X..",
+    "...XXXXXXXXXX...",
+    "...XX......XX...",
+    "....X......X....",
+    "................",
+    "................",
+    "................"
+  ]),
+
+  // Adult Tier 1 Gen 2: BUNNY (Mimitchi)
+  BUNNY_IDLE: toBits([
+    "..XXXX....XXXX..",
+    ".X....X..X....X.",
+    ".X.XX.X..X.XX.X.",
+    ".X.XX.X..X.XX.X.",
+    ".X....X..X....X.",
+    "..XXXX....XXXX..",
+    "...XX......XX...",
+    "..X..........X..",
+    ".X...XX..XX...X.",
+    ".X...XX..XX...X.",
+    ".X............X.",
+    "..X...XXXX...X..",
+    "...XXXXXXXXXX...",
+    "....XX.XX.XX....",
+    "...XX......XX...",
+    "................"
+  ]),
+
+  BUNNY_IDLE_2: toBits([
+    "..XXXX....XXXX..",
+    ".X....X..X....X.",
+    ".X.XX.X..X.XX.X.",
+    ".X.XX.X..X.XX.X.",
+    ".X....X..X....X.",
+    "..XXXX....XXXX..",
+    "...XX......XX...",
+    "..X..........X..",
+    ".X...XX..XX...X.",
+    ".X...XX..XX...X.",
+    ".X............X.",
+    "..X...XXXX...X..",
+    "...XXXXXXXXXX...",
+    "....XX.XX.XX....",
+    "....XX....XX....",
+    "................"
+  ]),
+
+  // Adult Tier 2 Gen 2: BARKY (Pochitchi)
+  BARKY_IDLE: toBits([
+    "...XX......XX...",
+    "..XXXX....XXXX..",
+    "..X..XX..XX..X..",
+    ".X............X.",
+    ".X...XX..XX...X.",
+    ".X...XX..XX...X.",
+    "X..............X",
+    "X.....XXXX.....X",
+    ".X...XXXXXX...X.",
+    "..X...XXXX...X..",
+    "...XXXXXXXXXX...",
+    "....X......X....",
+    "...XX......XX...",
+    "....X......X..X.",
+    "...XX......XXXX.",
+    "................"
+  ]),
+
+  BARKY_IDLE_2: toBits([
+    "...XX......XX...",
+    "..XXXX....XXXX..",
+    "..X..XX..XX..X..",
+    ".X............X.",
+    ".X...XX..XX...X.",
+    ".X...XX..XX...X.",
+    "X..............X",
+    "X.....XXXX.....X",
+    ".X...XXXXXX...X.",
+    "..X...XXXX...X..",
+    "...XXXXXXXXXX...",
+    "....XX....XX....",
+    "....X......X..X.",
+    "...XX......XXXX.",
+    "................",
+    "................"
+  ]),
+
+  // Adult Tier 3 Gen 2: BEAKY (Zukitchi)
+  BEAKY_IDLE: toBits([
+    ".....XXXXXX.....",
+    "...XX......XX...",
+    "..X..........X..",
+    ".X...XX..XX...X.",
+    "X....XX..XX....X",
+    "XXXXXXXXXXXXXXX.",
+    "X..............X",
+    "X...XXXXXXXX...X",
+    ".X..X......X..XX",
+    "..X.X......X.X.X",
+    "...XXXXXXXXXX..X",
+    "...X...XX...X.XX",
+    "..X....XX....X.X",
+    "..XX..XXXX..XX.X",
+    ".....XX..XX...X.",
+    "................"
+  ]),
+
+  BEAKY_IDLE_2: toBits([
+    ".....XXXXXX.....",
+    "...XX......XX...",
+    "..X..........X..",
+    ".X...XX..XX...X.",
+    "X....XX..XX....X",
+    "XXXXXXXXXXXXXXX.",
+    "X..............X",
+    "X...XXXXXXXX...X",
+    ".X..X......X..XX",
+    "..X.X......X.X.X",
+    "...XXXXXXXXXX..X",
+    "....X..XX..X..XX",
+    "...XX..XX..XX..X",
+    "....XX....XX...X",
+    "..............X.",
+    "................"
+  ]),
+
+  // Adult Tier 4 Gen 2: LEGGY (Hashizoutchi)
+  LEGGY_IDLE: toBits([
+    ".....XXXXXX.....",
+    "...XX......XX...",
+    "..X...XXXX...X..",
+    ".X...X.XX.X...X.",
+    "XXXXXXXXXXXXXXX.",
+    "X.............X.",
+    "XXXXXXXXXXXXXXX.",
+    ".X...XXXXXX...X.",
+    "..XXXXXXXXXXXX..",
+    ".....X....X.....",
+    ".....X....X.....",
+    ".....X....X.....",
+    ".....X....X.....",
+    ".....X....X.....",
+    "....XX....XX....",
+    "................"
+  ]),
+
+  LEGGY_IDLE_2: toBits([
+    ".....XXXXXX.....",
+    "...XX......XX...",
+    "..X...XXXX...X..",
+    ".X...X.XX.X...X.",
+    "XXXXXXXXXXXXXXX.",
+    "X.............X.",
+    "XXXXXXXXXXXXXXX.",
+    ".X...XXXXXX...X.",
+    "..XXXXXXXXXXXX..",
+    ".....X....X.....",
+    ".....X....X.....",
+    ".....X....X.....",
+    "....X......X....",
+    "...XX......XX...",
+    "................",
+    "................"
+  ]),
+
+  // Adult Tier 5 Gen 2: OCTO (Takotchi)
+  OCTO_IDLE: toBits([
+    ".....XXXXXX.....",
+    "...XX......XX...",
+    "..X..........X..",
+    ".X...XX..XX...X.",
+    ".X...XX..XX...X.",
+    "X..............X",
+    "X.....XXXX.....X",
+    "X....X....X....X",
+    ".X....XXXX....X.",
+    "..X..........X..",
+    "...XXXXXXXXXX...",
+    "..X.X..XX..X.X..",
+    ".X..X..XX..X..X.",
+    ".X..X..XX..X..X.",
+    "..XX.XX..XX.XX..",
+    "................"
+  ]),
+
+  OCTO_IDLE_2: toBits([
+    ".....XXXXXX.....",
+    "...XX......XX...",
+    "..X..........X..",
+    ".X...XX..XX...X.",
+    ".X...XX..XX...X.",
+    "X..............X",
+    "X.....XXXX.....X",
+    "X....X....X....X",
+    ".X....XXXX....X.",
+    "..X..........X..",
+    "...XXXXXXXXXX...",
+    "...XX..XX..XX...",
+    "..X..X.XX.X..X..",
+    "..X..X.XX.X..X..",
+    "...XX..XX..XX...",
+    "................"
+  ]),
+
+  // Adult Tier 6 Gen 2: FLORA (Kusatchi)
+  FLORA_IDLE: toBits([
+    "..XX....XX....XX",
+    ".XXXX..XXXX..XXX",
+    ".X..X..X..X..X..",
+    "..XX....XX....XX",
+    ".....XXXXXX.....",
+    "...XX......XX...",
+    "..X..........X..",
+    ".X...XX..XX...X.",
+    ".X...XX..XX...X.",
+    "X..............X",
+    "X....XXXXXX....X",
+    ".X..X......X..X.",
+    "..XX........XX..",
+    "...XXXXXXXXXX...",
+    "....XX....XX....",
+    "...XX......XX..."
+  ]),
+
+  FLORA_IDLE_2: toBits([
+    "..XX....XX....XX",
+    ".XXXX..XXXX..XXX",
+    ".X..X..X..X..X..",
+    "..XX....XX....XX",
+    ".....XXXXXX.....",
+    "...XX......XX...",
+    "..X..........X..",
+    ".X...XX..XX...X.",
+    ".X...XX..XX...X.",
+    "X..............X",
+    "X....XXXXXX....X",
+    ".X..X......X..X.",
+    "..XX........XX..",
+    "...XXXXXXXXXX...",
+    "...XX......XX...",
+    "....XX....XX...."
+  ]),
+
+  // Adult Secret Gen 2: KITTY (Nyatchi)
+  KITTY_IDLE: toBits([
+    ".XXXX......XXXX.",
+    ".X..XX....XX..X.",
+    ".X.X..XXXX..X.X.",
+    ".XX..........XX.",
+    "..X..XX..XX..X..",
+    "..X..XX..XX..X..",
+    "X.X..........X.X",
+    ".XX...XXXX...XX.",
+    "X.X....XX....X.X",
+    "..XX........XX..",
+    "...XXXXXXXXXX...",
+    "....X......X..X.",
+    "...XX.XXXX.XX.X.",
+    "..X..X....X..X..",
+    "..XXXX....XXXX..",
+    "................"
+  ]),
+
+  KITTY_IDLE_2: toBits([
+    ".XXXX......XXXX.",
+    ".X..XX....XX..X.",
+    ".X.X..XXXX..X.X.",
+    ".XX..........XX.",
+    "..X..XX..XX..X..",
+    "..X..XX..XX..X..",
+    "X.X..........X.X",
+    ".XX...XXXX...XX.",
+    "X.X....XX....X.X",
+    "..XX........XX..",
+    "...XXXXXXXXXX...",
+    "....X......X.XX.",
+    "...XX.XXXX.XX.X.",
+    "...XX......XX...",
+    "................",
+    "................"
+  ]),
+
+  // DramaPuchi Species Sprites aliases
   get BABYPUCHI_IDLE() { return this.BABYTCHI_IDLE; },
   get BABYPUCHI_IDLE_2() { return this.BABYTCHI_IDLE_2; },
   get ROLLI_IDLE() { return this.MARUTCHI_IDLE; },
@@ -336,10 +940,15 @@ export const SPRITES = {
   get SMARTY_IDLE() { return this.MAMETCHI_IDLE; },
   get SMARTY_IDLE_2() { return this.MAMETCHI_IDLE_2; },
   get PINGU_IDLE() { return this.GINJIROTCHI_IDLE; },
+  get PINGU_IDLE_2() { return this.GINJIROTCHI_IDLE_2; },
   get SHADOW_IDLE() { return this.MASKUTCHI_IDLE; },
+  get SHADOW_IDLE_2() { return this.MASKUTCHI_IDLE_2; },
   get CHOMPY_IDLE() { return this.KUCHIPATCHI_IDLE; },
+  get CHOMPY_IDLE_2() { return this.KUCHIPATCHI_IDLE_2; },
   get NOODLE_IDLE() { return this.NYOROTCHI_IDLE; },
+  get NOODLE_IDLE_2() { return this.NYOROTCHI_IDLE_2; },
   get DIVALIPS_IDLE() { return this.TARAKOTCHI_IDLE; },
+  get DIVALIPS_IDLE_2() { return this.TARAKOTCHI_IDLE_2; },
 
   DEAD_TOMB: toBits([
     "......XXXX......",
@@ -376,6 +985,25 @@ export const SPRITES = {
     "..X...X..X...X..",
     ".X....X..X....X.",
     "................",
+    "................"
+  ]),
+
+  UFO_BEAM: toBits([
+    ".....XXXXXX.....",
+    "....XXXXXXXX....",
+    "...XXXXXXXXXX...",
+    "....XXXXXXXX....",
+    ".....X.XX.X.....",
+    "....X......X....",
+    "...X........X...",
+    "..X...XXXX...X..",
+    "..X..XXXXXX..X..",
+    ".X..XXXXXXXX..X.",
+    ".X..XXXXXXXX..X.",
+    "X....XXXXXX....X",
+    "X.....XXXX.....X",
+    "X..............X",
+    "XXXXXXXXXXXXXXXX",
     "................"
   ]),
 
@@ -419,6 +1047,7 @@ export const SPRITES = {
     "...XX..."
   ]),
 
+  // Food items: Gen 1
   MEAT: toBits([
     "..XXXX..",
     ".XXXXXX.",
@@ -436,6 +1065,29 @@ export const SPRITES = {
     "..XXXX..",
     ".X.XX.X.",
     "X......X",
+    "........"
+  ]),
+
+  // Food items: Gen 2
+  BURGER: toBits([
+    "..XXXX..",
+    ".XXXXXX.",
+    "X.X..X.X",
+    "XXXXXXXX",
+    "XXXXXXXX",
+    ".XXXXXX.",
+    ".XXXXXX.",
+    "........"
+  ]),
+
+  SHORTCAKE: toBits([
+    "....XX..",
+    "...XXXX.",
+    "..XXXXXX",
+    ".XXXXXXX",
+    "XXXXXXXX",
+    "XXXXXXXX",
+    ".XXXXXX.",
     "........"
   ]),
 

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'dramapuchi-pwa-v23';
+const CACHE_NAME = 'dramapuchi-pwa-v24';
 const ASSETS = [
   '/',
   '/index.html',
@@ -15,6 +15,7 @@ const ASSETS = [
   '/constants/i18n.js',
   '/controllers/MenuController.js',
   '/controllers/MiniGameController.js',
+  '/controllers/HighLowGameController.js',
   '/storage/SaveManager.js',
   '/app.js',
   '/icon-192.png',

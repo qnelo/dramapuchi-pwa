@@ -113,6 +113,90 @@
         0 calc(var(--u) * 0.8) 0 rgba(110, 0, 10, 0.55),
         0 0 calc(var(--u) * 1) rgba(255, 255, 255, 0.2);
       pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .pet-device.gen-2 .shell-brand {
+      top: calc(var(--u) * 88);
+      font-size: calc(var(--u) * 19);
+      text-shadow:
+        0 calc(var(--u) * 0.8) 0 rgba(130, 75, 0, 0.55),
+        0 0 calc(var(--u) * 1) rgba(255, 255, 255, 0.2);
+    }
+
+    .shell-gen-badge {
+      display: none;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: calc(var(--u) * 8);
+      font-weight: 900;
+      letter-spacing: calc(var(--u) * 1.5);
+      background: #0077b6;
+      color: #fff;
+      padding: calc(var(--u) * 1.2) calc(var(--u) * 6);
+      border-radius: calc(var(--u) * 4);
+      margin-top: calc(var(--u) * 2.5);
+      box-shadow: 0 1.5px 3px rgba(0,0,0,0.45);
+      border: calc(var(--u) * 0.6) solid rgba(255, 255, 255, 0.35);
+      text-shadow: none;
+    }
+    .pet-device.gen-2 .shell-gen-badge {
+      display: block;
+    }
+    .pet-device:not(.gen-2) .shell-g2 {
+      display: none;
+    }
+    .pet-device.gen-2 .shell-g1 {
+      display: none;
+    }
+
+    /* Manual generation tabs */
+    .manual-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 14px;
+      background: #181a1f;
+      padding: 4px;
+      border-radius: 10px;
+    }
+    .manual-tab {
+      flex: 1;
+      padding: 8px 10px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: #9aa2ad;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      touch-action: manipulation;
+    }
+    .manual-tab:hover {
+      color: #fff;
+    }
+    .manual-tab.active {
+      background: #2d313a;
+      color: #ffd166;
+      border-color: #4a4f5c;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+    .manual-tab-pane {
+      display: none;
+    }
+    .manual-tab-pane.active {
+      display: block;
+    }
+    .manual-unlock-badge {
+      display: block;
+      background: rgba(255, 209, 102, 0.14);
+      border: 1px solid rgba(255, 209, 102, 0.35);
+      color: #ffd166;
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 12px;
+      margin-bottom: 14px;
+      line-height: 1.4;
     }
 
     /* Printed window frame around the LCD (sits inside the dark molded recess) */
@@ -648,44 +732,84 @@
         <path id="egg" d="M160,46 C242,46 307,144 309,264 C311,372 246,438 160,438 C74,438 9,372 11,264 C13,144 78,46 160,46 Z" />
         <clipPath id="clip-egg"><use href="#egg" /></clipPath>
 
-        <!-- Base ABS plastic color: lit from the upper left -->
+        <!-- Base ABS plastic color for Gen 1 (Red) -->
         <radialGradient id="g-plastic" cx="0.38" cy="0.28" r="0.8">
           <stop offset="0" stop-color="#ff4d5c" />
           <stop offset="0.35" stop-color="#e81b2e" />
           <stop offset="0.72" stop-color="#c41022" />
           <stop offset="1" stop-color="#8a0715" />
         </radialGradient>
+        <!-- Base ABS plastic color for Gen 2 (1997 Yellow) -->
+        <radialGradient id="g-plastic-g2" cx="0.38" cy="0.28" r="0.8">
+          <stop offset="0" stop-color="#fff885" />
+          <stop offset="0.35" stop-color="#ffcc00" />
+          <stop offset="0.72" stop-color="#e69500" />
+          <stop offset="1" stop-color="#995200" />
+        </radialGradient>
+
         <!-- Rim darkening that rounds the body like a pillow -->
         <radialGradient id="g-rim" cx="0.46" cy="0.42" r="0.62">
           <stop offset="0.68" stop-color="#3a0006" stop-opacity="0" />
           <stop offset="1" stop-color="#3a0006" stop-opacity="0.6" />
         </radialGradient>
+        <radialGradient id="g-rim-g2" cx="0.46" cy="0.42" r="0.62">
+          <stop offset="0.68" stop-color="#3a2200" stop-opacity="0" />
+          <stop offset="1" stop-color="#3a2200" stop-opacity="0.65" />
+        </radialGradient>
+
         <!-- Visible side wall (shell thickness) -->
         <linearGradient id="g-wall" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0" stop-color="#9c0a1a" />
           <stop offset="1" stop-color="#4c010a" />
         </linearGradient>
+        <linearGradient id="g-wall-g2" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#b37400" />
+          <stop offset="1" stop-color="#593300" />
+        </linearGradient>
+
         <!-- Beveled edge highlight -->
         <linearGradient id="g-bevel" x1="0.1" y1="0" x2="0.75" y2="1">
           <stop offset="0" stop-color="#ffd0d4" stop-opacity="0.85" />
           <stop offset="0.45" stop-color="#ff9aa3" stop-opacity="0.15" />
           <stop offset="1" stop-color="#ff9aa3" stop-opacity="0" />
         </linearGradient>
-        <!-- Raised faceplate band between the eggshell cracks -->
+        <linearGradient id="g-bevel-g2" x1="0.1" y1="0" x2="0.75" y2="1">
+          <stop offset="0" stop-color="#ffffff" stop-opacity="0.85" />
+          <stop offset="0.45" stop-color="#ffe680" stop-opacity="0.2" />
+          <stop offset="1" stop-color="#ffe680" stop-opacity="0" />
+        </linearGradient>
+
+        <!-- Raised faceplate band between the eggshell cracks (Gen 1 Red) -->
         <linearGradient id="g-band" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0" stop-color="#f02a3c" stop-opacity="0.55" />
           <stop offset="1" stop-color="#9e0a1a" stop-opacity="0.35" />
         </linearGradient>
+        <!-- Stylized ocean wave swirl band (Gen 2 Cyan/Blue) -->
+        <linearGradient id="g-band-g2" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#00b4d8" stop-opacity="0.75" />
+          <stop offset="1" stop-color="#0077b6" stop-opacity="0.6" />
+        </linearGradient>
+
         <!-- Molded recess around the screen window -->
         <linearGradient id="g-recess" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0" stop-color="#4a020b" />
           <stop offset="1" stop-color="#7a0614" />
         </linearGradient>
+        <linearGradient id="g-recess-g2" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#3d2200" />
+          <stop offset="1" stop-color="#663c00" />
+        </linearGradient>
+
         <!-- Button wells -->
         <radialGradient id="g-well" cx="0.5" cy="0.35" r="0.65">
           <stop offset="0" stop-color="#2c0005" />
           <stop offset="0.8" stop-color="#5a030d" />
           <stop offset="1" stop-color="#7d0614" />
+        </radialGradient>
+        <radialGradient id="g-well-g2" cx="0.5" cy="0.35" r="0.65">
+          <stop offset="0" stop-color="#2b1800" />
+          <stop offset="0.8" stop-color="#4d2f00" />
+          <stop offset="1" stop-color="#734700" />
         </radialGradient>
         <!-- Chrome split ring -->
         <linearGradient id="g-chrome" x1="0" y1="0" x2="1" y2="0">
@@ -700,7 +824,7 @@
           <stop offset="0.5" stop-color="#9aa2ad" />
           <stop offset="1" stop-color="#3f454e" />
         </linearGradient>
-        <!-- Keychain lug plastic -->
+        <!-- Keychain lug plastic (Gen 1 Red) -->
         <linearGradient id="g-lug" x1="0" y1="0" x2="1" y2="0">
           <stop offset="0" stop-color="#8a0715" />
           <stop offset="0.35" stop-color="#f23446" />
@@ -711,6 +835,19 @@
         <linearGradient id="g-lug-shade" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0.45" stop-color="#2a0004" stop-opacity="0" />
           <stop offset="1" stop-color="#2a0004" stop-opacity="0.65" />
+        </linearGradient>
+
+        <!-- Keychain lug plastic (Gen 2 Yellow) -->
+        <linearGradient id="g-lug-g2" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#995200" />
+          <stop offset="0.35" stop-color="#ffcc00" />
+          <stop offset="0.6" stop-color="#e69500" />
+          <stop offset="1" stop-color="#804400" />
+        </linearGradient>
+
+        <linearGradient id="g-lug-shade-g2" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0.45" stop-color="#3d2200" stop-opacity="0" />
+          <stop offset="1" stop-color="#3d2200" stop-opacity="0.65" />
         </linearGradient>
 
         <!-- Lug with a real see-through hole (the ring passes through it) -->
@@ -734,77 +871,117 @@
       <path d="M160,3 A11,19 0 0 1 160,41" fill="none" stroke="url(#g-chrome-back)" stroke-width="3.2" stroke-linecap="round" />
 
       <!-- 2. Molded keychain lug (behind the shell so the body overlaps its base) -->
-      <g mask="url(#mask-lug-hole)">
-        <path d="M142,60 L142,38 A18,18 0 0 1 178,38 L178,60 Z" fill="url(#g-lug)" />
-        <path d="M142,60 L142,38 A18,18 0 0 1 178,38 L178,60 Z" fill="url(#g-lug-shade)" />
-        <path d="M144.5,38 A15.5,15.5 0 0 1 175.5,38" fill="none" stroke="#ffb3ba" stroke-opacity="0.55" stroke-width="1.2" />
+      <!-- Gen 1 Red Lug -->
+      <g class="shell-g1">
+        <g mask="url(#mask-lug-hole)">
+          <path d="M142,60 L142,38 A18,18 0 0 1 178,38 L178,60 Z" fill="url(#g-lug)" />
+          <path d="M142,60 L142,38 A18,18 0 0 1 178,38 L178,60 Z" fill="url(#g-lug-shade)" />
+          <path d="M144.5,38 A15.5,15.5 0 0 1 175.5,38" fill="none" stroke="#ffb3ba" stroke-opacity="0.55" stroke-width="1.2" />
+        </g>
+        <!-- Inner wall of the lug hole -->
+        <circle cx="160" cy="36" r="7" fill="none" stroke="#4a020b" stroke-width="1.6" />
+        <path d="M153.4,34 A7,7 0 0 1 166.6,34" fill="none" stroke="#000" stroke-opacity="0.45" stroke-width="2" />
+        <path d="M154,39.5 A6.8,6.8 0 0 0 166,39.5" fill="none" stroke="#ff8f99" stroke-opacity="0.6" stroke-width="0.9" />
       </g>
-      <!-- Inner wall of the lug hole -->
-      <circle cx="160" cy="36" r="7" fill="none" stroke="#4a020b" stroke-width="1.6" />
-      <path d="M153.4,34 A7,7 0 0 1 166.6,34" fill="none" stroke="#000" stroke-opacity="0.45" stroke-width="2" />
-      <path d="M154,39.5 A6.8,6.8 0 0 0 166,39.5" fill="none" stroke="#ff8f99" stroke-opacity="0.6" stroke-width="0.9" />
+      <!-- Gen 2 Yellow Lug -->
+      <g class="shell-g2">
+        <g mask="url(#mask-lug-hole)">
+          <path d="M142,60 L142,38 A18,18 0 0 1 178,38 L178,60 Z" fill="url(#g-lug-g2)" />
+          <path d="M142,60 L142,38 A18,18 0 0 1 178,38 L178,60 Z" fill="url(#g-lug-shade-g2)" />
+          <path d="M144.5,38 A15.5,15.5 0 0 1 175.5,38" fill="none" stroke="#fff8a6" stroke-opacity="0.65" stroke-width="1.2" />
+        </g>
+        <!-- Inner wall of the lug hole -->
+        <circle cx="160" cy="36" r="7" fill="none" stroke="#3d2200" stroke-width="1.6" />
+        <path d="M153.4,34 A7,7 0 0 1 166.6,34" fill="none" stroke="#000" stroke-opacity="0.45" stroke-width="2" />
+        <path d="M154,39.5 A6.8,6.8 0 0 0 166,39.5" fill="none" stroke="#ffe066" stroke-opacity="0.7" stroke-width="0.9" />
+      </g>
 
       <!-- 3. Side wall: the visible thickness of the shell -->
-      <use href="#egg" transform="translate(0 7)" fill="url(#g-wall)" />
-
-      <!-- 4. Main front shell -->
-      <use href="#egg" fill="url(#g-plastic)" />
+      <g class="shell-g1">
+        <use href="#egg" transform="translate(0 7)" fill="url(#g-wall)" />
+        <use href="#egg" fill="url(#g-plastic)" />
+      </g>
+      <g class="shell-g2">
+        <use href="#egg" transform="translate(0 7)" fill="url(#g-wall-g2)" />
+        <use href="#egg" fill="url(#g-plastic-g2)" />
+      </g>
 
       <g clip-path="url(#clip-egg)">
         <!-- Plastic grain texture -->
         <rect x="0" y="40" width="320" height="406" filter="url(#f-grain)" opacity="0.09" style="mix-blend-mode: overlay" />
 
-        <!-- 5. Raised faceplate band bounded by the zigzag eggshell cracks -->
-        <path d="M0,128 L40,128 L62,120 L86,134 L110,120 L134,134 L160,118 L186,134 L210,120 L234,134 L258,120 L280,128 L320,128
-                 L320,322 L280,322 L258,330 L234,316 L210,330 L186,316 L160,332 L134,316 L110,330 L86,316 L62,330 L40,322 L0,322 Z"
-              fill="url(#g-band)" />
-        <!-- Crack crease (dark groove) and lit lip on the top zigzag -->
-        <path d="M0,127 L40,127 L62,119 L86,133 L110,119 L134,133 L160,117 L186,133 L210,119 L234,133 L258,119 L280,127 L320,127"
-              fill="none" stroke="#4d010a" stroke-opacity="0.75" stroke-width="1.6" stroke-linejoin="round" />
-        <path d="M0,129.2 L40,129.2 L62,121.2 L86,135.2 L110,121.2 L134,135.2 L160,119.2 L186,135.2 L210,121.2 L234,135.2 L258,121.2 L280,129.2 L320,129.2"
-              fill="none" stroke="#ffb0b8" stroke-opacity="0.55" stroke-width="1.1" stroke-linejoin="round" />
-        <!-- Soft cast shadow and crease under the bottom zigzag -->
-        <path d="M0,325 L40,325 L62,333 L86,319 L110,333 L134,319 L160,335 L186,319 L210,333 L234,319 L258,333 L280,325 L320,325"
-              fill="none" stroke="#3a0006" stroke-opacity="0.55" stroke-width="4" stroke-linejoin="round" filter="url(#f-blur-sm)" />
-        <path d="M0,322.5 L40,322.5 L62,330.5 L86,316.5 L110,330.5 L134,316.5 L160,332.5 L186,316.5 L210,330.5 L234,316.5 L258,330.5 L280,322.5 L320,322.5"
-              fill="none" stroke="#4d010a" stroke-opacity="0.8" stroke-width="1.4" stroke-linejoin="round" />
-        <path d="M0,320.8 L40,320.8 L62,328.8 L86,314.8 L110,328.8 L134,314.8 L160,330.8 L186,314.8 L210,328.8 L234,314.8 L258,328.8 L280,320.8 L320,320.8"
-              fill="none" stroke="#ff9aa3" stroke-opacity="0.35" stroke-width="0.9" stroke-linejoin="round" />
-
-        <!-- Specular highlights of glossy 90s plastic (painted under the recess) -->
-        <ellipse cx="100" cy="108" rx="60" ry="30" transform="rotate(-38 100 108)" fill="#fff" opacity="0.24" filter="url(#f-blur-lg)" />
-        <path d="M24,272 C22,172 74,84 150,56 C98,90 50,164 24,272 Z" fill="#fff" opacity="0.34" filter="url(#f-blur-sm)" />
-
-        <!-- 6. Molded recess that holds the screen window -->
-        <rect x="47" y="145.5" width="226" height="164" rx="22" fill="#ff7a85" opacity="0.5" />
-        <rect x="47" y="143" width="226" height="164" rx="22" fill="url(#g-recess)" />
-        <rect x="47" y="143" width="226" height="164" rx="22" fill="none" stroke="#1f0003" stroke-opacity="0.75" stroke-width="5" filter="url(#f-blur-md)" transform="translate(0 2)" />
-
-        <!-- 7. Button wells (A, B, C from left to right) -->
-        <g>
+        <!-- 5. Raised faceplate band (Gen 1 Zigzag cracks) -->
+        <g class="shell-g1">
+          <path d="M0,128 L40,128 L62,120 L86,134 L110,120 L134,134 L160,118 L186,134 L210,120 L234,134 L258,120 L280,128 L320,128
+                   L320,322 L280,322 L258,330 L234,316 L210,330 L186,316 L160,332 L134,316 L110,330 L86,316 L62,330 L40,322 L0,322 Z"
+                fill="url(#g-band)" />
+          <!-- Crack crease (dark groove) and lit lip on the top zigzag -->
+          <path d="M0,127 L40,127 L62,119 L86,133 L110,119 L134,133 L160,117 L186,133 L210,119 L234,133 L258,119 L280,127 L320,127"
+                fill="none" stroke="#4d010a" stroke-opacity="0.75" stroke-width="1.6" stroke-linejoin="round" />
+          <path d="M0,129.2 L40,129.2 L62,121.2 L86,135.2 L110,121.2 L134,135.2 L160,119.2 L186,135.2 L210,121.2 L234,135.2 L258,121.2 L280,129.2 L320,129.2"
+                fill="none" stroke="#ffb0b8" stroke-opacity="0.55" stroke-width="1.1" stroke-linejoin="round" />
+          <!-- Soft cast shadow and crease under the bottom zigzag -->
+          <path d="M0,325 L40,325 L62,333 L86,319 L110,333 L134,319 L160,335 L186,319 L210,333 L234,319 L258,333 L280,325 L320,325"
+                fill="none" stroke="#3a0006" stroke-opacity="0.55" stroke-width="4" stroke-linejoin="round" filter="url(#f-blur-sm)" />
+          <path d="M0,322.5 L40,322.5 L62,330.5 L86,316.5 L110,330.5 L134,316.5 L160,332.5 L186,316.5 L210,330.5 L234,316.5 L258,330.5 L280,322.5 L320,322.5"
+                fill="none" stroke="#4d010a" stroke-opacity="0.8" stroke-width="1.4" stroke-linejoin="round" />
+          <path d="M0,320.8 L40,320.8 L62,328.8 L86,314.8 L110,328.8 L134,314.8 L160,330.8 L186,314.8 L210,328.8 L234,314.8 L258,328.8 L280,320.8 L320,320.8"
+                fill="none" stroke="#ff9aa3" stroke-opacity="0.35" stroke-width="0.9" stroke-linejoin="round" />
+          <!-- Molded recess -->
+          <rect x="47" y="145.5" width="226" height="164" rx="22" fill="#ff7a85" opacity="0.5" />
+          <rect x="47" y="143" width="226" height="164" rx="22" fill="url(#g-recess)" />
+          <rect x="47" y="143" width="226" height="164" rx="22" fill="none" stroke="#1f0003" stroke-opacity="0.75" stroke-width="5" filter="url(#f-blur-md)" transform="translate(0 2)" />
+          <!-- Button wells -->
           <circle cx="104" cy="363.5" r="22.5" fill="#ff7a85" opacity="0.45" />
           <circle cx="104" cy="362" r="22" fill="url(#g-well)" />
           <circle cx="160" cy="375.5" r="22.5" fill="#ff7a85" opacity="0.45" />
           <circle cx="160" cy="374" r="22" fill="url(#g-well)" />
           <circle cx="216" cy="363.5" r="22.5" fill="#ff7a85" opacity="0.45" />
           <circle cx="216" cy="362" r="22" fill="url(#g-well)" />
+          <use href="#egg" fill="url(#g-rim)" />
+          <use href="#egg" fill="none" stroke="url(#g-bevel)" stroke-width="6" />
         </g>
 
-        <!-- 8. Volume shading: rim darkening -->
-        <use href="#egg" fill="url(#g-rim)" />
+        <!-- 5. Raised faceplate band (Gen 2 Cyan Waves & Swirls) -->
+        <g class="shell-g2">
+          <path d="M0,132 Q40,118 80,132 T160,132 T240,132 T320,132
+                   L320,318 Q280,332 240,318 T160,318 T80,318 T0,318 Z"
+                fill="url(#g-band-g2)" />
+          <path d="M0,130 Q40,116 80,130 T160,130 T240,130 T320,130"
+                fill="none" stroke="#005f73" stroke-opacity="0.8" stroke-width="2" stroke-linecap="round" />
+          <path d="M0,133 Q40,119 80,133 T160,133 T240,133 T320,133"
+                fill="none" stroke="#94d2bd" stroke-opacity="0.65" stroke-width="1.2" stroke-linecap="round" />
+          <path d="M0,320 Q40,334 80,320 T160,320 T240,320 T320,320"
+                fill="none" stroke="#005f73" stroke-opacity="0.8" stroke-width="2" stroke-linecap="round" />
+          <!-- Molded recess -->
+          <rect x="47" y="145.5" width="226" height="164" rx="22" fill="#ffd166" opacity="0.5" />
+          <rect x="47" y="143" width="226" height="164" rx="22" fill="url(#g-recess-g2)" />
+          <rect x="47" y="143" width="226" height="164" rx="22" fill="none" stroke="#1f1100" stroke-opacity="0.75" stroke-width="5" filter="url(#f-blur-md)" transform="translate(0 2)" />
+          <!-- Button wells -->
+          <circle cx="104" cy="363.5" r="22.5" fill="#ffd166" opacity="0.45" />
+          <circle cx="104" cy="362" r="22" fill="url(#g-well-g2)" />
+          <circle cx="160" cy="375.5" r="22.5" fill="#ffd166" opacity="0.45" />
+          <circle cx="160" cy="374" r="22" fill="url(#g-well-g2)" />
+          <circle cx="216" cy="363.5" r="22.5" fill="#ffd166" opacity="0.45" />
+          <circle cx="216" cy="362" r="22" fill="url(#g-well-g2)" />
+          <use href="#egg" fill="url(#g-rim-g2)" />
+          <use href="#egg" fill="none" stroke="url(#g-bevel-g2)" stroke-width="6" />
+        </g>
 
-        <!-- 9. Glint and bounce light (on top of everything) -->
+        <!-- Specular highlights of glossy 90s plastic -->
+        <ellipse cx="100" cy="108" rx="60" ry="30" transform="rotate(-38 100 108)" fill="#fff" opacity="0.24" filter="url(#f-blur-lg)" />
+        <path d="M24,272 C22,172 74,84 150,56 C98,90 50,164 24,272 Z" fill="#fff" opacity="0.34" filter="url(#f-blur-sm)" />
+
+        <!-- Glint and bounce light -->
         <ellipse cx="116" cy="70" rx="9" ry="3.5" transform="rotate(-28 116 70)" fill="#fff" opacity="0.75" filter="url(#f-blur-sm)" />
-        <path d="M262,392 C284,366 298,330 302,296 C304,340 290,376 266,398 Z" fill="#ff9aa3" opacity="0.3" filter="url(#f-blur-sm)" />
-
-        <!-- 10. Beveled edge where the front face meets the side wall -->
-        <use href="#egg" fill="none" stroke="url(#g-bevel)" stroke-width="6" />
+        <path d="M262,392 C284,366 298,330 302,296 C304,340 290,376 266,398 Z" fill="#fff" opacity="0.25" filter="url(#f-blur-sm)" />
       </g>
 
       <!-- Parting line between the front and back shell halves -->
-      <use href="#egg" fill="none" stroke="#2a0004" stroke-opacity="0.55" stroke-width="1" />
+      <use href="#egg" class="shell-g1" fill="none" stroke="#2a0004" stroke-opacity="0.55" stroke-width="1" />
+      <use href="#egg" class="shell-g2" fill="none" stroke="#3d2200" stroke-opacity="0.55" stroke-width="1" />
 
-      <!-- 11. Front half of the chrome ring (in front of the lug, through the hole) -->
+      <!-- 11. Front half of the chrome ring -->
       <path d="M160,3 A11,19 0 0 0 157,40" fill="none" stroke="#000" stroke-opacity="0.4" stroke-width="3.2" stroke-linecap="round" transform="translate(1.5 2)" filter="url(#f-blur-sm)" />
       <path d="M160,3 A11,19 0 0 0 160,41" fill="none" stroke="url(#g-chrome)" stroke-width="3.2" stroke-linecap="round" />
       <path d="M158.4,5 A10,17.5 0 0 0 150.4,24" fill="none" stroke="#fff" stroke-opacity="0.85" stroke-width="0.8" stroke-linecap="round" />
@@ -812,7 +989,10 @@
 
     <div class="pet-ui">
       <!-- White pad-printed "DramaPuchi" brand -->
-      <div class="shell-brand">DramaPuchi</div>
+      <div class="shell-brand">
+        <span class="shell-brand-text">DramaPuchi</span>
+        <span id="shell-gen-badge" class="shell-gen-badge">GEN 2</span>
+      </div>
 
       <!--
         Gen 1 icon shapes, drawn like 90s etched LCD segments: chunky solid polygons with
@@ -940,6 +1120,27 @@
     </div>
   </dialog>
 
+  <!-- Hatch Selection Modal (When Gen 2 is unlocked) -->
+  <dialog id="modal-hatch" class="petmodal" closedby="any" aria-labelledby="hatch-title">
+    <div class="modal-header">
+      <h2 id="hatch-title">🥚 Hatch New Egg</h2>
+      <button id="btn-close-hatch" class="btn-close-modal" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body">
+      <p id="hatch-prompt" style="margin-top:0; font-weight:500;">Select Generation / Selecciona Generación:</p>
+      <div style="display:flex; flex-direction:column; gap:10px; margin-top:12px;">
+        <button id="btn-hatch-gen1" class="settings-btn" style="text-align:left; padding:12px; font-weight:600;">
+          🥚 <span id="lbl-hatch-gen1">Generation 1 (Classic Red)</span>
+          <div id="lbl-hatch-gen1-sub" style="font-size:11px; opacity:0.8; font-weight:normal; margin-top:4px;">Rice/Bread, Candy, Left/Right Game</div>
+        </button>
+        <button id="btn-hatch-gen2" class="settings-btn" style="text-align:left; padding:12px; font-weight:600; border-color:#ffd166; color:#ffd166;">
+          ✨ <span id="lbl-hatch-gen2">Generation 2 (Swirl Yellow)</span>
+          <div id="lbl-hatch-gen2-sub" style="font-size:11px; opacity:0.8; font-weight:normal; margin-top:4px;">Burger, Cake, High-Low Game</div>
+        </button>
+      </div>
+    </div>
+  </dialog>
+
   <!-- Instruction Manual Modal -->
   <dialog id="modal-manual" class="petmodal" closedby="any" aria-labelledby="manual-title">
     <div class="modal-header">
@@ -947,181 +1148,327 @@
       <button id="btn-close-manual" class="btn-close-modal" aria-label="Close">✕</button>
     </div>
     <div class="modal-body">
-      <!-- Buttons Section -->
-      <div class="manual-section">
-        <h3 id="manual-sec-buttons-title">🔘 Keychain Buttons (Left to Right: A, B, C)</h3>
-        <div class="manual-list">
-          <div class="manual-item">
-            <span class="badge">A</span>
-            <div id="manual-btn-a-desc" class="manual-item-desc"></div>
+      <!-- Generation Switcher Tabs -->
+      <div class="manual-tabs">
+        <button id="tab-manual-gen1" class="manual-tab active" type="button">Generation 1 (1996)</button>
+        <button id="tab-manual-gen2" class="manual-tab" type="button">Generation 2 (1997)</button>
+      </div>
+
+      <!-- TAB PANE 1: GENERATION 1 -->
+      <div id="manual-pane-gen1" class="manual-tab-pane active">
+        <!-- Buttons Section -->
+        <div class="manual-section">
+          <h3 id="manual-sec-buttons-title">🔘 Keychain Buttons (Left to Right: A, B, C)</h3>
+          <div class="manual-list">
+            <div class="manual-item">
+              <span class="badge">A</span>
+              <div id="manual-btn-a-desc" class="manual-item-desc"></div>
+            </div>
+            <div class="manual-item">
+              <span class="badge">B</span>
+              <div id="manual-btn-b-desc" class="manual-item-desc"></div>
+            </div>
+            <div class="manual-item">
+              <span class="badge">C</span>
+              <div id="manual-btn-c-desc" class="manual-item-desc"></div>
+            </div>
           </div>
-          <div class="manual-item">
-            <span class="badge">B</span>
-            <div id="manual-btn-b-desc" class="manual-item-desc"></div>
+        </div>
+
+        <!-- Icons Section -->
+        <div class="manual-section">
+          <h3 id="manual-sec-icons-title">📟 8 Care Icons</h3>
+          <div class="manual-list">
+            <div class="manual-item">
+              <span class="manual-icon ink-feed"><svg viewBox="0 0 16 16"><use href="#ico-feed" /></svg></span>
+              <div id="manual-icon-0-desc" class="manual-item-desc"></div>
+            </div>
+            <div class="manual-item">
+              <span class="manual-icon ink-light"><svg viewBox="0 0 16 16"><use href="#ico-light" /></svg></span>
+              <div id="manual-icon-1-desc" class="manual-item-desc"></div>
+            </div>
+            <div class="manual-item">
+              <span class="manual-icon ink-game"><svg viewBox="0 0 16 16"><use href="#ico-game" /></svg></span>
+              <div id="manual-icon-2-desc" class="manual-item-desc"></div>
+            </div>
+            <div class="manual-item">
+              <span class="manual-icon ink-medicine"><svg viewBox="0 0 16 16"><use href="#ico-medicine" /></svg></span>
+              <div id="manual-icon-3-desc" class="manual-item-desc"></div>
+            </div>
+            <div class="manual-item">
+              <span class="manual-icon ink-clean"><svg viewBox="0 0 16 16"><use href="#ico-clean" /></svg></span>
+              <div id="manual-icon-4-desc" class="manual-item-desc"></div>
+            </div>
+            <div class="manual-item">
+              <span class="manual-icon ink-scale"><svg viewBox="0 0 16 16"><use href="#ico-scale" /></svg></span>
+              <div id="manual-icon-5-desc" class="manual-item-desc"></div>
+            </div>
+            <div class="manual-item">
+              <span class="manual-icon ink-discipline"><svg viewBox="0 0 16 16"><use href="#ico-discipline" /></svg></span>
+              <div id="manual-icon-6-desc" class="manual-item-desc"></div>
+            </div>
+            <div class="manual-item">
+              <span class="manual-icon ink-attention"><svg viewBox="0 0 16 16"><use href="#ico-attention" /></svg></span>
+              <div id="manual-icon-7-desc" class="manual-item-desc"></div>
+            </div>
           </div>
-          <div class="manual-item">
-            <span class="badge">C</span>
-            <div id="manual-btn-c-desc" class="manual-item-desc"></div>
+        </div>
+
+        <!-- Lifecycle & Tips Section -->
+        <div class="manual-section">
+          <h3 id="manual-sec-lifecycle-title">🌱 Lifecycle & Pro Tips</h3>
+          <p id="manual-lifecycle-desc" style="margin:4px 0 8px 0;"></p>
+          <p id="manual-sitter-desc" style="margin:0;"></p>
+        </div>
+
+        <!-- Evolution Matrix Section Gen 1 -->
+        <div class="manual-section">
+          <h3 id="manual-sec-evolution-title">🧬 Evolution Matrix (Gen 1)</h3>
+          <p id="manual-evolution-desc" style="margin:4px 0 10px 0;"></p>
+
+          <!-- Early stages -->
+          <div class="evo-group">
+            <div id="manual-evo-early-title" class="evo-stage-title">🌱 Early Stages (Linear)</div>
+            <div class="evo-cards">
+              <div class="evo-card">
+                <div class="manual-sprite-chip"><canvas id="canvas-evo-babypuchi" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
+                <div class="evo-info">
+                  <strong>Babypuchi</strong> <span class="badge" data-stage="baby">Baby</span>
+                  <div id="manual-evo-baby-desc" class="evo-desc"></div>
+                </div>
+              </div>
+              <div class="evo-card">
+                <div class="manual-sprite-chip"><canvas id="canvas-evo-rolli" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
+                <div class="evo-info">
+                  <strong>Rolli</strong> <span class="badge" data-stage="child">Child</span>
+                  <div id="manual-evo-child-desc" class="evo-desc"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Branch A: Chirpy -->
+          <div class="evo-group">
+            <div id="manual-evo-branch-a-title" class="evo-stage-title">⭐ Branch A: Good Care (Chirpy)</div>
+            <div class="evo-card evo-card-teen">
+              <div class="manual-sprite-chip"><canvas id="canvas-evo-chirpy" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
+              <div class="evo-info">
+                <strong>Chirpy</strong> <span class="badge" data-stage="teen">Teen</span>
+                <div id="manual-evo-chirpy-desc" class="evo-desc"></div>
+              </div>
+            </div>
+            <div class="evo-subcards">
+              <div class="evo-card">
+                <div class="manual-sprite-chip"><canvas id="canvas-evo-smarty" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
+                <div class="evo-info">
+                  <strong>Smarty</strong> <span class="badge badge-gold" data-stage="adult">Adult</span>
+                  <div id="manual-evo-smarty-desc" class="evo-desc"></div>
+                </div>
+              </div>
+              <div class="evo-card">
+                <div class="manual-sprite-chip"><canvas id="canvas-evo-pingu" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
+                <div class="evo-info">
+                  <strong>Pingu</strong> <span class="badge" data-stage="adult">Adult</span>
+                  <div id="manual-evo-pingu-desc" class="evo-desc"></div>
+                </div>
+              </div>
+              <div class="evo-card">
+                <div class="manual-sprite-chip"><canvas id="canvas-evo-shadow" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
+                <div class="evo-info">
+                  <strong>Shadow</strong> <span class="badge" data-stage="adult">Adult</span>
+                  <div id="manual-evo-shadow-desc" class="evo-desc"></div>
+                </div>
+              </div>
+              <!-- Gen 1 Secret Character: Oldy -->
+              <div class="evo-card" style="border-color:#b59410;">
+                <div class="manual-sprite-chip"><canvas id="canvas-evo-oldy" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
+                <div class="evo-info">
+                  <strong>Oldy</strong> <span class="badge badge-gold" style="background:#b59410; color:#fff;">Secret</span>
+                  <div id="manual-evo-oldy-desc" class="evo-desc"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Branch B: Pouty -->
+          <div class="evo-group">
+            <div id="manual-evo-branch-b-title" class="evo-stage-title">🍂 Branch B: Poor Care (Pouty)</div>
+            <div class="evo-card evo-card-teen">
+              <div class="manual-sprite-chip"><canvas id="canvas-evo-pouty" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
+              <div class="evo-info">
+                <strong>Pouty</strong> <span class="badge" data-stage="teen">Teen</span>
+                <div id="manual-evo-pouty-desc" class="evo-desc"></div>
+              </div>
+            </div>
+            <div class="evo-subcards">
+              <div class="evo-card">
+                <div class="manual-sprite-chip"><canvas id="canvas-evo-chompy" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
+                <div class="evo-info">
+                  <strong>Chompy</strong> <span class="badge" data-stage="adult">Adult</span>
+                  <div id="manual-evo-chompy-desc" class="evo-desc"></div>
+                </div>
+              </div>
+              <div class="evo-card">
+                <div class="manual-sprite-chip"><canvas id="canvas-evo-noodle" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
+                <div class="evo-info">
+                  <strong>Noodle</strong> <span class="badge" data-stage="adult">Adult</span>
+                  <div id="manual-evo-noodle-desc" class="evo-desc"></div>
+                </div>
+              </div>
+              <div class="evo-card">
+                <div class="manual-sprite-chip"><canvas id="canvas-evo-divalips" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
+                <div class="evo-info">
+                  <strong>Divalips</strong> <span class="badge" data-stage="adult">Adult</span>
+                  <div id="manual-evo-divalips-desc" class="evo-desc"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Departure -->
+          <div class="evo-group">
+            <div id="manual-evo-departure-title" class="evo-stage-title">🛸 Departure (UFO)</div>
+            <div class="evo-card">
+              <div class="manual-sprite-chip"><canvas id="canvas-evo-departed" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
+              <div class="evo-info">
+                <strong id="manual-evo-departed-name">Home Planet Return</strong> <span class="badge">End</span>
+                <div id="manual-evo-departed-desc" class="evo-desc"></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Icons Section -->
-      <div class="manual-section">
-        <h3 id="manual-sec-icons-title">📟 8 Care Icons</h3>
-        <div class="manual-list">
-          <div class="manual-item">
-            <span class="manual-icon ink-feed"><svg viewBox="0 0 16 16"><use href="#ico-feed" /></svg></span>
-            <div id="manual-icon-0-desc" class="manual-item-desc"></div>
-          </div>
-          <div class="manual-item">
-            <span class="manual-icon ink-light"><svg viewBox="0 0 16 16"><use href="#ico-light" /></svg></span>
-            <div id="manual-icon-1-desc" class="manual-item-desc"></div>
-          </div>
-          <div class="manual-item">
-            <span class="manual-icon ink-game"><svg viewBox="0 0 16 16"><use href="#ico-game" /></svg></span>
-            <div id="manual-icon-2-desc" class="manual-item-desc"></div>
-          </div>
-          <div class="manual-item">
-            <span class="manual-icon ink-medicine"><svg viewBox="0 0 16 16"><use href="#ico-medicine" /></svg></span>
-            <div id="manual-icon-3-desc" class="manual-item-desc"></div>
-          </div>
-          <div class="manual-item">
-            <span class="manual-icon ink-clean"><svg viewBox="0 0 16 16"><use href="#ico-clean" /></svg></span>
-            <div id="manual-icon-4-desc" class="manual-item-desc"></div>
-          </div>
-          <div class="manual-item">
-            <span class="manual-icon ink-scale"><svg viewBox="0 0 16 16"><use href="#ico-scale" /></svg></span>
-            <div id="manual-icon-5-desc" class="manual-item-desc"></div>
-          </div>
-          <div class="manual-item">
-            <span class="manual-icon ink-discipline"><svg viewBox="0 0 16 16"><use href="#ico-discipline" /></svg></span>
-            <div id="manual-icon-6-desc" class="manual-item-desc"></div>
-          </div>
-          <div class="manual-item">
-            <span class="manual-icon ink-attention"><svg viewBox="0 0 16 16"><use href="#ico-attention" /></svg></span>
-            <div id="manual-icon-7-desc" class="manual-item-desc"></div>
-          </div>
-        </div>
-      </div>
+      <!-- TAB PANE 2: GENERATION 2 -->
+      <div id="manual-pane-gen2" class="manual-tab-pane">
+        <!-- Unlock banner note -->
+        <div id="manual-gen2-unlock-note" class="manual-unlock-badge"></div>
 
-      <!-- Lifecycle & Tips Section -->
-      <div class="manual-section">
-        <h3 id="manual-sec-lifecycle-title">🌱 Lifecycle & Pro Tips</h3>
-        <p id="manual-lifecycle-desc" style="margin:4px 0 8px 0;"></p>
-        <p id="manual-sitter-desc" style="margin:0;"></p>
-      </div>
-
-      <!-- Evolution Matrix Section -->
-      <div class="manual-section">
-        <h3 id="manual-sec-evolution-title">🧬 Evolution Matrix</h3>
-        <p id="manual-evolution-desc" style="margin:4px 0 10px 0;"></p>
-
-        <!-- Early stages -->
-        <div class="evo-group">
-          <div id="manual-evo-early-title" class="evo-stage-title">🌱 Early Stages (Linear)</div>
-          <div class="evo-cards">
-            <div class="evo-card">
-              <div class="manual-sprite-chip"><canvas id="canvas-evo-babypuchi" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
-              <div class="evo-info">
-                <strong>Babypuchi</strong> <span class="badge" data-stage="baby">Baby</span>
-                <div id="manual-evo-baby-desc" class="evo-desc"></div>
-              </div>
-            </div>
-            <div class="evo-card">
-              <div class="manual-sprite-chip"><canvas id="canvas-evo-rolli" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
-              <div class="evo-info">
-                <strong>Rolli</strong> <span class="badge" data-stage="child">Child</span>
-                <div id="manual-evo-child-desc" class="evo-desc"></div>
-              </div>
-            </div>
-          </div>
+        <!-- Gen 2 Food & Minigame -->
+        <div class="manual-section">
+          <h3 id="manual-gen2-features-title">✨ Gen 2 Highlights & Changes</h3>
+          <p id="manual-gen2-food-desc" style="margin:4px 0 8px 0;"></p>
+          <p id="manual-gen2-game-desc" style="margin:0 0 8px 0;"></p>
         </div>
 
-        <!-- Branch A: Chirpy -->
-        <div class="evo-group">
-          <div id="manual-evo-branch-a-title" class="evo-stage-title">⭐ Branch A: Good Care (Chirpy)</div>
-          <div class="evo-card evo-card-teen">
-            <div class="manual-sprite-chip"><canvas id="canvas-evo-chirpy" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
-            <div class="evo-info">
-              <strong>Chirpy</strong> <span class="badge" data-stage="teen">Teen</span>
-              <div id="manual-evo-chirpy-desc" class="evo-desc"></div>
-            </div>
-          </div>
-          <div class="evo-subcards">
-            <div class="evo-card">
-              <div class="manual-sprite-chip"><canvas id="canvas-evo-smarty" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
-              <div class="evo-info">
-                <strong>Smarty</strong> <span class="badge badge-gold" data-stage="adult">Adult</span>
-                <div id="manual-evo-smarty-desc" class="evo-desc"></div>
-              </div>
-            </div>
-            <div class="evo-card">
-              <div class="manual-sprite-chip"><canvas id="canvas-evo-pingu" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
-              <div class="evo-info">
-                <strong>Pingu</strong> <span class="badge" data-stage="adult">Adult</span>
-                <div id="manual-evo-pingu-desc" class="evo-desc"></div>
-              </div>
-            </div>
-            <div class="evo-card">
-              <div class="manual-sprite-chip"><canvas id="canvas-evo-shadow" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
-              <div class="evo-info">
-                <strong>Shadow</strong> <span class="badge" data-stage="adult">Adult</span>
-                <div id="manual-evo-shadow-desc" class="evo-desc"></div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <!-- Evolution Matrix Section Gen 2 -->
+        <div class="manual-section">
+          <h3 id="manual-gen2-evo-title">🧬 Evolution Matrix (Gen 2)</h3>
 
-        <!-- Branch B: Pouty -->
-        <div class="evo-group">
-          <div id="manual-evo-branch-b-title" class="evo-stage-title">🍂 Branch B: Poor Care (Pouty)</div>
-          <div class="evo-card evo-card-teen">
-            <div class="manual-sprite-chip"><canvas id="canvas-evo-pouty" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
-            <div class="evo-info">
-              <strong>Pouty</strong> <span class="badge" data-stage="teen">Teen</span>
-              <div id="manual-evo-pouty-desc" class="evo-desc"></div>
-            </div>
-          </div>
-          <div class="evo-subcards">
-            <div class="evo-card">
-              <div class="manual-sprite-chip"><canvas id="canvas-evo-chompy" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
-              <div class="evo-info">
-                <strong>Chompy</strong> <span class="badge" data-stage="adult">Adult</span>
-                <div id="manual-evo-chompy-desc" class="evo-desc"></div>
+          <!-- Early stages Gen 2 -->
+          <div class="evo-group">
+            <div id="manual-gen2-early-title" class="evo-stage-title">🌱 Early Stages (Linear)</div>
+            <div class="evo-cards">
+              <div class="evo-card">
+                <div class="manual-sprite-chip"><canvas id="canvas-evo-snowpuchi" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
+                <div class="evo-info">
+                  <strong>Snowpuchi</strong> <span class="badge" data-stage="baby">Baby</span>
+                  <div id="manual-evo-snowpuchi-desc" class="evo-desc"></div>
+                </div>
               </div>
-            </div>
-            <div class="evo-card">
-              <div class="manual-sprite-chip"><canvas id="canvas-evo-noodle" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
-              <div class="evo-info">
-                <strong>Noodle</strong> <span class="badge" data-stage="adult">Adult</span>
-                <div id="manual-evo-noodle-desc" class="evo-desc"></div>
-              </div>
-            </div>
-            <div class="evo-card">
-              <div class="manual-sprite-chip"><canvas id="canvas-evo-divalips" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
-              <div class="evo-info">
-                <strong>Divalips</strong> <span class="badge" data-stage="adult">Adult</span>
-                <div id="manual-evo-divalips-desc" class="evo-desc"></div>
+              <div class="evo-card">
+                <div class="manual-sprite-chip"><canvas id="canvas-evo-curly" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
+                <div class="evo-info">
+                  <strong>Curly</strong> <span class="badge" data-stage="child">Child</span>
+                  <div id="manual-evo-curly-desc" class="evo-desc"></div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <!-- Departure -->
-        <div class="evo-group">
-          <div id="manual-evo-departure-title" class="evo-stage-title">🛸 Departure (UFO)</div>
-          <div class="evo-card">
-            <div class="manual-sprite-chip"><canvas id="canvas-evo-departed" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
-            <div class="evo-info">
-              <strong id="manual-evo-departed-name">Home Planet Return</strong> <span class="badge">End</span>
-              <div id="manual-evo-departed-desc" class="evo-desc"></div>
+          <!-- Branch A: Spiky -->
+          <div class="evo-group">
+            <div id="manual-gen2-branch-a-title" class="evo-stage-title">⭐ Branch A: Good Care (Spiky)</div>
+            <div class="evo-card evo-card-teen">
+              <div class="manual-sprite-chip"><canvas id="canvas-evo-spiky" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
+              <div class="evo-info">
+                <strong>Spiky</strong> <span class="badge" data-stage="teen">Teen</span>
+                <div id="manual-evo-spiky-desc" class="evo-desc"></div>
+              </div>
+            </div>
+            <div class="evo-subcards">
+              <div class="evo-card">
+                <div class="manual-sprite-chip"><canvas id="canvas-evo-bunny" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
+                <div class="evo-info">
+                  <strong>Bunny</strong> <span class="badge badge-gold" data-stage="adult">Adult</span>
+                  <div id="manual-evo-bunny-desc" class="evo-desc"></div>
+                </div>
+              </div>
+              <div class="evo-card">
+                <div class="manual-sprite-chip"><canvas id="canvas-evo-barky" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
+                <div class="evo-info">
+                  <strong>Barky</strong> <span class="badge" data-stage="adult">Adult</span>
+                  <div id="manual-evo-barky-desc" class="evo-desc"></div>
+                </div>
+              </div>
+              <div class="evo-card">
+                <div class="manual-sprite-chip"><canvas id="canvas-evo-beaky" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
+                <div class="evo-info">
+                  <strong>Beaky</strong> <span class="badge" data-stage="adult">Adult</span>
+                  <div id="manual-evo-beaky-desc" class="evo-desc"></div>
+                </div>
+              </div>
+              <!-- Gen 2 Secret Character: Kitty -->
+              <div class="evo-card" style="border-color:#b59410;">
+                <div class="manual-sprite-chip"><canvas id="canvas-evo-kitty" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
+                <div class="evo-info">
+                  <strong>Kitty</strong> <span class="badge badge-gold" style="background:#b59410; color:#fff;">Secret</span>
+                  <div id="manual-evo-kitty-desc" class="evo-desc"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Branch B: Ducky -->
+          <div class="evo-group">
+            <div id="manual-gen2-branch-b-title" class="evo-stage-title">🍂 Branch B: Poor Care (Ducky)</div>
+            <div class="evo-card evo-card-teen">
+              <div class="manual-sprite-chip"><canvas id="canvas-evo-ducky" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
+              <div class="evo-info">
+                <strong>Ducky</strong> <span class="badge" data-stage="teen">Teen</span>
+                <div id="manual-evo-ducky-desc" class="evo-desc"></div>
+              </div>
+            </div>
+            <div class="evo-subcards">
+              <div class="evo-card">
+                <div class="manual-sprite-chip"><canvas id="canvas-evo-leggy" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
+                <div class="evo-info">
+                  <strong>Leggy</strong> <span class="badge" data-stage="adult">Adult</span>
+                  <div id="manual-evo-leggy-desc" class="evo-desc"></div>
+                </div>
+              </div>
+              <div class="evo-card">
+                <div class="manual-sprite-chip"><canvas id="canvas-evo-octo" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
+                <div class="evo-info">
+                  <strong>Octo</strong> <span class="badge" data-stage="adult">Adult</span>
+                  <div id="manual-evo-octo-desc" class="evo-desc"></div>
+                </div>
+              </div>
+              <div class="evo-card">
+                <div class="manual-sprite-chip"><canvas id="canvas-evo-flora" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
+                <div class="evo-info">
+                  <strong>Flora</strong> <span class="badge" data-stage="adult">Adult</span>
+                  <div id="manual-evo-flora-desc" class="evo-desc"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Departure Gen 2 -->
+          <div class="evo-group">
+            <div id="manual-gen2-departure-title" class="evo-stage-title">🛸 Abduction & Return (UFO)</div>
+            <div class="evo-card">
+              <div class="manual-sprite-chip"><canvas id="canvas-evo-abduction" class="manual-sprite-canvas" width="16" height="16"></canvas></div>
+              <div class="evo-info">
+                <strong>Alien UFO Abduction</strong> <span class="badge">End</span>
+                <div id="manual-gen2-departed-desc" class="evo-desc"></div>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Installation on Mobile Section -->
+      <!-- Installation on Mobile Section (Shared) -->
       <div class="manual-section">
         <h3 id="manual-sec-install-title">📱 Install on Mobile</h3>
         <div class="manual-list">
@@ -1136,7 +1483,7 @@
         </div>
       </div>
 
-      <!-- Credits & Repository Section -->
+      <!-- Credits & Repository Section (Shared) -->
       <div class="manual-section">
         <h3 id="manual-sec-credits-title">✨ Credits & Repository</h3>
         <p style="margin:4px 0 6px 0;">
@@ -1162,6 +1509,6 @@
     </div>
   </div>
 
-  <script type="module" src="./app.js?v=33"></script>
+  <script type="module" src="./app.js?v=34"></script>
 </body>
 </html>
