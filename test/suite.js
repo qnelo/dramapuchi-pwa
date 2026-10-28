@@ -743,4 +743,29 @@ assert(!allJson.includes('तामागोची'), 'Zero-leak failure: found 
 assert(!allJson.includes('তামাগোচি'), 'Zero-leak failure: found Bengali tamagotchi in translations');
 console.log('✓ Trademark Zero-Leak Audit verified (0 occurrences).');
 
-console.log('\nALL 14 TEST SUITES PASSED SUCCESSFULLY! 🎯');
+// 15. CloudSyncManager
+console.log('Testing CloudSyncManager...');
+const { CloudSyncManager } = await import('../storage/CloudSyncManager.js');
+
+// isFreshEgg
+const freshEgg = { stage: 'EGG', ageMinutes: 0, hunger: 0, happiness: 0 };
+assert(CloudSyncManager.isFreshEgg(freshEgg) === true, 'Brand-new egg must be detected as fresh egg');
+assert(CloudSyncManager.isFreshEgg(null) === true, 'Null state should be considered fresh egg');
+
+const evolvedPet = { stage: 'BABY', ageMinutes: 5, hunger: 2, happiness: 2 };
+assert(CloudSyncManager.isFreshEgg(evolvedPet) === false, 'Baby pet must NOT be detected as fresh egg');
+
+const eggWithAge = { stage: 'EGG', ageMinutes: 3, hunger: 0, happiness: 0 };
+assert(CloudSyncManager.isFreshEgg(eggWithAge) === false, 'Egg with ageMinutes > 0 must NOT be fresh egg');
+
+// JWT decode test
+const fakePayload = { sub: 'google-12345', email: 'test@example.com', name: 'Test User' };
+const b64Payload = Buffer.from(JSON.stringify(fakePayload)).toString('base64url');
+const fakeJwt = `eyJhbGciOiJSUzI1NiJ9.${b64Payload}.signature`;
+const decoded = CloudSyncManager.decodeJwtPayload(fakeJwt);
+assert(decoded.sub === 'google-12345', 'Decoded sub must match');
+assert(decoded.email === 'test@example.com', 'Decoded email must match');
+
+console.log('✓ CloudSyncManager verified.');
+
+console.log('\nALL 15 TEST SUITES PASSED SUCCESSFULLY! 🎯');

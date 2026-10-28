@@ -20,7 +20,11 @@ export const TRANSLATIONS = {
       "soundOff": "🔇 Audio: Muted",
       "export": "💾 Export Save (JSON)",
       "import": "📂 Import Save (JSON)",
-      "reset": "🥚 Hatch New Egg"
+      "reset": "🥚 Hatch New Egg",
+      "cloudHeader": "☁️ Cloud Save & Sync",
+      "cloudDisconnect": "Disconnect",
+      "cloudDisconnected": "⚪ Not connected",
+      "cloudSynced": "🟢 Synced"
     },
     "icons": {
       "0": "Feed",
@@ -52,7 +56,11 @@ export const TRANSLATIONS = {
       "hatchGen1": "Gen 1 (Classic)",
       "hatchGen1Sub": "Rice/Bread, Candy, Left/Right Game",
       "hatchGen2": "Gen 2 (Swirl)",
-      "hatchGen2Sub": "Burger, Cake, High-Low Game"
+      "hatchGen2Sub": "Burger, Cake, High-Low Game",
+      "conflictTitle": "⚠️ Sync Conflict",
+      "conflictDesc": "A different save was found in the cloud. Which version do you want to keep?",
+      "conflictCloud": "☁️ Use Cloud Save",
+      "conflictLocal": "📱 Keep This Device"
     },
     "manual": {
       "title": "📖 DramaPuchi Manual",
@@ -165,7 +173,11 @@ export const TRANSLATIONS = {
       "soundOff": "🔇 Audio: SILENCIADO",
       "export": "💾 Exportar partida (JSON)",
       "import": "📂 Importar partida (JSON)",
-      "reset": "🥚 Incubar Nuevo Huevo"
+      "reset": "🥚 Incubar Nuevo Huevo",
+      "cloudHeader": "☁️ Guardado en la nube",
+      "cloudDisconnect": "Desconectar",
+      "cloudDisconnected": "⚪ No conectado",
+      "cloudSynced": "🟢 Sincronizado"
     },
     "icons": {
       "0": "Comida",
@@ -197,7 +209,11 @@ export const TRANSLATIONS = {
       "hatchGen1": "Gen 1 (Clásica)",
       "hatchGen1Sub": "Arroz/Pan, Caramelo, Juego Izq/Der",
       "hatchGen2": "Gen 2 (Remolinos)",
-      "hatchGen2Sub": "Hamburguesa, Pastel, Juego Mayor/Menor"
+      "hatchGen2Sub": "Hamburguesa, Pastel, Juego Mayor/Menor",
+      "conflictTitle": "⚠️ Conflicto de sincronización",
+      "conflictDesc": "Se encontró una partida diferente en la nube. ¿Cuál deseas conservar?",
+      "conflictCloud": "☁️ Usar la de la nube",
+      "conflictLocal": "📱 Conservar este dispositivo"
     },
     "manual": {
       "title": "📖 Manual de DramaPuchi",
@@ -310,7 +326,11 @@ export const TRANSLATIONS = {
       "soundOff": "🔇 声音：静音",
       "export": "💾 导出存档 (JSON)",
       "import": "📂 导入存档 (JSON)",
-      "reset": "🥚 重新孵化新蛋"
+      "reset": "🥚 重新孵化新蛋",
+      "cloudHeader": "☁️ 云端存档与同步",
+      "cloudDisconnect": "断开连接",
+      "cloudDisconnected": "⚪ 未连接",
+      "cloudSynced": "🟢 已同步"
     },
     "icons": {
       "0": "喂食",
@@ -342,7 +362,11 @@ export const TRANSLATIONS = {
       "hatchGen1": "第1代（经典）",
       "hatchGen1Sub": "米饭/面包、糖果、猜方向游戏",
       "hatchGen2": "第2代（旋涡）",
-      "hatchGen2Sub": "汉堡、蛋糕、高低猜数游戏"
+      "hatchGen2Sub": "汉堡、蛋糕、高低猜数游戏",
+      "conflictTitle": "⚠️ 同步冲突",
+      "conflictDesc": "在云端发现了不同的存档。你想保留哪个版本？",
+      "conflictCloud": "☁️ 使用云端存档",
+      "conflictLocal": "📱 保留此设备进度"
     },
     "manual": {
       "title": "📖 DramaPuchi 培养手册",
@@ -455,7 +479,11 @@ export const TRANSLATIONS = {
       "soundOff": "🔇 Áudio: MUDO",
       "export": "💾 Exportar partida (JSON)",
       "import": "📂 Importar partida (JSON)",
-      "reset": "🥚 Chocar Novo Ovo"
+      "reset": "🥚 Chocar Novo Ovo",
+      "cloudHeader": "☁️ Salvamento na Nuvem",
+      "cloudDisconnect": "Desconectar",
+      "cloudDisconnected": "⚪ Não conectado",
+      "cloudSynced": "🟢 Sincronizado"
     },
     "icons": {
       "0": "Alimentar",
@@ -487,7 +515,11 @@ export const TRANSLATIONS = {
       "hatchGen1": "Geração 1 (Clássica)",
       "hatchGen1Sub": "Arroz/Pão, Doce, Jogo Esq/Dir",
       "hatchGen2": "Geração 2 (Ondas)",
-      "hatchGen2Sub": "Hambúrguer, Bolo, Jogo Maior/Menor"
+      "hatchGen2Sub": "Hambúrguer, Bolo, Jogo Maior/Menor",
+      "conflictTitle": "⚠️ Conflito de Sincronização",
+      "conflictDesc": "Um progresso diferente foi encontrado na nuvem. Qual deseja manter?",
+      "conflictCloud": "☁️ Usar da Nuvem",
+      "conflictLocal": "📱 Manter Este Dispositivo"
     },
     "manual": {
       "title": "📖 Manual do DramaPuchi",
@@ -600,7 +632,11 @@ export const TRANSLATIONS = {
       "soundOff": "🔇 音声: 消音",
       "export": "💾 セーブを書き出す",
       "import": "📂 セーブを読み込む",
-      "reset": "🥚 新しいたまごを孵化"
+      "reset": "🥚 新しいたまごを孵化",
+      "cloudHeader": "☁️ クラウドセーブ＆同期",
+      "cloudDisconnect": "切断",
+      "cloudDisconnected": "⚪ 未接続",
+      "cloudSynced": "🟢 同期済み"
     },
     "icons": {
       "0": "食事",
@@ -632,7 +668,11 @@ export const TRANSLATIONS = {
       "hatchGen1": "第1世代（クラシック）",
       "hatchGen1Sub": "ごはん/パン、キャンディ、あっちむいてホイ",
       "hatchGen2": "第2世代（スワール）",
-      "hatchGen2Sub": "ハンバーガー、ケーキ、数字当てゲーム"
+      "hatchGen2Sub": "ハンバーガー、ケーキ、数字当てゲーム",
+      "conflictTitle": "⚠️ 同期の競合",
+      "conflictDesc": "クラウド上に異なるセーブデータが見つかりました。どちらを保持しますか？",
+      "conflictCloud": "☁️ クラウドセーブを使用",
+      "conflictLocal": "📱 このデバイスのデータを維持"
     },
     "manual": {
       "title": "📖 DramaPuchi 取扱説明書",
@@ -745,7 +785,11 @@ export const TRANSLATIONS = {
       "soundOff": "🔇 Audio: STUMM",
       "export": "💾 Spielstand exportieren",
       "import": "📂 Spielstand importieren",
-      "reset": "🥚 Neues Ei ausbrüten"
+      "reset": "🥚 Neues Ei ausbrüten",
+      "cloudHeader": "☁️ Cloud-Speicherung & Sync",
+      "cloudDisconnect": "Trennen",
+      "cloudDisconnected": "⚪ Nicht verbunden",
+      "cloudSynced": "🟢 Synchronisiert"
     },
     "icons": {
       "0": "Füttern",
@@ -777,7 +821,11 @@ export const TRANSLATIONS = {
       "hatchGen1": "Gen 1 (Klassisch)",
       "hatchGen1Sub": "Reis/Brot, Süßigkeit, Links/Rechts-Spiel",
       "hatchGen2": "Gen 2 (Wirbel)",
-      "hatchGen2Sub": "Burger, Kuchen, Höher/Tiefer-Spiel"
+      "hatchGen2Sub": "Burger, Kuchen, Höher/Tiefer-Spiel",
+      "conflictTitle": "⚠️ Synchronisationskonflikt",
+      "conflictDesc": "In der Cloud wurde ein anderer Spielstand gefunden. Welchen möchtest du behalten?",
+      "conflictCloud": "☁️ Cloud-Stand verwenden",
+      "conflictLocal": "📱 Dieses Gerät behalten"
     },
     "manual": {
       "title": "📖 DramaPuchi-Handbuch",
@@ -890,7 +938,11 @@ export const TRANSLATIONS = {
       "soundOff": "🔇 Audio : MUET",
       "export": "💾 Exporter la sauvegarde",
       "import": "📂 Importer une sauvegarde",
-      "reset": "🥚 Faire éclore un nouvel œuf"
+      "reset": "🥚 Faire éclore un nouvel œuf",
+      "cloudHeader": "☁️ Sauvegarde Cloud & Sync",
+      "cloudDisconnect": "Déconnecter",
+      "cloudDisconnected": "⚪ Non connecté",
+      "cloudSynced": "🟢 Synchronisé"
     },
     "icons": {
       "0": "Nourrir",
@@ -922,7 +974,11 @@ export const TRANSLATIONS = {
       "hatchGen1": "Gen 1 (Classique)",
       "hatchGen1Sub": "Riz/Pain, Bonbon, Jeu Gauche/Droite",
       "hatchGen2": "Gen 2 (Tourbillons)",
-      "hatchGen2Sub": "Burger, Gâteau, Jeu Plus/Moins"
+      "hatchGen2Sub": "Burger, Gâteau, Jeu Plus/Moins",
+      "conflictTitle": "⚠️ Conflit de synchronisation",
+      "conflictDesc": "Une sauvegarde différente a été trouvée dans le cloud. Laquelle souhaitez-vous conserver ?",
+      "conflictCloud": "☁️ Utiliser la sauvegarde Cloud",
+      "conflictLocal": "📱 Conserver cet appareil"
     },
     "manual": {
       "title": "📖 Manuel de DramaPuchi",
@@ -1035,7 +1091,11 @@ export const TRANSLATIONS = {
       "soundOff": "🔇 Audio: MUTO",
       "export": "💾 Esporta salvataggio",
       "import": "📂 Importa salvataggio",
-      "reset": "🥚 Schiudi un nuovo uovo"
+      "reset": "🥚 Schiudi un nuovo uovo",
+      "cloudHeader": "☁️ Salvataggio Cloud & Sync",
+      "cloudDisconnect": "Disconnetti",
+      "cloudDisconnected": "⚪ Non connesso",
+      "cloudSynced": "🟢 Sincronizzato"
     },
     "icons": {
       "0": "Cibo",
@@ -1067,7 +1127,11 @@ export const TRANSLATIONS = {
       "hatchGen1": "Gen 1 (Classica)",
       "hatchGen1Sub": "Riso/Pane, Caramella, Gioco Sinistra/Destra",
       "hatchGen2": "Gen 2 (Spirale)",
-      "hatchGen2Sub": "Burger, Torta, Gioco Alto/Basso"
+      "hatchGen2Sub": "Burger, Torta, Gioco Alto/Basso",
+      "conflictTitle": "⚠️ Conflitto di sincronizzazione",
+      "conflictDesc": "È stato trovato un salvataggio diverso nel cloud. Quale vuoi mantenere?",
+      "conflictCloud": "☁️ Usa salvataggio Cloud",
+      "conflictLocal": "📱 Mantieni questo dispositivo"
     },
     "manual": {
       "title": "📖 Manuale di DramaPuchi",
@@ -1180,7 +1244,11 @@ export const TRANSLATIONS = {
       "soundOff": "🔇 Звук: ВЫКЛ",
       "export": "💾 Экспорт сохранения",
       "import": "📂 Импорт сохранения",
-      "reset": "🥚 Вывести новое яйцо"
+      "reset": "🥚 Вывести новое яйцо",
+      "cloudHeader": "☁️ Облачное сохранение",
+      "cloudDisconnect": "Отключить",
+      "cloudDisconnected": "⚪ Не подключено",
+      "cloudSynced": "🟢 Синхронизировано"
     },
     "icons": {
       "0": "Кормление",
@@ -1212,7 +1280,11 @@ export const TRANSLATIONS = {
       "hatchGen1": "Поколение 1 (Классика)",
       "hatchGen1Sub": "Рис/Хлеб, Конфета, Игра Влево/Вправо",
       "hatchGen2": "Поколение 2 (Волны)",
-      "hatchGen2Sub": "Бургер, Торт, Игра Больше/Меньше"
+      "hatchGen2Sub": "Бургер, Торт, Игра Больше/Меньше",
+      "conflictTitle": "⚠️ Конфликт синхронизации",
+      "conflictDesc": "В облаке найдено другое сохранение. Какую версию вы хотите сохранить?",
+      "conflictCloud": "☁️ Использовать облачный",
+      "conflictLocal": "📱 Оставить это устройство"
     },
     "manual": {
       "title": "📖 Инструкция к DramaPuchi",
@@ -1325,7 +1397,11 @@ export const TRANSLATIONS = {
       "soundOff": "🔇 الصوت: صامت",
       "export": "💾 تصدير الحفظ",
       "import": "📂 استيراد الحفظ",
-      "reset": "🥚 فقس بيضة جديدة"
+      "reset": "🥚 فقس بيضة جديدة",
+      "cloudHeader": "☁️ الحفظ السحابي والمزامنة",
+      "cloudDisconnect": "قطع الاتصال",
+      "cloudDisconnected": "⚪ غير متصل",
+      "cloudSynced": "🟢 تمت المزامنة"
     },
     "icons": {
       "0": "إطعام",
@@ -1357,7 +1433,11 @@ export const TRANSLATIONS = {
       "hatchGen1": "الجيل 1 (كلاسيكي)",
       "hatchGen1Sub": "أرز/خبز، حلوى، لعبة يسار/يمين",
       "hatchGen2": "الجيل 2 (أمواج)",
-      "hatchGen2Sub": "برغر، كعك، لعبة أكبر/أصغر"
+      "hatchGen2Sub": "برغر، كعك، لعبة أكبر/أصغر",
+      "conflictTitle": "⚠️ تعارض في المزامنة",
+      "conflictDesc": "تم العثور على حفظ مختلف في السحابة. أي نسخة تريد الاحتفاظ بها؟",
+      "conflictCloud": "☁️ استخدام حفظ السحابة",
+      "conflictLocal": "📱 الاحتفاظ بهذا الجهاز"
     },
     "manual": {
       "title": "📖 دليل درامابوتشي",
@@ -1470,7 +1550,11 @@ export const TRANSLATIONS = {
       "soundOff": "🔇 ऑडियो: म्यूट",
       "export": "💾 गेम सेव एक्सपोर्ट करें",
       "import": "📂 गेम सेव इम्पोर्ट करें",
-      "reset": "🥚 नया अंडा शुरू करें"
+      "reset": "🥚 नया अंडा शुरू करें",
+      "cloudHeader": "☁️ क्लाउड सेव और सिंक",
+      "cloudDisconnect": "डिस्कनेक्ट करें",
+      "cloudDisconnected": "⚪ कनेक्ट नहीं है",
+      "cloudSynced": "🟢 सिंक हो गया"
     },
     "icons": {
       "0": "भोजन",
@@ -1502,7 +1586,11 @@ export const TRANSLATIONS = {
       "hatchGen1": "पीढ़ी 1 (क्लासिक)",
       "hatchGen1Sub": "चावल/ब्रेड, कैंडी, बायां/दायां खेल",
       "hatchGen2": "पीढ़ी 2 (घूर्णन)",
-      "hatchGen2Sub": "बर्गर, केक, उच्च/निम्न खेल"
+      "hatchGen2Sub": "बर्गर, केक, उच्च/निम्न खेल",
+      "conflictTitle": "⚠️ सिंक विरोध",
+      "conflictDesc": "क्लाउड में एक अलग सेव मिला। आप कौन सा संस्करण रखना चाहते हैं?",
+      "conflictCloud": "☁️ क्लाउड सेव का उपयोग करें",
+      "conflictLocal": "📱 इस डिवाइस का सेव रखें"
     },
     "manual": {
       "title": "📖 ड्रामापुची निर्देशिका",
@@ -1615,7 +1703,11 @@ export const TRANSLATIONS = {
       "soundOff": "🔇 শব্দ: মিউট",
       "export": "💾 সেভ ফাইল এক্সপোর্ট",
       "import": "📂 সেভ ফাইল ইমপোর্ট",
-      "reset": "🥚 নতুন ডিম ফোটান"
+      "reset": "🥚 নতুন ডিম ফোটান",
+      "cloudHeader": "☁️ ক্লাউড সেভ ও সিঙ্ক",
+      "cloudDisconnect": "বিচ্ছিন্ন করুন",
+      "cloudDisconnected": "⚪ সংযুক্ত নয়",
+      "cloudSynced": "🟢 সিঙ্ক করা হয়েছে"
     },
     "icons": {
       "0": "খাবার",
@@ -1647,7 +1739,11 @@ export const TRANSLATIONS = {
       "hatchGen1": "প্রজন্ম ১ (ক্লাসিক)",
       "hatchGen1Sub": "ভাত/পাউরুটি, ক্যান্ডি, বাম/ডান খেলা",
       "hatchGen2": "প্রজন্ম ২ (ঘূর্ণি)",
-      "hatchGen2Sub": "বার্গার, কেক, বেশি/কম খেলা"
+      "hatchGen2Sub": "বার্গার, কেক, বেশি/কম খেলা",
+      "conflictTitle": "⚠️ সিঙ্ক বিরোধ",
+      "conflictDesc": "ক্লাউডে একটি ভিন্ন সেভ পাওয়া গেছে। আপনি কোন সংস্করণটি রাখতে চান?",
+      "conflictCloud": "☁️ ক্লাউড সেভ ব্যবহার করুন",
+      "conflictLocal": "📱 এই ডিভাইসের সেভ রাখুন"
     },
     "manual": {
       "title": "📖 ড্রামাপুচি নির্দেশিকা",
@@ -1760,7 +1856,11 @@ export const TRANSLATIONS = {
       "soundOff": "🔇 Audio: SENYAP",
       "export": "💾 Ekspor Data Simpan",
       "import": "📂 Impor Data Simpan",
-      "reset": "🥚 Tetaskan Telur Baru"
+      "reset": "🥚 Tetaskan Telur Baru",
+      "cloudHeader": "☁️ Simpan Cloud & Sinkronisasi",
+      "cloudDisconnect": "Putuskan",
+      "cloudDisconnected": "⚪ Belum terhubung",
+      "cloudSynced": "🟢 Tersinkronisasi"
     },
     "icons": {
       "0": "Makan",
@@ -1792,7 +1892,11 @@ export const TRANSLATIONS = {
       "hatchGen1": "Gen 1 (Klasik)",
       "hatchGen1Sub": "Nasi/Roti, Permen, Game Kiri/Kanan",
       "hatchGen2": "Gen 2 (Pusaran)",
-      "hatchGen2Sub": "Burger, Kue, Game Tebak Angka"
+      "hatchGen2Sub": "Burger, Kue, Game Tebak Angka",
+      "conflictTitle": "⚠️ Konflik Sinkronisasi",
+      "conflictDesc": "Ditemukan penyimpanan berbeda di cloud. Versi mana yang ingin Anda simpan?",
+      "conflictCloud": "☁️ Gunakan Simpanan Cloud",
+      "conflictLocal": "📱 Simpan Perangkat Ini"
     },
     "manual": {
       "title": "📖 Panduan DramaPuchi",
@@ -1905,7 +2009,11 @@ export const TRANSLATIONS = {
       "soundOff": "🔇 เสียง: ปิด",
       "export": "💾 ส่งออกเซฟ (JSON)",
       "import": "📂 นำเข้าเซฟ (JSON)",
-      "reset": "🥚 ฟักไข่ใบใหม่"
+      "reset": "🥚 ฟักไข่ใบใหม่",
+      "cloudHeader": "☁️ บันทึกบนคลาวด์และซิงค์",
+      "cloudDisconnect": "ตัดการเชื่อมต่อ",
+      "cloudDisconnected": "⚪ ยังไม่ได้เชื่อมต่อ",
+      "cloudSynced": "🟢 ซิงค์แล้ว"
     },
     "icons": {
       "0": "ให้อาหาร",
@@ -1937,7 +2045,11 @@ export const TRANSLATIONS = {
       "hatchGen1": "รุ่น 1 (คลาสสิก)",
       "hatchGen1Sub": "ข้าว/ขนมปัง, ลูกอม, เกมซ้าย/ขวา",
       "hatchGen2": "รุ่น 2 (ลายคลื่น)",
-      "hatchGen2Sub": "เบอร์เกอร์, เค้ก, เกมสูง/ต่ำ"
+      "hatchGen2Sub": "เบอร์เกอร์, เค้ก, เกมสูง/ต่ำ",
+      "conflictTitle": "⚠️ การซิงค์ขัดแย้ง",
+      "conflictDesc": "พบข้อมูลบันทึกที่แตกต่างบนคลาวด์ คุณต้องการเก็บเวอร์ชันใดไว้?",
+      "conflictCloud": "☁️ ใช้ข้อมูลบันทึกบนคลาวด์",
+      "conflictLocal": "📱 เก็บข้อมูลของอุปกรณ์นี้"
     },
     "manual": {
       "title": "📖 คู่มือดรามาปุจิ",

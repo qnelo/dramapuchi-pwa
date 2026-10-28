@@ -9,6 +9,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script>window.DRAMAPUCHI_GOOGLE_CLIENT_ID = '488546893397-sepvb33kiclnkn6afl0j4lpp9rrdte9k.apps.googleusercontent.com';</script>
   <style>
     * { box-sizing: border-box; user-select: none; -webkit-tap-highlight-color: transparent; }
     body {
@@ -1107,6 +1109,22 @@
         <button id="setting-sound" class="settings-btn">🔊 Audio: ON</button>
       </div>
 
+      <!-- Cloud Save & Google Sync -->
+      <div class="settings-group">
+        <div id="setting-cloud-header" class="settings-group-title">☁️ Cloud Save & Sync</div>
+        <div id="cloud-sync-status-container" style="display: flex; flex-direction: column; gap: 8px;">
+          <div id="cloud-user-row" style="display: none; align-items: center; justify-content: space-between; background: rgba(255,255,255,0.06); padding: 8px 12px; border-radius: 8px;">
+            <div style="display: flex; align-items: center; gap: 8px; overflow: hidden;">
+              <img id="cloud-user-avatar" src="" alt="" style="width: 24px; height: 24px; border-radius: 50%; display: none;">
+              <span id="cloud-user-email" style="font-size: 12px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;"></span>
+            </div>
+            <button id="btn-cloud-disconnect" class="settings-btn" style="padding: 4px 8px; font-size: 11px; margin: 0; width: auto;">Disconnect</button>
+          </div>
+          <div id="cloud-status-text" style="font-size: 11px; color: #a0a6b5;">⚪ Not connected</div>
+          <div id="google-signin-btn-container" style="display: flex; justify-content: center; margin-top: 4px;"></div>
+        </div>
+      </div>
+
       <!-- Data persistence & reset -->
       <div class="settings-group">
         <div id="setting-data-header" class="settings-group-title">💾 Save Data & Reset</div>
@@ -1116,6 +1134,28 @@
         </div>
         <button id="setting-reset" class="settings-btn btn-danger">🥚 Hatch New Egg</button>
         <input type="file" id="file-import" accept=".json" style="display:none">
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Sync Conflict Modal -->
+  <dialog id="modal-conflict" class="petmodal" closedby="any" aria-labelledby="conflict-title">
+    <div class="modal-header">
+      <h2 id="conflict-title">⚠️ Sync Conflict</h2>
+    </div>
+    <div class="modal-body">
+      <p id="conflict-desc" style="margin-top:0; font-size: 13px; line-height: 1.5;">
+        A different save was found in the cloud. Which version do you want to keep?
+      </p>
+      <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 14px;">
+        <button id="btn-conflict-cloud" class="settings-btn" style="text-align: left; padding: 10px 14px;">
+          <strong id="lbl-conflict-cloud">☁️ Use Cloud Save</strong>
+          <div id="lbl-conflict-cloud-detail" style="font-size: 11px; opacity: 0.8; margin-top: 3px;"></div>
+        </button>
+        <button id="btn-conflict-local" class="settings-btn" style="text-align: left; padding: 10px 14px;">
+          <strong id="lbl-conflict-local">📱 Keep This Device</strong>
+          <div id="lbl-conflict-local-detail" style="font-size: 11px; opacity: 0.8; margin-top: 3px;"></div>
+        </button>
       </div>
     </div>
   </dialog>

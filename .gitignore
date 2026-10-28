@@ -4,6 +4,12 @@ er.txt
 
 # Wrangler & Cloudflare
 .wrangler/
+.env
+.env.*
+client_secret*.json
+
+# Local tooling & agents
+.ovis/
 
 # Dependencies and logs
 node_modules/

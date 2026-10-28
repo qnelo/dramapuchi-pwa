@@ -1,4 +1,4 @@
-const CACHE_NAME = 'dramapuchi-pwa-v25';
+const CACHE_NAME = 'dramapuchi-pwa-v26';
 const ASSETS = [
   '/',
   '/index.html',
@@ -17,6 +17,7 @@ const ASSETS = [
   '/controllers/MiniGameController.js',
   '/controllers/HighLowGameController.js',
   '/storage/SaveManager.js',
+  '/storage/CloudSyncManager.js',
   '/app.js',
   '/icon-192.png',
   '/icon-512.png'
@@ -85,6 +86,13 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
+  const url = new URL(event.request.url);
+
+  // Bypass API routes and non-GET requests entirely
+  if (url.pathname.startsWith('/api/') || event.request.method !== 'GET') {
+    return;
+  }
+
   // Navigation requests (opening or refreshing the PWA)
   if (event.request.mode === 'navigate' || event.request.destination === 'document') {
     event.respondWith(

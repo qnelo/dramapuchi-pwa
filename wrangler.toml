@@ -1,0 +1,11 @@
+name = "dramapuchi"
+compatibility_date = "2024-10-01"
+pages_build_output_dir = "public"
+
+[vars]
+GOOGLE_CLIENT_ID = "488546893397-sepvb33kiclnkn6afl0j4lpp9rrdte9k.apps.googleusercontent.com"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "dramapuchi-db"
+database_id = "12441c55-5eed-4573-a104-ac8857384409"

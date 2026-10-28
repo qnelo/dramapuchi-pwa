@@ -3,6 +3,7 @@ import { LcdMatrix } from './ui/LcdMatrix.js';
 import { RetroAudio } from './audio/RetroAudio.js?v=24';
 import { MenuController } from './controllers/MenuController.js';
 import { SaveManager } from './storage/SaveManager.js';
+import { CloudSyncManager } from './storage/CloudSyncManager.js';
 import { GameRenderer } from './ui/GameRenderer.js';
 import { UI_MODE } from './constants/menu.js';
 import { TRANSLATIONS, detectLanguage } from './constants/i18n.js';
@@ -12,6 +13,7 @@ let state = null;
 let lcd = null;
 let audio = null;
 let menu = null;
+let cloudSync = null;
 let lastCallAlertTime = 0;
 let currentLang = detectLanguage();
 
@@ -42,6 +44,28 @@ async function init() {
   applyTranslations(currentLang);
   renderEvolutionSprites();
 
+  // 7b. Initialize Cloud Sync (Google Auth & Cloudflare D1)
+  cloudSync = new CloudSyncManager({
+    clientId: (typeof window !== 'undefined' && window.DRAMAPUCHI_GOOGLE_CLIENT_ID) || '488546893397-sepvb33kiclnkn6afl0j4lpp9rrdte9k.apps.googleusercontent.com',
+    onStateLoaded: (cloudState) => {
+      state = cloudState;
+      syncGenerationAppearance();
+      menu = new MenuController(state, audio, () => updateIconBezel());
+      updateSettingsUI();
+      updateCloudSyncUI();
+    },
+    onStatusChange: () => {
+      updateCloudSyncUI();
+    },
+    onConflict: (conflict) => {
+      showConflictModal(conflict);
+    }
+  });
+  cloudSync.bindLifecycleEvents();
+  if (cloudSync.isAuthenticated()) {
+    cloudSync.pullAndReconcile(state);
+  }
+
   // 8. Start time reconciliation and render loops
   window.addEventListener('resize', () => lcd.resize());
 
@@ -49,7 +73,10 @@ async function init() {
   setInterval(tickEngine, 1000);
 
   // Periodic save every 5 seconds
-  setInterval(() => SaveManager.save(state), 5000);
+  setInterval(() => {
+    SaveManager.save(state);
+    if (cloudSync) cloudSync.markDirty(state);
+  }, 5000);
   window.addEventListener('beforeunload', () => SaveManager.save(state));
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
@@ -225,6 +252,8 @@ function setupQolListeners() {
   if (btnSettingsOpen && modalSettings) {
     btnSettingsOpen.addEventListener('click', () => {
       audio.init();
+      updateSettingsUI();
+      updateCloudSyncUI();
       modalSettings.showModal();
       audio.playConfirm();
     });
@@ -233,6 +262,17 @@ function setupQolListeners() {
     btnCloseSettings.addEventListener('click', () => {
       modalSettings.close();
       audio.playCancel();
+    });
+  }
+
+  const btnCloudDisconnect = document.getElementById('btn-cloud-disconnect');
+  if (btnCloudDisconnect) {
+    btnCloudDisconnect.addEventListener('click', () => {
+      if (cloudSync) {
+        cloudSync.disconnect();
+        updateCloudSyncUI();
+        audio.playCancel();
+      }
     });
   }
 
@@ -273,6 +313,7 @@ function setupQolListeners() {
   };
   bindBackdropDismiss(modalSettings);
   bindBackdropDismiss(modalManual);
+  bindBackdropDismiss(document.getElementById('modal-conflict'));
 
   // Language selector
   if (settingLang) {
@@ -336,6 +377,7 @@ function setupQolListeners() {
         syncGenerationAppearance();
         menu = new MenuController(state, audio, () => updateIconBezel());
         updateSettingsUI();
+        if (cloudSync) cloudSync.markDirty(state);
         audio.playConfirm();
       } catch (err) {
         const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
@@ -422,6 +464,7 @@ function setupQolListeners() {
 async function performReset(targetGeneration = 1) {
   state = SaveManager.getInitialState(targetGeneration);
   await SaveManager.save(state);
+  if (cloudSync) cloudSync.markDirty(state);
   syncGenerationAppearance();
   menu = new MenuController(state, audio, () => updateIconBezel());
   updateSettingsUI();
@@ -527,17 +570,19 @@ function applyTranslations(lang) {
     setElText('setting-export', t.settings.export);
     setElText('setting-import', t.settings.import);
     setElText('setting-reset', t.settings.reset);
+    setElText('setting-cloud-header', t.settings.cloudHeader);
+    setElText('btn-cloud-disconnect', t.settings.cloudDisconnect);
   }
 
-  // Update bezel icon tooltips/titles
-  for (let i = 0; i < 8; i++) {
-    const iconEl = document.getElementById(`icon-${i}`);
-    if (iconEl && t.icons[i]) {
-      iconEl.title = t.icons[i];
-    }
+  if (t.dialogs) {
+    setElText('conflict-title', t.dialogs.conflictTitle);
+    setElText('conflict-desc', t.dialogs.conflictDesc);
+    setElText('lbl-conflict-cloud', t.dialogs.conflictCloud);
+    setElText('lbl-conflict-local', t.dialogs.conflictLocal);
   }
 
   updateSettingsUI();
+  updateCloudSyncUI();
 
   // Update instruction manual modal content
   setElText('manual-title', t.manual.title);
@@ -668,6 +713,90 @@ function updateSettingsUI() {
   if (settingSound && audio && t.settings) {
     settingSound.textContent = audio.muted ? t.settings.soundOff : t.settings.soundOn;
   }
+}
+
+function updateCloudSyncUI() {
+  if (!cloudSync) return;
+  const userRow = document.getElementById('cloud-user-row');
+  const userEmail = document.getElementById('cloud-user-email');
+  const userAvatar = document.getElementById('cloud-user-avatar');
+  const statusText = document.getElementById('cloud-status-text');
+  const googleBtnContainer = document.getElementById('google-signin-btn-container');
+
+  const t = TRANSLATIONS[currentLang]?.settings || TRANSLATIONS.en.settings;
+
+  if (cloudSync.isAuthenticated()) {
+    const user = cloudSync.getUser();
+    if (userRow) userRow.style.display = 'flex';
+    if (userEmail) userEmail.textContent = user.email || user.name || 'Google User';
+    if (userAvatar) {
+      if (user.picture) {
+        userAvatar.src = user.picture;
+        userAvatar.style.display = 'inline-block';
+      } else {
+        userAvatar.style.display = 'none';
+      }
+    }
+    if (googleBtnContainer) googleBtnContainer.style.display = 'none';
+    const lastSync = cloudSync.getLastSyncTime();
+    const timeStr = lastSync ? new Date(lastSync).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
+    if (statusText) {
+      statusText.textContent = `${t.cloudSynced || '🟢 Synced'}${timeStr ? ` (${timeStr})` : ''}`;
+      statusText.style.color = '#5bfec8';
+    }
+  } else {
+    if (userRow) userRow.style.display = 'none';
+    if (googleBtnContainer) googleBtnContainer.style.display = 'flex';
+    if (statusText) {
+      statusText.textContent = t.cloudDisconnected || '⚪ Not connected';
+      statusText.style.color = '#a0a6b5';
+    }
+    cloudSync.initGoogleClient(googleBtnContainer);
+  }
+}
+
+function showConflictModal(conflict) {
+  const modalConflict = document.getElementById('modal-conflict');
+  const lblCloudDetail = document.getElementById('lbl-conflict-cloud-detail');
+  const lblLocalDetail = document.getElementById('lbl-conflict-local-detail');
+  const btnCloud = document.getElementById('btn-conflict-cloud');
+  const btnLocal = document.getElementById('btn-conflict-local');
+
+  if (!modalConflict || !btnCloud || !btnLocal) {
+    conflict.resolve('cloud');
+    return;
+  }
+
+  const cloudDate = conflict.cloudUpdatedAt ? new Date(conflict.cloudUpdatedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
+  const localDate = conflict.localState?.lastTickTimestamp ? new Date(conflict.localState.lastTickTimestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
+
+  if (lblCloudDetail) {
+    lblCloudDetail.textContent = `${conflict.cloudState.species || conflict.cloudState.stage} (Gen ${conflict.cloudState.generation || 1}) - ${cloudDate}`;
+  }
+  if (lblLocalDetail) {
+    lblLocalDetail.textContent = `${conflict.localState.species || conflict.localState.stage} (Gen ${conflict.localState.generation || 1}) - ${localDate}`;
+  }
+
+  const onSelectCloud = () => {
+    btnCloud.removeEventListener('click', onSelectCloud);
+    btnLocal.removeEventListener('click', onSelectLocal);
+    modalConflict.close();
+    conflict.resolve('cloud');
+    if (audio) audio.playConfirm();
+  };
+
+  const onSelectLocal = () => {
+    btnCloud.removeEventListener('click', onSelectCloud);
+    btnLocal.removeEventListener('click', onSelectLocal);
+    modalConflict.close();
+    conflict.resolve('local');
+    if (audio) audio.playConfirm();
+  };
+
+  btnCloud.addEventListener('click', onSelectCloud);
+  btnLocal.addEventListener('click', onSelectLocal);
+
+  modalConflict.showModal();
 }
 
 function tickEngine() {
