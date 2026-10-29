@@ -50,13 +50,34 @@ async function init() {
     clientId: (typeof window !== 'undefined' && window.DRAMAPUCHI_GOOGLE_CLIENT_ID) || '488546893397-sepvb33kiclnkn6afl0j4lpp9rrdte9k.apps.googleusercontent.com',
     onStateLoaded: (cloudState) => {
       state = cloudState;
+      if (cloudState.gen2Unlocked || SaveManager.isGen2Unlocked()) {
+        state.gen2Unlocked = true;
+        SaveManager.setGen2Unlocked(true);
+        SaveManager.save(state);
+      }
       syncGenerationAppearance();
       menu = new MenuController(state, audio, () => updateIconBezel());
       updateSettingsUI();
       updateCloudSyncUI();
+      updateManualUnlockStatus();
     },
     onStatusChange: () => {
       updateCloudSyncUI();
+      if (cloudSync && cloudSync.isAuthenticated()) {
+        cloudSync.pullAndReconcile(state).then((reconciled) => {
+          if (reconciled) {
+            state = reconciled;
+            if (state.gen2Unlocked || SaveManager.isGen2Unlocked()) {
+              state.gen2Unlocked = true;
+              SaveManager.setGen2Unlocked(true);
+              SaveManager.save(state);
+              syncGenerationAppearance();
+              updateManualUnlockStatus();
+              updateSettingsUI();
+            }
+          }
+        }).catch(() => {});
+      }
     },
     onConflict: (conflict) => {
       showConflictModal(conflict);
@@ -64,7 +85,19 @@ async function init() {
   });
   cloudSync.bindLifecycleEvents();
   if (cloudSync.isAuthenticated()) {
-    cloudSync.pullAndReconcile(state);
+    cloudSync.pullAndReconcile(state).then((reconciled) => {
+      if (reconciled) {
+        state = reconciled;
+        if (state.gen2Unlocked || SaveManager.isGen2Unlocked()) {
+          state.gen2Unlocked = true;
+          SaveManager.setGen2Unlocked(true);
+          SaveManager.save(state);
+          syncGenerationAppearance();
+          updateManualUnlockStatus();
+          updateSettingsUI();
+        }
+      }
+    }).catch(() => {});
   }
 
   // 8. Start time reconciliation and render loops

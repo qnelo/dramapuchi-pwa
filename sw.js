@@ -1,4 +1,4 @@
-const CACHE_NAME = 'dramapuchi-pwa-v33';
+const CACHE_NAME = 'dramapuchi-pwa-v34';
 const ASSETS = [
   '/',
   '/index.html',
@@ -24,6 +24,7 @@ const ASSETS = [
 ];
 
 self.addEventListener('install', (event) => {
+  self.skipWaiting();
   event.waitUntil(
     (async () => {
       const cache = await caches.open(CACHE_NAME);

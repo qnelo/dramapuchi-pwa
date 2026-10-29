@@ -226,6 +226,21 @@ export async function onRequestPost(context) {
       'SELECT rev, state, updated_at FROM user_saves WHERE sub = ?'
     ).bind(user.sub).first();
 
+    if (existing) {
+      // Permanent donor perks (gen2Unlocked, hasDonated) are cumulative and immutable
+      try {
+        const existingState = JSON.parse(existing.state || '{}');
+        if (existingState.gen2Unlocked) {
+          state.gen2Unlocked = true;
+        }
+        if (existingState.hasDonated) {
+          state.hasDonated = true;
+        }
+      } catch {}
+    }
+
+    const stateJson = JSON.stringify(state);
+
     if (!existing) {
       // First save for this user
       await db.prepare(

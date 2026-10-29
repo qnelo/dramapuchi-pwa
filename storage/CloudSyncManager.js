@@ -303,9 +303,23 @@ export class CloudSyncManager {
       const cloudRev = Number(data.rev) || 1;
       const localRev = this.currentRev;
 
+      // Permanent account perks (Gen 2 unlock & supporter badge) are cumulative and immutable
+      const hasGen2Unlock = Boolean(cloudState?.gen2Unlocked || localState?.gen2Unlocked || SaveManager.isGen2Unlocked());
+      const hasDonated = Boolean(cloudState?.hasDonated || localState?.hasDonated);
+
+      if (hasGen2Unlock) {
+        SaveManager.setGen2Unlocked(true);
+        if (localState) localState.gen2Unlocked = true;
+        if (cloudState) cloudState.gen2Unlocked = true;
+      }
+      if (hasDonated) {
+        if (localState) localState.hasDonated = true;
+        if (cloudState) cloudState.hasDonated = true;
+      }
+
       // If local device is just a fresh egg, adopt cloud state unconditionally
       if (CloudSyncManager.isFreshEgg(localState)) {
-        SaveManager.setGen2Unlocked(Boolean(cloudState.gen2Unlocked));
+        if (cloudState.gen2Unlocked) SaveManager.setGen2Unlocked(true);
         await SaveManager.save(cloudState);
         this.setRev(cloudRev);
         this.setLastSyncTime(data.updatedAt || Date.now());
@@ -354,7 +368,7 @@ export class CloudSyncManager {
           localState,
           resolve: async (choice) => {
             if (choice === 'cloud') {
-              SaveManager.setGen2Unlocked(Boolean(cloudState.gen2Unlocked));
+              if (cloudState.gen2Unlocked) SaveManager.setGen2Unlocked(true);
               await SaveManager.save(cloudState);
               this.setRev(cloudRev);
               this.isDirty = false;
@@ -370,7 +384,7 @@ export class CloudSyncManager {
         return localState;
       } else {
         // Default: Cloud is newer
-        SaveManager.setGen2Unlocked(Boolean(cloudState.gen2Unlocked));
+        if (cloudState.gen2Unlocked) SaveManager.setGen2Unlocked(true);
         await SaveManager.save(cloudState);
         this.setRev(cloudRev);
         this.setLastSyncTime(data.updatedAt || Date.now());
@@ -447,7 +461,7 @@ export class CloudSyncManager {
             localState: state,
             resolve: async (choice) => {
               if (choice === 'cloud') {
-                SaveManager.setGen2Unlocked(Boolean(cloudState.gen2Unlocked));
+                if (cloudState.gen2Unlocked) SaveManager.setGen2Unlocked(true);
                 await SaveManager.save(cloudState);
                 this.setRev(cloudRev);
                 this.isDirty = false;
