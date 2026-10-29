@@ -13,4 +13,4 @@
 KOFI_VERIFICATION_TOKEN=your_kofi_verification_token_here
 
 # Google OAuth Client ID for Cloud Sync (Optional local override)
-GOOGLE_CLIENT_ID=488546893397-sepvb33kiclnkn6afl0j4lpp9rrdte9k.apps.googleusercontent.com
+GOOGLE_CLIENT_ID=your_google_client_id_here.apps.googleusercontent.com

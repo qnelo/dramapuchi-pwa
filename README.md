@@ -141,7 +141,7 @@ Secret tokens should **never** be committed to Git. Two template files are provi
   KOFI_VERIFICATION_TOKEN=your_kofi_verification_token_here
 
   # Google OAuth Client ID for Cloud Sync (optional local override)
-  GOOGLE_CLIENT_ID=488546893397-sepvb33kiclnkn6afl0j4lpp9rrdte9k.apps.googleusercontent.com
+  GOOGLE_CLIENT_ID=your_google_client_id_here.apps.googleusercontent.com
   ```
 
 * **`.env.example`** $\to$ **`.env`** (used by standalone Node.js scripts):
