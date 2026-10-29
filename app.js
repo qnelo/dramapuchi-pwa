@@ -1,4 +1,5 @@
 import { PetEngine } from './engine/timeEngine.js';
+import { SUPPORT_CONFIG } from './config/petConfig.js';
 import { LcdMatrix } from './ui/LcdMatrix.js';
 import { RetroAudio } from './audio/RetroAudio.js?v=24';
 import { MenuController } from './controllers/MenuController.js';
@@ -293,6 +294,181 @@ function setupQolListeners() {
     });
   }
 
+  // Support Modal & Anti-fraud Verification logic
+  const btnSupportOpen = document.getElementById('btn-support-open');
+  const btnCloseSupport = document.getElementById('btn-close-support');
+  const modalSupport = document.getElementById('modal-support');
+  const btnOpenSupportFromSettings = document.getElementById('btn-open-support-from-settings');
+
+  const donorCode = CloudSyncManager.getOrGenerateDonorCode();
+  const txtDonorCode = document.getElementById('txt-donor-code');
+  if (txtDonorCode) {
+    txtDonorCode.textContent = donorCode;
+  }
+
+  const updateSupportModalPerkView = () => {
+    const isUnlocked = Boolean((state && state.gen2Unlocked) || SaveManager.isGen2Unlocked());
+    const badgeUnlocked = document.getElementById('support-badge-unlocked');
+    const perkBox = document.getElementById('support-perk-box');
+    if (badgeUnlocked) badgeUnlocked.style.display = isUnlocked ? 'flex' : 'none';
+    if (perkBox) perkBox.style.display = isUnlocked ? 'none' : 'flex';
+  };
+
+  const copyDonorCodeToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(donorCode);
+      const txtBtn = document.getElementById('txt-btn-copy-code');
+      const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
+      if (txtBtn) {
+        const original = txtBtn.textContent;
+        txtBtn.textContent = t.support?.copied || 'Copied!';
+        setTimeout(() => {
+          txtBtn.textContent = original;
+        }, 2000);
+      }
+    } catch {}
+  };
+
+  const setSupportStatus = (msg, type = 'info') => {
+    const statusBox = document.getElementById('support-verify-status');
+    if (!statusBox) return;
+    statusBox.textContent = msg;
+    statusBox.className = `support-verify-status ${type}`;
+    statusBox.style.display = 'block';
+  };
+
+  const handleSuccessfulDonationUnlock = async () => {
+    SaveManager.setGen2Unlocked(true);
+    if (state) {
+      state.gen2Unlocked = true;
+      state.hasDonated = true;
+      await SaveManager.save(state);
+    }
+    audio.playEvolution();
+    updateSupportModalPerkView();
+    updateManualUnlockStatus();
+    updateSettingsUI();
+    if (cloudSync && cloudSync.isAuthenticated()) {
+      await cloudSync.syncToCloud(state);
+    }
+  };
+
+  const checkDonationVerification = async (options = {}) => {
+    const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
+    setSupportStatus(t.support?.verifying || 'Verifying...', 'info');
+
+    try {
+      const res = await cloudSync.verifyDonation(options);
+      if (res.ok && res.verified) {
+        await handleSuccessfulDonationUnlock();
+        setSupportStatus(t.support?.verifySuccess || '✨ Donation confirmed! Generation 2 unlocked!', 'success');
+        return true;
+      } else if (res.status === 409 || res.error === 'already_claimed') {
+        setSupportStatus(t.support?.alreadyClaimed || 'This donation has already been claimed by another account.', 'error');
+        return false;
+      } else {
+        setSupportStatus(t.support?.verifyNotFound || 'No donation found matching this code or ID.', 'error');
+        return false;
+      }
+    } catch {
+      setSupportStatus(t.support?.verifyError || 'Error verifying donation.', 'error');
+      return false;
+    }
+  };
+
+  const openSupportModalHandler = () => {
+    audio.init();
+    updateSupportModalPerkView();
+    if (txtDonorCode) txtDonorCode.textContent = donorCode;
+    const statusBox = document.getElementById('support-verify-status');
+    if (statusBox) statusBox.style.display = 'none';
+
+    modalSupport.showModal();
+    audio.playConfirm();
+
+    // Quiet auto-check if not unlocked yet
+    if (cloudSync && !state?.gen2Unlocked && !SaveManager.isGen2Unlocked()) {
+      cloudSync.verifyDonation({ donorCode }).then((res) => {
+        if (res.ok && res.verified) {
+          handleSuccessfulDonationUnlock();
+          const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
+          setSupportStatus(t.support?.verifySuccess || '✨ Donation confirmed! Generation 2 unlocked!', 'success');
+        }
+      }).catch(() => {});
+    }
+  };
+
+  if (btnSupportOpen && modalSupport) {
+    btnSupportOpen.addEventListener('click', openSupportModalHandler);
+  }
+  if (btnOpenSupportFromSettings && modalSupport) {
+    btnOpenSupportFromSettings.addEventListener('click', () => {
+      if (modalSettings) modalSettings.close();
+      openSupportModalHandler();
+    });
+  }
+  if (btnCloseSupport && modalSupport) {
+    btnCloseSupport.addEventListener('click', () => {
+      modalSupport.close();
+      audio.playCancel();
+    });
+  }
+
+  // Copy Donor Code button
+  const btnCopyDonorCode = document.getElementById('btn-copy-donor-code');
+  if (btnCopyDonorCode) {
+    btnCopyDonorCode.addEventListener('click', async () => {
+      audio.playConfirm();
+      await copyDonorCodeToClipboard();
+    });
+  }
+
+  // Check donation status button
+  const btnSupportCheck = document.getElementById('btn-support-check');
+  if (btnSupportCheck) {
+    btnSupportCheck.addEventListener('click', async () => {
+      audio.playConfirm();
+      await checkDonationVerification({ donorCode });
+    });
+  }
+
+  // Redeem ID button
+  const btnRedeemId = document.getElementById('btn-redeem-id');
+  const inputReceiptId = document.getElementById('input-receipt-id');
+  if (btnRedeemId && inputReceiptId) {
+    btnRedeemId.addEventListener('click', async () => {
+      const txId = (inputReceiptId.value || '').trim();
+      if (!txId) {
+        inputReceiptId.focus();
+        audio.playCancel();
+        return;
+      }
+      audio.playConfirm();
+      await checkDonationVerification({ transactionId: txId });
+    });
+  }
+
+  // Tiers buttons inside Support Modal: copy code to clipboard & open direct Ko-fi item URL
+  document.querySelectorAll('.support-tier-btn').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      audio.playConfirm();
+      await copyDonorCodeToClipboard();
+      const amount = Number(btn.dataset.amount);
+      const tier = SUPPORT_CONFIG.TIERS?.find((t) => t.amount === amount);
+      const targetUrl = tier?.url || SUPPORT_CONFIG.KOFI_URL || 'https://ko-fi.com/qnelo';
+      window.open(targetUrl, '_blank', 'noopener,noreferrer');
+    });
+  });
+
+  const btnKofiCta = document.getElementById('btn-kofi-cta');
+  if (btnKofiCta) {
+    btnKofiCta.href = SUPPORT_CONFIG.KOFI_URL || 'https://ko-fi.com/qnelo';
+    btnKofiCta.addEventListener('click', async () => {
+      audio.playConfirm();
+      await copyDonorCodeToClipboard();
+    });
+  }
+
   // Light-dismiss fallback for modern dialogs (click on backdrop closes modal)
   const bindBackdropDismiss = (modalEl) => {
     if (!modalEl || ('closedBy' in HTMLDialogElement.prototype)) return;
@@ -313,6 +489,7 @@ function setupQolListeners() {
   };
   bindBackdropDismiss(modalSettings);
   bindBackdropDismiss(modalManual);
+  bindBackdropDismiss(modalSupport);
   bindBackdropDismiss(document.getElementById('modal-conflict'));
 
   // Language selector
@@ -554,6 +731,7 @@ function applyTranslations(lang) {
     const cleanLabel = (s) => (s || '').replace(/[\p{Extended_Pictographic}\uFE0F]/gu, '').trim();
     setElText('txt-settings-open', cleanLabel(t.topControls.settings));
     setElText('txt-manual-open', cleanLabel(t.topControls.manual));
+    setElText('txt-support-open', cleanLabel(t.topControls.support));
   }
 
   // Settings modal labels
@@ -572,6 +750,35 @@ function applyTranslations(lang) {
     setElText('setting-reset', t.settings.reset);
     setElText('setting-cloud-header', t.settings.cloudHeader);
     setElText('btn-cloud-disconnect', t.settings.cloudDisconnect);
+    setElText('setting-support-header', t.settings.supportHeader);
+    setElText('txt-support-settings-btn', t.settings.supportBtn);
+  }
+
+  // Support Modal labels
+  if (t.support) {
+    setElText('support-title', t.support.title);
+    setElText('support-desc', t.support.desc);
+    setElText('tier-snack-label', t.support.tierSnack);
+    setElText('tier-meal-label', t.support.tierMeal);
+    setElText('tier-clean-label', t.support.tierClean);
+    setElText('tier-game-label', t.support.tierGame);
+    setElText('tier-medicine-label', t.support.tierMedicine);
+    setElText('txt-kofi-cta', t.support.cta);
+
+    // Anti-fraud and perk elements
+    setElText('support-perk-title', t.support.perkTitle);
+    setElText('support-perk-unlocked', t.support.perkUnlocked);
+    setElText('lbl-donor-code', t.support.donorCodeLabel);
+    setElText('txt-btn-copy-code', t.support.copyCode);
+    setElText('lbl-code-hint', t.support.codeHint);
+    setElText('btn-check-status-label', t.support.checkStatusBtn);
+    setElText('lbl-receipt-collapsible', t.support.receiptCollapsible);
+    setElText('btn-redeem-label', t.support.redeemBtn);
+
+    const inputReceipt = document.getElementById('input-receipt-id');
+    if (inputReceipt && t.support.receiptPlaceholder) {
+      inputReceipt.placeholder = t.support.receiptPlaceholder;
+    }
   }
 
   if (t.dialogs) {
@@ -679,6 +886,7 @@ function applyTranslations(lang) {
   setElText('manual-sec-credits-title', t.manual.creditsHeader);
   setElText('manual-credits-author-label', t.manual.creditsAuthorLabel);
   setElText('manual-credits-repo-label', t.manual.creditsRepoLabel);
+  setElText('manual-credits-support-label', t.manual.creditsSupportLabel);
   document.querySelectorAll('[data-stage]').forEach((el) => { el.textContent = t.manual.stages[el.dataset.stage]; });
 
   // Update notification toast

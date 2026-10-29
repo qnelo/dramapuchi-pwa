@@ -4,6 +4,7 @@ pages_build_output_dir = "public"
 
 [vars]
 GOOGLE_CLIENT_ID = "488546893397-sepvb33kiclnkn6afl0j4lpp9rrdte9k.apps.googleusercontent.com"
+# KOFI_VERIFICATION_TOKEN is encrypted in Cloudflare Pages Secrets (not stored in git)
 
 [[d1_databases]]
 binding = "DB"

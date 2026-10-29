@@ -1,0 +1,16 @@
+# ==============================================================================
+# DramaPuchi Local Cloudflare Pages Development Secrets (.dev.vars)
+# ==============================================================================
+# Instructions:
+# 1. Copy this file to '.dev.vars' in the project root:
+#    cp .dev.vars.example .dev.vars
+# 2. Fill in your real secrets below.
+# 3. '.dev.vars' is automatically ignored by Git and will NEVER be committed.
+# ==============================================================================
+
+# Ko-fi Webhook Verification Token
+# Obtain this token from: https://ko-fi.com/manage/webhooks?src=sidemenu
+KOFI_VERIFICATION_TOKEN=your_kofi_verification_token_here
+
+# Google OAuth Client ID for Cloud Sync (Optional local override)
+GOOGLE_CLIENT_ID=488546893397-sepvb33kiclnkn6afl0j4lpp9rrdte9k.apps.googleusercontent.com

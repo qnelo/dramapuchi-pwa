@@ -716,6 +716,28 @@ for (const lang of requiredLanguages) {
   assert(TRANSLATIONS[lang].update.available, `Missing update.available in ${lang}`);
   assert(TRANSLATIONS[lang].update.action, `Missing update.action in ${lang}`);
   assert(TRANSLATIONS[lang].update.updating, `Missing update.updating in ${lang}`);
+  assert(TRANSLATIONS[lang].topControls.support, `Missing topControls.support in ${lang}`);
+  assert(TRANSLATIONS[lang].support?.title, `Missing support.title in ${lang}`);
+  assert(TRANSLATIONS[lang].support?.cta, `Missing support.cta in ${lang}`);
+  assert(TRANSLATIONS[lang].support?.tierSnack, `Missing support.tierSnack in ${lang}`);
+  assert(TRANSLATIONS[lang].support?.tierMeal, `Missing support.tierMeal in ${lang}`);
+  assert(TRANSLATIONS[lang].support?.tierClean, `Missing support.tierClean in ${lang}`);
+  assert(TRANSLATIONS[lang].support?.tierGame, `Missing support.tierGame in ${lang}`);
+  assert(TRANSLATIONS[lang].support?.tierMedicine, `Missing support.tierMedicine in ${lang}`);
+  assert(TRANSLATIONS[lang].support?.perkTitle, `Missing support.perkTitle in ${lang}`);
+  assert(TRANSLATIONS[lang].support?.perkUnlocked, `Missing support.perkUnlocked in ${lang}`);
+  assert(TRANSLATIONS[lang].support?.donorCodeLabel, `Missing support.donorCodeLabel in ${lang}`);
+  assert(TRANSLATIONS[lang].support?.copyCode, `Missing support.copyCode in ${lang}`);
+  assert(TRANSLATIONS[lang].support?.copied, `Missing support.copied in ${lang}`);
+  assert(TRANSLATIONS[lang].support?.codeHint, `Missing support.codeHint in ${lang}`);
+  assert(TRANSLATIONS[lang].support?.checkStatusBtn, `Missing support.checkStatusBtn in ${lang}`);
+  assert(TRANSLATIONS[lang].support?.receiptCollapsible, `Missing support.receiptCollapsible in ${lang}`);
+  assert(TRANSLATIONS[lang].support?.receiptPlaceholder, `Missing support.receiptPlaceholder in ${lang}`);
+  assert(TRANSLATIONS[lang].support?.redeemBtn, `Missing support.redeemBtn in ${lang}`);
+  assert(TRANSLATIONS[lang].support?.verifying, `Missing support.verifying in ${lang}`);
+  assert(TRANSLATIONS[lang].support?.verifySuccess, `Missing support.verifySuccess in ${lang}`);
+  assert(TRANSLATIONS[lang].support?.verifyNotFound, `Missing support.verifyNotFound in ${lang}`);
+  assert(TRANSLATIONS[lang].support?.alreadyClaimed, `Missing support.alreadyClaimed in ${lang}`);
 }
 // Auto-detection: no saved choice -> first supported entry of the browser's preference list, else 'en'
 const stubNav = (languages) => Object.defineProperty(globalThis, 'navigator', { value: { languages, language: languages[0] }, configurable: true, writable: true });
@@ -765,6 +787,24 @@ const fakeJwt = `eyJhbGciOiJSUzI1NiJ9.${b64Payload}.signature`;
 const decoded = CloudSyncManager.decodeJwtPayload(fakeJwt);
 assert(decoded.sub === 'google-12345', 'Decoded sub must match');
 assert(decoded.email === 'test@example.com', 'Decoded email must match');
+
+// Donor Code Generation test
+const mockStore = {};
+globalThis.localStorage = {
+  getItem: (k) => mockStore[k] || null,
+  setItem: (k, v) => { mockStore[k] = String(v); },
+  removeItem: (k) => { delete mockStore[k]; }
+};
+const donorCode1 = CloudSyncManager.getOrGenerateDonorCode();
+assert(/^#DP-[2-9A-HJ-NP-Z]{4}$/.test(donorCode1), `Donor code format invalid: ${donorCode1}`);
+const donorCode2 = CloudSyncManager.getOrGenerateDonorCode();
+assert(donorCode1 === donorCode2, 'Donor code must be persistent across calls for the same session');
+
+// Webhook donor code regex extraction test
+const regex = /#DP-[A-Za-z0-9]{4,8}\b/i;
+const sampleMsg = "Loved the retro pet! My code is #dp-9k8b, unlock gen 2!";
+const match = sampleMsg.match(regex);
+assert(match && match[0].toUpperCase() === '#DP-9K8B', 'Donor code regex must extract #DP-XXXX correctly');
 
 console.log('✓ CloudSyncManager verified.');
 

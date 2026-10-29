@@ -38,6 +38,14 @@
       gap: 10px;
       z-index: 100;
     }
+    .top-right-controls {
+      position: fixed;
+      top: 14px;
+      right: 14px;
+      display: flex;
+      gap: 10px;
+      z-index: 100;
+    }
     .floating-btn {
       background: rgba(26, 29, 36, 0.78);
       backdrop-filter: blur(10px);
@@ -64,9 +72,322 @@
     .floating-btn:active {
       transform: translateY(1px);
     }
+    .floating-btn-support {
+      background: rgba(36, 32, 26, 0.85);
+      border-color: rgba(255, 209, 102, 0.35);
+    }
+    .floating-btn-support:hover {
+      background: rgba(50, 42, 30, 0.95);
+      border-color: rgba(255, 209, 102, 0.65);
+    }
+    @media (max-width: 480px) {
+      .floating-btn .btn-text {
+        font-size: 12px;
+      }
+      .floating-btn {
+        padding: 6px 10px;
+      }
+    }
+    @media (max-width: 380px) {
+      .floating-btn-support .btn-text {
+        display: none;
+      }
+    }
     .btn-icon {
       font-size: 14px;
       line-height: 1;
+    }
+
+    /* Support modal tiers grid */
+    .support-tiers-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .support-tier-btn {
+      background: #252830;
+      border: 1px solid #3e4452;
+      border-radius: 10px;
+      padding: 10px 12px;
+      color: #e6edf3;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      touch-action: manipulation;
+      transition: background 0.15s, border-color 0.15s, transform 0.1s;
+    }
+    .support-tier-btn:hover {
+      background: #2f3440;
+      border-color: #ffd166;
+      transform: translateY(-1px);
+    }
+    .support-tier-btn:active {
+      transform: translateY(1px);
+    }
+    .support-tier-chip {
+      flex: none;
+      width: 26px;
+      height: 26px;
+      padding: 2px;
+      border-radius: 5px;
+      background: #9ba885;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.45);
+    }
+    .support-tier-chip svg {
+      width: 18px;
+      height: 18px;
+      display: block;
+    }
+    .support-tier-chip use {
+      fill: currentColor;
+      fill-rule: evenodd;
+      mix-blend-mode: multiply;
+      opacity: 0.85;
+    }
+    .support-tier-label {
+      font-weight: 600;
+      color: #f0f2f5;
+      font-size: 13px;
+    }
+    .support-tier-btn-fan {
+      grid-column: span 2;
+      background: linear-gradient(135deg, rgba(184, 64, 94, 0.15) 0%, rgba(255, 209, 102, 0.15) 100%);
+      border-color: rgba(255, 209, 102, 0.45);
+      justify-content: center;
+    }
+    .support-tier-btn-fan:hover {
+      border-color: #ffd166;
+      background: linear-gradient(135deg, rgba(184, 64, 94, 0.25) 0%, rgba(255, 209, 102, 0.25) 100%);
+    }
+
+    /* Support modal enhancement & anti-fraud verification styles */
+    .support-reward-callout {
+      margin-top: 12px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, rgba(255, 209, 102, 0.12) 0%, rgba(255, 94, 91, 0.12) 100%);
+      border: 1px solid rgba(255, 209, 102, 0.35);
+      color: #ffd166;
+      font-weight: 500;
+      font-size: 12.5px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      line-height: 1.4;
+    }
+    .support-unlocked-badge {
+      background: rgba(91, 254, 200, 0.15);
+      border: 1px solid rgba(91, 254, 200, 0.45);
+      color: #5bfec8;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+    .support-code-card {
+      margin-top: 14px;
+      background: #1e2129;
+      border: 1px solid #3c4250;
+      border-radius: 10px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .support-code-header {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #ffd166;
+    }
+    .support-code-display {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #121418;
+      border: 1px dashed #555d6e;
+      border-radius: 6px;
+      padding: 6px 10px;
+    }
+    .support-code-display code {
+      flex: 1;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: #5bfec8;
+      user-select: all;
+    }
+    .btn-copy-code {
+      background: #2b303c;
+      border: 1px solid #485063;
+      color: #e5e7eb;
+      border-radius: 6px;
+      padding: 5px 10px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .btn-copy-code:hover {
+      background: #3d4454;
+      border-color: #ffd166;
+      color: #fff;
+    }
+    .support-code-help {
+      margin: 0;
+      font-size: 11.5px;
+      color: #9aa4b2;
+      line-height: 1.4;
+    }
+    .btn-kofi-primary {
+      background: #ff5e5b !important;
+      border-color: #ff7875 !important;
+      color: #fff !important;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .btn-kofi-primary:hover {
+      background: #e64c49 !important;
+      border-color: #ff8e8c !important;
+    }
+    .support-btn-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    .support-btn-row > * {
+      flex: 1;
+    }
+    @media (max-width: 420px) {
+      .support-btn-row {
+        flex-direction: column;
+      }
+    }
+    .support-redeem-details {
+      margin-top: 12px;
+      background: #1d2027;
+      border: 1px solid #323744;
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 12px;
+    }
+    .support-redeem-details summary {
+      cursor: pointer;
+      color: #9aa4b2;
+      font-weight: 500;
+      outline: none;
+      user-select: none;
+    }
+    .support-redeem-details summary:hover {
+      color: #ffd166;
+    }
+    .support-redeem-details[open] summary {
+      color: #ffd166;
+      margin-bottom: 8px;
+    }
+    .support-redeem-body {
+      padding-top: 2px;
+    }
+    .support-verify-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      width: 100%;
+      box-sizing: border-box;
+      margin-top: 4px;
+    }
+    .support-input {
+      flex: 1;
+      min-width: 0;
+      box-sizing: border-box;
+      background: #121418;
+      border: 1px solid #434754;
+      border-radius: 6px;
+      padding: 7px 10px;
+      color: #f0f2f5;
+      font-size: 12px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .support-input:focus {
+      border-color: #ffd166;
+    }
+    .btn-verify-action {
+      flex: 0 0 auto;
+      width: auto;
+      white-space: nowrap;
+      box-sizing: border-box;
+      padding: 7px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      background: #2b303c;
+      border: 1px solid #485063;
+      border-radius: 6px;
+      color: #ffd166;
+      cursor: pointer;
+      touch-action: manipulation;
+      transition: background 0.15s, border-color 0.15s, color 0.15s, transform 0.1s;
+    }
+    .btn-verify-action:hover {
+      background: #3a4152;
+      border-color: #ffd166;
+      color: #fff;
+    }
+    .btn-verify-action:active {
+      transform: scale(0.97);
+    }
+    @media (max-width: 360px) {
+      .support-verify-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .btn-verify-action {
+        width: 100%;
+        text-align: center;
+      }
+    }
+    .support-verify-status {
+      margin-top: 10px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      line-height: 1.4;
+      text-align: center;
+    }
+    .support-verify-status.success {
+      background: rgba(91, 254, 200, 0.15);
+      border: 1px solid rgba(91, 254, 200, 0.4);
+      color: #5bfec8;
+    }
+    .support-verify-status.error {
+      background: rgba(255, 107, 122, 0.15);
+      border: 1px solid rgba(255, 107, 122, 0.4);
+      color: #ff6b7a;
+    }
+    .support-verify-status.info {
+      background: rgba(255, 209, 102, 0.15);
+      border: 1px solid rgba(255, 209, 102, 0.4);
+      color: #ffd166;
     }
 
     /*
@@ -283,6 +604,7 @@
       opacity: 1;
     }
     /* Printed ink colors, shared by the device and the manual */
+    .ink-snack { color: #d97724; }
     .ink-feed { color: #b5533c; }
     .ink-light { color: #d4b02a; }
     .ink-game { color: #2f6fb0; }
@@ -726,6 +1048,14 @@
     </button>
   </div>
 
+  <!-- Top-right floating quick-access controls -->
+  <div class="top-right-controls">
+    <button id="btn-support-open" class="floating-btn floating-btn-support" title="Support" aria-label="Support">
+      <span class="btn-icon">☕</span>
+      <span id="txt-support-open" class="btn-text">Support</span>
+    </button>
+  </div>
+
   <!-- Keychain device: layered SVG plastic body + interactive overlay -->
   <div class="pet-device">
     <svg class="pet-body" viewBox="0 0 320 446" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -1002,6 +1332,10 @@
         and as its LCD segment.
       -->
       <svg width="0" height="0" aria-hidden="true" style="position: absolute">
+        <symbol id="ico-snack" viewBox="0 0 16 16">
+          <path d="M1 3.5l4 4.5-4 4.5zm14 0l-4 4.5 4 4.5zM4 6l2-2h4l2 2v4l-2 2H6l-2-2z" />
+          <path d="M7 4h2v8H7z" opacity="0.6" />
+        </symbol>
         <symbol id="ico-feed" viewBox="0 0 16 16">
           <path d="M.5 1h1.6v3.6h1.1V1h1.6v3.6h1.1V1h1.6v5.2L5 8.4V15H3V8.4L.5 6.2z" />
           <path d="M9.5 1H11l3.8 3.8v3.8H9.5zM9.8 9.8H13V15H9.8z" />
@@ -1125,6 +1459,15 @@
         </div>
       </div>
 
+      <!-- Support DramaPuchi -->
+      <div class="settings-group">
+        <div id="setting-support-header" class="settings-group-title">☕ Support DramaPuchi</div>
+        <button id="btn-open-support-from-settings" class="settings-btn" style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+          <span>💖</span>
+          <span id="txt-support-settings-btn">Make a Contribution</span>
+        </button>
+      </div>
+
       <!-- Data persistence & reset -->
       <div class="settings-group">
         <div id="setting-data-header" class="settings-group-title">💾 Save Data & Reset</div>
@@ -1178,6 +1521,104 @@
           <div id="lbl-hatch-gen2-sub" style="font-size:11px; opacity:0.8; font-weight:normal; margin-top:4px;">Burger, Cake, High-Low Game</div>
         </button>
       </div>
+    </div>
+  </dialog>
+
+  <!-- Support / Ko-fi Modal -->
+  <dialog id="modal-support" class="petmodal" closedby="any" aria-labelledby="support-title">
+    <div class="modal-header">
+      <h2 id="support-title">☕ Support DramaPuchi</h2>
+      <button id="btn-close-support" class="btn-close-modal" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body">
+      <!-- Active Donor Perk Status Banner -->
+      <div id="support-badge-unlocked" class="support-unlocked-badge" style="display:none;">
+        <span class="support-unlocked-badge-icon">🌟</span>
+        <span id="support-perk-unlocked">✨ Generation 2 is unlocked on your account!</span>
+      </div>
+
+      <p id="support-desc" style="margin-top:0; color:#cbd3e1; font-size:13px; line-height:1.6;">
+        DramaPuchi is a free, open-source project without ads. Optional contributions help keep the project alive!
+      </p>
+
+      <div id="support-perk-box" class="support-reward-callout">
+        <span class="support-reward-icon">🎁</span>
+        <span id="support-perk-title">✨ Any donation unlocks Generation 2 (1997)!</span>
+      </div>
+      
+      <div class="support-tiers-grid">
+        <button class="support-tier-btn" data-amount="1" type="button">
+          <span class="support-tier-chip ink-snack">
+            <svg viewBox="0 0 16 16"><use href="#ico-snack" /></svg>
+          </span>
+          <span class="support-tier-label" id="tier-snack-label">Snack - $1 USD</span>
+        </button>
+        <button class="support-tier-btn" data-amount="2" type="button">
+          <span class="support-tier-chip ink-feed">
+            <svg viewBox="0 0 16 16"><use href="#ico-feed" /></svg>
+          </span>
+          <span class="support-tier-label" id="tier-meal-label">Meal - $2 USD</span>
+        </button>
+        <button class="support-tier-btn" data-amount="3" type="button">
+          <span class="support-tier-chip ink-clean">
+            <svg viewBox="0 0 16 16"><use href="#ico-clean" /></svg>
+          </span>
+          <span class="support-tier-label" id="tier-clean-label">Bath - $3 USD</span>
+        </button>
+        <button class="support-tier-btn" data-amount="5" type="button">
+          <span class="support-tier-chip ink-game">
+            <svg viewBox="0 0 16 16"><use href="#ico-game" /></svg>
+          </span>
+          <span class="support-tier-label" id="tier-game-label">Game - $5 USD</span>
+        </button>
+        <button class="support-tier-btn support-tier-btn-fan" data-amount="10" type="button">
+          <span class="support-tier-chip ink-medicine">
+            <svg viewBox="0 0 16 16"><use href="#ico-medicine" /></svg>
+          </span>
+          <span class="support-tier-label" id="tier-medicine-label">Medicine - $10 USD</span>
+        </button>
+      </div>
+
+      <!-- Single-Use Donor Code Card -->
+      <div class="support-code-card">
+        <div class="support-code-header">
+          <span id="lbl-donor-code">Your unique donor code:</span>
+        </div>
+        <div class="support-code-display">
+          <code id="txt-donor-code">#DP-....</code>
+          <button id="btn-copy-donor-code" class="btn-copy-code" type="button">
+            <span id="txt-btn-copy-code">📋 Copy</span>
+          </button>
+        </div>
+        <p id="lbl-code-hint" class="support-code-help">
+          Paste this code in the message box on Ko-fi to activate your reward automatically.
+        </p>
+        <div class="support-btn-row">
+          <button id="btn-support-check" class="settings-btn" type="button" style="display:flex; align-items:center; justify-content:center; gap:6px;">
+            <span id="btn-check-status-label">🔄 Check donation status</span>
+          </button>
+          <a id="btn-kofi-cta" href="https://ko-fi.com/qnelo" target="_blank" rel="noopener noreferrer" class="settings-btn btn-kofi-primary" style="text-decoration:none;">
+            <span id="txt-kofi-cta">Support on Ko-fi</span>
+            <span>↗</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Fallback Receipt ID Redemption -->
+      <details class="support-redeem-details">
+        <summary id="lbl-receipt-collapsible">Donated without the code? Redeem with Receipt ID</summary>
+        <div class="support-redeem-body">
+          <div class="support-verify-row">
+            <input type="text" id="input-receipt-id" class="support-input" placeholder="Ko-fi Transaction ID from receipt" autocomplete="off" spellcheck="false" />
+            <button type="button" id="btn-redeem-id" class="btn-verify-action">
+              <span id="btn-redeem-label">Redeem ID</span>
+            </button>
+          </div>
+        </div>
+      </details>
+
+      <!-- Status message container -->
+      <div id="support-verify-status" class="support-verify-status" style="display:none;"></div>
     </div>
   </dialog>
 
@@ -1529,9 +1970,13 @@
         <p style="margin:4px 0 6px 0;">
           <span id="manual-credits-author-label">Created by</span>: <strong>Camilo</strong>
         </p>
-        <p style="margin:0;">
+        <p style="margin:4px 0 6px 0;">
           <span id="manual-credits-repo-label">Repository</span>: 
           <a href="https://github.com/qnelo/dramapuchi-pwa" target="_blank" rel="noopener noreferrer" class="manual-link">https://github.com/qnelo/dramapuchi-pwa</a>
+        </p>
+        <p style="margin:0;">
+          <span id="manual-credits-support-label">Support on Ko-fi</span>: 
+          <a href="https://ko-fi.com/qnelo" target="_blank" rel="noopener noreferrer" class="manual-link">https://ko-fi.com/qnelo</a>
         </p>
       </div>
     </div>
@@ -1549,6 +1994,6 @@
     </div>
   </div>
 
-  <script type="module" src="./app.js?v=34"></script>
+  <script type="module" src="./app.js?v=39"></script>
 </body>
 </html>

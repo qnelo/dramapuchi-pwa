@@ -110,3 +110,15 @@ export const THRESHOLDS = {
   SENESCENCE_START_DAYS: 15,  // Day 15 as adult triggers accelerated decay & medicine resistance
   TICK_SIZE_MS: 60 * 1000     // 1 minute per tick
 };
+
+export const SUPPORT_CONFIG = {
+  KOFI_URL: 'https://ko-fi.com/qnelo',
+  TIERS: [
+    { amount: 1, id: 'snack', url: 'https://ko-fi.com/s/d36d1b77d2' },
+    { amount: 2, id: 'meal', url: 'https://ko-fi.com/s/9b741c9c18' },
+    { amount: 3, id: 'clean', url: 'https://ko-fi.com/s/5ecb5a3e4b' },
+    { amount: 5, id: 'game', url: 'https://ko-fi.com/s/9c332e9183' },
+    { amount: 10, id: 'medicine', url: 'https://ko-fi.com/s/1e6b405b48' }
+  ]
+};
+

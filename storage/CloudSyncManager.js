@@ -407,4 +407,42 @@ export class CloudSyncManager {
       this.isSyncing = false;
     }
   }
+
+  static getOrGenerateDonorCode() {
+    const KEY = 'dramapuchi_donor_code';
+    try {
+      if (typeof localStorage !== 'undefined') {
+        let saved = localStorage.getItem(KEY);
+        if (saved && saved.startsWith('#DP-')) return saved;
+        const chars = '23456789ABCDEFGHJKLMNPQRSTUVWXYZ';
+        let code = '#DP-';
+        for (let i = 0; i < 4; i++) {
+          code += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        localStorage.setItem(KEY, code);
+        return code;
+      }
+    } catch {}
+    return '#DP-7777';
+  }
+
+  async verifyDonation({ donorCode = '', transactionId = '', email = '' } = {}) {
+    try {
+      const headers = {
+        'Content-Type': 'application/json'
+      };
+      if (this.token) {
+        headers['Authorization'] = `Bearer ${this.token}`;
+      }
+      const res = await fetch('/api/verify-donation', {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({ donorCode, transactionId, email })
+      });
+      const data = await res.json();
+      return { ok: res.ok, status: res.status, ...data };
+    } catch (err) {
+      return { ok: false, error: err.message };
+    }
+  }
 }

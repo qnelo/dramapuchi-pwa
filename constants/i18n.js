@@ -3,7 +3,8 @@ export const TRANSLATIONS = {
     "title": "DramaPuchi PWA",
     "topControls": {
       "settings": "⚙️ Settings",
-      "manual": "📖 Manual"
+      "manual": "📖 Manual",
+      "support": "☕ Support"
     },
     "settings": {
       "title": "⚙️ Settings",
@@ -24,7 +25,9 @@ export const TRANSLATIONS = {
       "cloudHeader": "☁️ Cloud Save & Sync",
       "cloudDisconnect": "Disconnect",
       "cloudDisconnected": "⚪ Not connected",
-      "cloudSynced": "🟢 Synced"
+      "cloudSynced": "🟢 Synced",
+      "supportHeader": "☕ Support DramaPuchi",
+      "supportBtn": "💖 Make a Contribution"
     },
     "icons": {
       "0": "Feed",
@@ -144,19 +147,49 @@ export const TRANSLATIONS = {
       "evoOctoDesc": "5–6 mistakes. Sensitive octopus wanderer.",
       "evoFloraDesc": "≥ 7 mistakes. Delicate botanical puchi requiring attention.",
       "gen2DepartureTitle": "🛸 Alien Abduction & Return (UFO)",
-      "gen2DepartedDesc": "An alien UFO beams the puchi back to the home planet with a twinkling star upon retirement or departure."
+      "gen2DepartedDesc": "An alien UFO beams the puchi back to the home planet with a twinkling star upon retirement or departure.",
+      "creditsSupportLabel": "Support on Ko-fi"
     },
     "update": {
       "available": "✨ New version available!",
       "action": "Update",
       "updating": "Updating..."
+    },
+    "support": {
+      "title": "☕ Support DramaPuchi",
+      "desc": "DramaPuchi is a free, open-source project without ads. Optional contributions help keep the project alive!",
+      "tierCoffee": "☕ 1 Coffee ($1)",
+      "tierSnack": "Snack - $1 USD",
+      "tierCake": "🍰 3 Coffees ($3)",
+      "tierMeal": "Meal - $2 USD",
+      "tierFan": "💖 Super Fan ($10)",
+      "cta": "Support on Ko-fi",
+      "close": "Close",
+      "tierClean": "Clean - $3 USD",
+      "tierGame": "Play - $5 USD",
+      "tierMedicine": "Medicine - $10 USD",
+      "perkTitle": "✨ Any donation unlocks Generation 2 (1997)!",
+      "perkUnlocked": "✨ Generation 2 is unlocked on your account!",
+      "donorCodeLabel": "Your unique donor code:",
+      "copyCode": "📋 Copy",
+      "copied": "Copied!",
+      "codeHint": "Paste this code in the message box on Ko-fi to activate your reward automatically.",
+      "checkStatusBtn": "🔄 Check donation status",
+      "receiptCollapsible": "Donated without the code? Redeem with Receipt ID",
+      "receiptPlaceholder": "Ko-fi Transaction ID from receipt",
+      "redeemBtn": "Redeem ID",
+      "verifying": "Verifying...",
+      "verifySuccess": "✨ Donation confirmed! Generation 2 is unlocked!",
+      "verifyNotFound": "No pending donation found matching this code or ID. If you just donated, please wait a few seconds for Ko-fi to process.",
+      "alreadyClaimed": "This donation has already been claimed by another account."
     }
   },
   "es": {
     "title": "DramaPuchi PWA",
     "topControls": {
       "settings": "⚙️ Ajustes",
-      "manual": "📖 Manual"
+      "manual": "📖 Manual",
+      "support": "☕ Apoyar"
     },
     "settings": {
       "title": "⚙️ Ajustes",
@@ -177,7 +210,9 @@ export const TRANSLATIONS = {
       "cloudHeader": "☁️ Guardado en la nube",
       "cloudDisconnect": "Desconectar",
       "cloudDisconnected": "⚪ No conectado",
-      "cloudSynced": "🟢 Sincronizado"
+      "cloudSynced": "🟢 Sincronizado",
+      "supportHeader": "☕ Apoyar DramaPuchi",
+      "supportBtn": "💖 Hacer un aporte"
     },
     "icons": {
       "0": "Comida",
@@ -297,19 +332,49 @@ export const TRANSLATIONS = {
       "evoOctoDesc": "5–6 fallos. Nómada sensible con tentáculos.",
       "evoFloraDesc": "≥ 7 fallos. Puchi vegetal delicado que requiere atención constante.",
       "gen2DepartureTitle": "🛸 Abducción y Retorno Alienígena (OVNI)",
-      "gen2DepartedDesc": "Un platillo volador (OVNI) abduce al puchi llevándolo de regreso a su planeta natal con una estrella titilante al expirar o partir."
+      "gen2DepartedDesc": "Un platillo volador (OVNI) abduce al puchi llevándolo de regreso a su planeta natal con una estrella titilante al expirar o partir.",
+      "creditsSupportLabel": "Apoyar en Ko-fi"
     },
     "update": {
       "available": "✨ ¡Nueva versión disponible!",
       "action": "Actualizar",
       "updating": "Actualizando..."
+    },
+    "support": {
+      "title": "☕ Apoyar DramaPuchi",
+      "desc": "DramaPuchi es un proyecto gratuito, de código abierto y sin anuncios. ¡Tu aporte voluntario ayuda a mantenerlo activo!",
+      "tierCoffee": "☕ 1 Café ($1 USD)",
+      "tierSnack": "Snack - $1 USD",
+      "tierCake": "🍰 3 Cafés ($3 USD)",
+      "tierMeal": "Meal - $2 USD",
+      "tierFan": "💖 Super Fan ($10 USD)",
+      "cta": "Apoyar en Ko-fi",
+      "close": "Cerrar",
+      "tierClean": "Bañar - $3 USD",
+      "tierGame": "Jugar - $5 USD",
+      "tierMedicine": "Medicina - $10 USD",
+      "perkTitle": "✨ ¡Cualquier aporte desbloquea la Generación 2 (1997)!",
+      "perkUnlocked": "✨ ¡Generación 2 desbloqueada en tu cuenta!",
+      "donorCodeLabel": "Tu código único de donante:",
+      "copyCode": "📋 Copiar",
+      "copied": "¡Copiado!",
+      "codeHint": "Pega este código en el campo de mensaje en Ko-fi para activar tu recompensa de forma automática.",
+      "checkStatusBtn": "🔄 Comprobar estado de mi donación",
+      "receiptCollapsible": "¿Donaste sin poner el código? Canjear con tu ID de recibo",
+      "receiptPlaceholder": "ID de transacción de tu recibo de Ko-fi",
+      "redeemBtn": "Canjear ID",
+      "verifying": "Verificando...",
+      "verifySuccess": "✨ ¡Donación confirmada! ¡Generación 2 desbloqueada!",
+      "verifyNotFound": "No se encontró una donación pendiente con ese código o ID. Si acabas de donar, espera unos segundos a que Ko-fi procese el pago.",
+      "alreadyClaimed": "Esta donación ya fue canjeada por otra cuenta."
     }
   },
   "zh": {
     "title": "DramaPuchi 宠物 PWA",
     "topControls": {
       "settings": "⚙️ 设置",
-      "manual": "📖 说明书"
+      "manual": "📖 说明书",
+      "support": "☕ 支持"
     },
     "settings": {
       "title": "⚙️ 设置",
@@ -330,7 +395,9 @@ export const TRANSLATIONS = {
       "cloudHeader": "☁️ 云端存档与同步",
       "cloudDisconnect": "断开连接",
       "cloudDisconnected": "⚪ 未连接",
-      "cloudSynced": "🟢 已同步"
+      "cloudSynced": "🟢 已同步",
+      "supportHeader": "☕ 支持 DramaPuchi",
+      "supportBtn": "💖 赞助项目"
     },
     "icons": {
       "0": "喂食",
@@ -450,19 +517,49 @@ export const TRANSLATIONS = {
       "evoOctoDesc": "失误5–6次。敏感的章鱼形态游历者。",
       "evoFloraDesc": "失误≥7次。娇弱且需要高度关注的植物系角色。",
       "gen2DepartureTitle": "🛸 飞碟离去与归还（UFO）",
-      "gen2DepartedDesc": "寿终正寝或圆满告别时，飞碟光束将伴随闪烁星光将其接回母星。"
+      "gen2DepartedDesc": "寿终正寝或圆满告别时，飞碟光束将伴随闪烁星光将其接回母星。",
+      "creditsSupportLabel": "在 Ko-fi 上支持"
     },
     "update": {
       "available": "✨ 发现新版本！",
       "action": "立即更新",
       "updating": "更新中..."
+    },
+    "support": {
+      "title": "☕ 支持 DramaPuchi",
+      "desc": "DramaPuchi 是一个完全免费、开源且无广告的项目。您的自愿赞助将帮助项目持续更新！",
+      "tierCoffee": "☕ 1杯咖啡 ($1)",
+      "tierSnack": "零食 (Snack) - $1 USD",
+      "tierCake": "🍰 3杯咖啡 ($3)",
+      "tierMeal": "正餐 (Meal) - $2 USD",
+      "tierFan": "💖 超级粉丝 ($10)",
+      "cta": "在 Ko-fi 上支持",
+      "close": "关闭",
+      "tierClean": "洗澡 (Clean) - $3 USD",
+      "tierGame": "玩耍 (Play) - $5 USD",
+      "tierMedicine": "治病 (Medicine) - $10 USD",
+      "perkTitle": "✨ 任意赞助即可解锁第2代（1997）！",
+      "perkUnlocked": "✨ 第2代已在您的账户中解锁！",
+      "donorCodeLabel": "您的专属赞助识别码：",
+      "copyCode": "📋 复制",
+      "copied": "已复制！",
+      "codeHint": "在 Ko-fi 赞助时的留言框中粘贴此代码，即可自动解锁奖励。",
+      "checkStatusBtn": "🔄 检查赞助状态",
+      "receiptCollapsible": "未填写代码？使用收据交易号兑换",
+      "receiptPlaceholder": "Ko-fi 电子收据中的交易 ID",
+      "redeemBtn": "兑换交易号",
+      "verifying": "验证中...",
+      "verifySuccess": "✨ 赞助已确认！第2代成功解锁！",
+      "verifyNotFound": "未找到与该代码或交易号匹配的待处理赞助。如果您刚完成付款，请稍候数秒重试。",
+      "alreadyClaimed": "该赞助已被其他账户领取。"
     }
   },
   "pt": {
     "title": "DramaPuchi PWA",
     "topControls": {
       "settings": "⚙️ Configurações",
-      "manual": "📖 Manual"
+      "manual": "📖 Manual",
+      "support": "☕ Apoiar"
     },
     "settings": {
       "title": "⚙️ Configurações",
@@ -483,7 +580,9 @@ export const TRANSLATIONS = {
       "cloudHeader": "☁️ Salvamento na Nuvem",
       "cloudDisconnect": "Desconectar",
       "cloudDisconnected": "⚪ Não conectado",
-      "cloudSynced": "🟢 Sincronizado"
+      "cloudSynced": "🟢 Sincronizado",
+      "supportHeader": "☕ Apoiar DramaPuchi",
+      "supportBtn": "💖 Fazer uma contribuição"
     },
     "icons": {
       "0": "Alimentar",
@@ -603,19 +702,49 @@ export const TRANSLATIONS = {
       "evoOctoDesc": "5–6 erros. Andarilho sensível com tentáculos.",
       "evoFloraDesc": "≥ 7 erros. Planta delicada que exige cuidado contínuo.",
       "gen2DepartureTitle": "🛸 Retorno e Abdução Alienígena (OVNI)",
-      "gen2DepartedDesc": "Um OVNI emite um feixe de luz levando o puchi de volta ao seu planeta natal com uma estrela cintilante ao partir."
+      "gen2DepartedDesc": "Um OVNI emite um feixe de luz levando o puchi de volta ao seu planeta natal com uma estrela cintilante ao partir.",
+      "creditsSupportLabel": "Apoiar no Ko-fi"
     },
     "update": {
       "available": "✨ Nova versão disponível!",
       "action": "Atualizar",
       "updating": "Atualizando..."
+    },
+    "support": {
+      "title": "☕ Apoiar DramaPuchi",
+      "desc": "DramaPuchi é um projeto gratuito, de código aberto e sem anúncios. Sua contribuição voluntária ajuda a manter o projeto!",
+      "tierCoffee": "☕ 1 Café ($1)",
+      "tierSnack": "Snack - $1 USD",
+      "tierCake": "🍰 3 Cafés ($3)",
+      "tierMeal": "Refeição - $2 USD",
+      "tierFan": "💖 Super Fã ($10)",
+      "cta": "Apoiar no Ko-fi",
+      "close": "Fechar",
+      "tierClean": "Banho - $3 USD",
+      "tierGame": "Brincar - $5 USD",
+      "tierMedicine": "Remédio - $10 USD",
+      "perkTitle": "✨ Qualquer contribuição desbloqueia a Geração 2 (1997)!",
+      "perkUnlocked": "✨ Geração 2 desbloqueada na sua conta!",
+      "donorCodeLabel": "Seu código único de apoiador:",
+      "copyCode": "📋 Copiar",
+      "copied": "Copiado!",
+      "codeHint": "Cole este código na mensagem do Ko-fi para ativar sua recompensa automaticamente.",
+      "checkStatusBtn": "🔄 Verificar status da doação",
+      "receiptCollapsible": "Doou sem o código? Resgatar com ID do recibo",
+      "receiptPlaceholder": "ID de transação do recibo do Ko-fi",
+      "redeemBtn": "Resgatar ID",
+      "verifying": "Verificando...",
+      "verifySuccess": "✨ Doação confirmada! Geração 2 desbloqueada!",
+      "verifyNotFound": "Nenhuma doação pendente encontrada com este código ou ID. Aguarde alguns segundos se acabou de doar.",
+      "alreadyClaimed": "Esta doação já foi resgatada por outra conta."
     }
   },
   "ja": {
     "title": "DramaPuchi PWA",
     "topControls": {
       "settings": "⚙️ 設定",
-      "manual": "📖 説明書"
+      "manual": "📖 説明書",
+      "support": "☕ 応援"
     },
     "settings": {
       "title": "⚙️ 設定",
@@ -636,7 +765,9 @@ export const TRANSLATIONS = {
       "cloudHeader": "☁️ クラウドセーブ＆同期",
       "cloudDisconnect": "切断",
       "cloudDisconnected": "⚪ 未接続",
-      "cloudSynced": "🟢 同期済み"
+      "cloudSynced": "🟢 同期済み",
+      "supportHeader": "☕ DramaPuchi を応援",
+      "supportBtn": "💖 支援する"
     },
     "icons": {
       "0": "食事",
@@ -756,19 +887,49 @@ export const TRANSLATIONS = {
       "evoOctoDesc": "ミス5〜6回。デリケートなたこ型プチ。",
       "evoFloraDesc": "ミス7回以上。手のかかる植物プチ。",
       "gen2DepartureTitle": "🛸 帰還・宇宙船（UFO）",
-      "gen2DepartedDesc": "寿命を迎えるか平穏に帰還する時、UFOの光線で星空へと連れ戻されます。"
+      "gen2DepartedDesc": "寿命を迎えるか平穏に帰還する時、UFOの光線で星空へと連れ戻されます。",
+      "creditsSupportLabel": "Ko-fi で支援する"
     },
     "update": {
       "available": "✨ 新しいバージョンが利用可能です！",
       "action": "今すぐ更新",
       "updating": "更新中..."
+    },
+    "support": {
+      "title": "☕ DramaPuchi を応援",
+      "desc": "DramaPuchi は完全無料・オープンソース・広告なしのプロジェクトです。皆様のご支援が開発の励みになります！",
+      "tierCoffee": "☕ コーヒー1杯 ($1)",
+      "tierSnack": "おやつ (Snack) - $1 USD",
+      "tierCake": "🍰 コーヒー3杯 ($3)",
+      "tierMeal": "ごはん (Meal) - $2 USD",
+      "tierFan": "💖 スーパーファン ($10)",
+      "cta": "Ko-fi で支援する",
+      "close": "閉じる",
+      "tierClean": "おそうじ (Clean) - $3 USD",
+      "tierGame": "ゲーム (Play) - $5 USD",
+      "tierMedicine": "ちりょう (Medicine) - $10 USD",
+      "perkTitle": "✨ どんな支援でも第2世代（1997）がアンロック！",
+      "perkUnlocked": "✨ アカウントで第2世代が解放されました！",
+      "donorCodeLabel": "あなた専用の支援コード:",
+      "copyCode": "📋 コピー",
+      "copied": "コピー完了！",
+      "codeHint": "Ko-fi のメッセージ欄にこのコードを貼り付けると自動で報酬が有効になります。",
+      "checkStatusBtn": "🔄 支援状況を確認",
+      "receiptCollapsible": "コードを入れずに支援しましたか？領収書IDで引き換え",
+      "receiptPlaceholder": "Ko-fi 領収書の取引ID",
+      "redeemBtn": "IDを引き換える",
+      "verifying": "確認中...",
+      "verifySuccess": "✨ 支援が確認されました！第2世代がアンロックされました！",
+      "verifyNotFound": "該当する支援が見つかりませんでした。支払い直後の場合は数秒お待ちください。",
+      "alreadyClaimed": "この支援は既に別のアカウントで引き換え済みです。"
     }
   },
   "de": {
     "title": "DramaPuchi PWA",
     "topControls": {
       "settings": "⚙️ Einstellungen",
-      "manual": "📖 Handbuch"
+      "manual": "📖 Handbuch",
+      "support": "☕ Spenden"
     },
     "settings": {
       "title": "⚙️ Einstellungen",
@@ -789,7 +950,9 @@ export const TRANSLATIONS = {
       "cloudHeader": "☁️ Cloud-Speicherung & Sync",
       "cloudDisconnect": "Trennen",
       "cloudDisconnected": "⚪ Nicht verbunden",
-      "cloudSynced": "🟢 Synchronisiert"
+      "cloudSynced": "🟢 Synchronisiert",
+      "supportHeader": "☕ DramaPuchi unterstützen",
+      "supportBtn": "💖 Beitrag leisten"
     },
     "icons": {
       "0": "Füttern",
@@ -909,19 +1072,49 @@ export const TRANSLATIONS = {
       "evoOctoDesc": "5–6 Fehler. Empfindlicher Oktopus-Wanderer.",
       "evoFloraDesc": "≥ 7 Fehler. Zarte botanische Kreatur, die ständige Fürsorge braucht.",
       "gen2DepartureTitle": "🛸 Entführung & Rückkehr (UFO)",
-      "gen2DepartedDesc": "Ein UFO beamt den Puchi mit einem funkelnden Stern zurück zum Heimatplaneten."
+      "gen2DepartedDesc": "Ein UFO beamt den Puchi mit einem funkelnden Stern zurück zum Heimatplaneten.",
+      "creditsSupportLabel": "Auf Ko-fi unterstützen"
     },
     "update": {
       "available": "✨ Neue Version verfügbar!",
       "action": "Aktualisieren",
       "updating": "Wird aktualisiert..."
+    },
+    "support": {
+      "title": "☕ DramaPuchi unterstützen",
+      "desc": "DramaPuchi ist ein kostenloses, werbefreies Open-Source-Projekt. Dein Beitrag hilft bei der Weiterentwicklung!",
+      "tierCoffee": "☕ 1 Kaffee ($1)",
+      "tierSnack": "Snack - $1 USD",
+      "tierCake": "🍰 3 Kaffees ($3)",
+      "tierMeal": "Mahlzeit - $2 USD",
+      "tierFan": "💖 Super-Fan ($10)",
+      "cta": "Auf Ko-fi unterstützen",
+      "close": "Schließen",
+      "tierClean": "Baden - $3 USD",
+      "tierGame": "Spielen - $5 USD",
+      "tierMedicine": "Medizin - $10 USD",
+      "perkTitle": "✨ Jede Spende schaltet Generation 2 (1997) frei!",
+      "perkUnlocked": "✨ Generation 2 ist auf deinem Konto freigeschaltet!",
+      "donorCodeLabel": "Dein eindeutiger Unterstützer-Code:",
+      "copyCode": "📋 Kopieren",
+      "copied": "Kopiert!",
+      "codeHint": "Füge diesen Code im Ko-fi-Nachrichtenfeld ein, um die Belohnung automatisch zu aktivieren.",
+      "checkStatusBtn": "🔄 Spendenstatus prüfen",
+      "receiptCollapsible": "Ohne Code gespendet? Mit Beleg-ID einlösen",
+      "receiptPlaceholder": "Ko-fi Transaktions-ID aus dem Beleg",
+      "redeemBtn": "ID einlösen",
+      "verifying": "Wird überprüft...",
+      "verifySuccess": "✨ Spende bestätigt! Generation 2 freigeschaltet!",
+      "verifyNotFound": "Keine ausstehende Spende für diesen Code oder diese ID gefunden. Bitte kurz warten.",
+      "alreadyClaimed": "Diese Spende wurde bereits von einem anderen Konto eingelöst."
     }
   },
   "fr": {
     "title": "DramaPuchi PWA",
     "topControls": {
       "settings": "⚙️ Paramètres",
-      "manual": "📖 Manuel"
+      "manual": "📖 Manuel",
+      "support": "☕ Soutenir"
     },
     "settings": {
       "title": "⚙️ Paramètres",
@@ -942,7 +1135,9 @@ export const TRANSLATIONS = {
       "cloudHeader": "☁️ Sauvegarde Cloud & Sync",
       "cloudDisconnect": "Déconnecter",
       "cloudDisconnected": "⚪ Non connecté",
-      "cloudSynced": "🟢 Synchronisé"
+      "cloudSynced": "🟢 Synchronisé",
+      "supportHeader": "☕ Soutenir DramaPuchi",
+      "supportBtn": "💖 Faire un don"
     },
     "icons": {
       "0": "Nourrir",
@@ -1062,19 +1257,49 @@ export const TRANSLATIONS = {
       "evoOctoDesc": "5–6 erreurs. Poulpe sensible et voyageur.",
       "evoFloraDesc": "≥ 7 erreurs. Végétal délicat demandant une attention constante.",
       "gen2DepartureTitle": "🛸 Enlèvement & Retour Extraterrestre (OVNI)",
-      "gen2DepartedDesc": "Une soucoupe volante téléporte le puchi vers sa planète natale avec une étoile scintillante."
+      "gen2DepartedDesc": "Une soucoupe volante téléporte le puchi vers sa planète natale avec une étoile scintillante.",
+      "creditsSupportLabel": "Soutenir sur Ko-fi"
     },
     "update": {
       "available": "✨ Nouvelle version disponible !",
       "action": "Mettre à jour",
       "updating": "Mise à jour..."
+    },
+    "support": {
+      "title": "☕ Soutenir DramaPuchi",
+      "desc": "DramaPuchi est un projet gratuit, open-source et sans publicité. Votre soutien aide à maintenir le développement !",
+      "tierCoffee": "☕ 1 Café ($1)",
+      "tierSnack": "Snack - $1 USD",
+      "tierCake": "🍰 3 Cafés ($3)",
+      "tierMeal": "Repas - $2 USD",
+      "tierFan": "💖 Super Fan ($10)",
+      "cta": "Soutenir sur Ko-fi",
+      "close": "Fermer",
+      "tierClean": "Bain - $3 USD",
+      "tierGame": "Jouer - $5 USD",
+      "tierMedicine": "Médicament - $10 USD",
+      "perkTitle": "✨ Tout don débloque la Génération 2 (1997) !",
+      "perkUnlocked": "✨ Génération 2 débloquée sur votre compte !",
+      "donorCodeLabel": "Votre code unique de donateur :",
+      "copyCode": "📋 Copier",
+      "copied": "Copié !",
+      "codeHint": "Collez ce code dans le message sur Ko-fi pour activer votre récompense automatiquement.",
+      "checkStatusBtn": "🔄 Vérifier l'état du don",
+      "receiptCollapsible": "Donné sans le code ? Échanger avec l'ID du reçu",
+      "receiptPlaceholder": "ID de transaction du reçu Ko-fi",
+      "redeemBtn": "Valider l'ID",
+      "verifying": "Vérification...",
+      "verifySuccess": "✨ Don confirmé ! Génération 2 débloquée !",
+      "verifyNotFound": "Aucun don en attente trouvé pour ce code ou cet ID. Veuillez patienter quelques instants.",
+      "alreadyClaimed": "Ce don a déjà été réclamé par un autre compte."
     }
   },
   "it": {
     "title": "DramaPuchi PWA",
     "topControls": {
       "settings": "⚙️ Impostazioni",
-      "manual": "📖 Manuale"
+      "manual": "📖 Manuale",
+      "support": "☕ Supporta"
     },
     "settings": {
       "title": "⚙️ Impostazioni",
@@ -1095,7 +1320,9 @@ export const TRANSLATIONS = {
       "cloudHeader": "☁️ Salvataggio Cloud & Sync",
       "cloudDisconnect": "Disconnetti",
       "cloudDisconnected": "⚪ Non connesso",
-      "cloudSynced": "🟢 Sincronizzato"
+      "cloudSynced": "🟢 Sincronizzato",
+      "supportHeader": "☕ Supporta DramaPuchi",
+      "supportBtn": "💖 Fai una donazione"
     },
     "icons": {
       "0": "Cibo",
@@ -1215,19 +1442,49 @@ export const TRANSLATIONS = {
       "evoOctoDesc": "5–6 errori. Vagabondo sensibile simile a un polpo.",
       "evoFloraDesc": "≥ 7 errori. Creatura botanica delicata che richiede cura costante.",
       "gen2DepartureTitle": "🛸 Rapimento e Ritorno Alieno (UFO)",
-      "gen2DepartedDesc": "Un disco volante trasporta il puchi al suo pianeta natale con una stella scintillante."
+      "gen2DepartedDesc": "Un disco volante trasporta il puchi al suo pianeta natale con una stella scintillante.",
+      "creditsSupportLabel": "Supporta su Ko-fi"
     },
     "update": {
       "available": "✨ Nuova versione disponibile!",
       "action": "Aggiorna",
       "updating": "Aggiornamento in corso..."
+    },
+    "support": {
+      "title": "☕ Supporta DramaPuchi",
+      "desc": "DramaPuchi è un progetto gratuito, open source e senza pubblicità. Il tuo supporto aiuta a mantenerlo attivo!",
+      "tierCoffee": "☕ 1 Caffè ($1)",
+      "tierSnack": "Snack - $1 USD",
+      "tierCake": "🍰 3 Caffè ($3)",
+      "tierMeal": "Pasto - $2 USD",
+      "tierFan": "💖 Super Fan ($10)",
+      "cta": "Supporta su Ko-fi",
+      "close": "Chiudi",
+      "tierClean": "Bagno - $3 USD",
+      "tierGame": "Gioco - $5 USD",
+      "tierMedicine": "Medicina - $10 USD",
+      "perkTitle": "✨ Qualsiasi donazione sblocca la Generazione 2 (1997)!",
+      "perkUnlocked": "✨ Generazione 2 sbloccata sul tuo account!",
+      "donorCodeLabel": "Il tuo codice sostenitore univoco:",
+      "copyCode": "📋 Copia",
+      "copied": "Copiato!",
+      "codeHint": "Incolla questo codice nel messaggio su Ko-fi per sbloccare la ricompensa automaticamente.",
+      "checkStatusBtn": "🔄 Controlla stato donazione",
+      "receiptCollapsible": "Donato senza codice? Riscatta con ID ricevuta",
+      "receiptPlaceholder": "ID transazione della ricevuta Ko-fi",
+      "redeemBtn": "Riscatta ID",
+      "verifying": "Verifica in corso...",
+      "verifySuccess": "✨ Donazione confermata! Generazione 2 sbloccata!",
+      "verifyNotFound": "Nessuna donazione trovata con questo codice o ID. Attendi qualche istante se hai appena pagato.",
+      "alreadyClaimed": "Questa donazione è già stata riscattata da un altro account."
     }
   },
   "ru": {
     "title": "DramaPuchi PWA",
     "topControls": {
       "settings": "⚙️ Настройки",
-      "manual": "📖 Инструкция"
+      "manual": "📖 Инструкция",
+      "support": "☕ Поддержать"
     },
     "settings": {
       "title": "⚙️ Настройки",
@@ -1248,7 +1505,9 @@ export const TRANSLATIONS = {
       "cloudHeader": "☁️ Облачное сохранение",
       "cloudDisconnect": "Отключить",
       "cloudDisconnected": "⚪ Не подключено",
-      "cloudSynced": "🟢 Синхронизировано"
+      "cloudSynced": "🟢 Синхронизировано",
+      "supportHeader": "☕ Поддержка DramaPuchi",
+      "supportBtn": "💖 Поддержать проект"
     },
     "icons": {
       "0": "Кормление",
@@ -1368,19 +1627,49 @@ export const TRANSLATIONS = {
       "evoOctoDesc": "5–6 ошибок. Чувствительный пучи-осьминог.",
       "evoFloraDesc": "≥ 7 ошибок. Нежный растительный пучи, требующий заботы.",
       "gen2DepartureTitle": "🛸 Возвращение на НЛО",
-      "gen2DepartedDesc": "Летающая тарелка забирает пучи лучом света на родную планету под мерцающей звездой."
+      "gen2DepartedDesc": "Летающая тарелка забирает пучи лучом света на родную планету под мерцающей звездой.",
+      "creditsSupportLabel": "Поддержать на Ko-fi"
     },
     "update": {
       "available": "✨ Доступна новая версия!",
       "action": "Обновить",
       "updating": "Обновление..."
+    },
+    "support": {
+      "title": "☕ Поддержать DramaPuchi",
+      "desc": "DramaPuchi — бесплатный проект с открытым исходным кодом без рекламы. Ваша поддержка помогает его развитию!",
+      "tierCoffee": "☕ 1 Кофе ($1)",
+      "tierSnack": "Снэк (Snack) - $1 USD",
+      "tierCake": "🍰 3 Кофе ($3)",
+      "tierMeal": "Еда (Meal) - $2 USD",
+      "tierFan": "💖 Супер-фан ($10)",
+      "cta": "Поддержать на Ko-fi",
+      "close": "Закрыть",
+      "tierClean": "Уборка (Clean) - $3 USD",
+      "tierGame": "Игра (Play) - $5 USD",
+      "tierMedicine": "Лекарство (Medicine) - $10 USD",
+      "perkTitle": "✨ Любое пожертвование открывает Поколение 2 (1997)!",
+      "perkUnlocked": "✨ Поколение 2 разблокировано в вашем аккаунте!",
+      "donorCodeLabel": "Ваш уникальный код поддержки:",
+      "copyCode": "📋 Скопировать",
+      "copied": "Скопировано!",
+      "codeHint": "Вставьте этот код в сообщение на Ko-fi для автоматической активации награды.",
+      "checkStatusBtn": "🔄 Проверить статус пожертвования",
+      "receiptCollapsible": "Донатили без кода? Активируйте по номеру чека",
+      "receiptPlaceholder": "ID транзакции из чека Ko-fi",
+      "redeemBtn": "Активировать ID",
+      "verifying": "Проверка...",
+      "verifySuccess": "✨ Донат подтвержден! Поколение 2 разблокировано!",
+      "verifyNotFound": "Пожертвование по этому коду или ID не найдено. Подождите несколько секунд.",
+      "alreadyClaimed": "Это пожертвование уже было активировано другим аккаунтом."
     }
   },
   "ar": {
     "title": "درامابوتشي PWA",
     "topControls": {
       "settings": "⚙️ الإعدادات",
-      "manual": "📖 الدليل"
+      "manual": "📖 الدليل",
+      "support": "☕ دعم"
     },
     "settings": {
       "title": "⚙️ الإعدادات",
@@ -1401,7 +1690,9 @@ export const TRANSLATIONS = {
       "cloudHeader": "☁️ الحفظ السحابي والمزامنة",
       "cloudDisconnect": "قطع الاتصال",
       "cloudDisconnected": "⚪ غير متصل",
-      "cloudSynced": "🟢 تمت المزامنة"
+      "cloudSynced": "🟢 تمت المزامنة",
+      "supportHeader": "☕ دعم DramaPuchi",
+      "supportBtn": "💖 المساهمة"
     },
     "icons": {
       "0": "إطعام",
@@ -1521,19 +1812,49 @@ export const TRANSLATIONS = {
       "evoOctoDesc": "5–6 أخطاء. كائن أخطبوطي حساس.",
       "evoFloraDesc": "≥ 7 أخطاء. كائن نباتي حساس يحتاج رعاية مستمرة.",
       "gen2DepartureTitle": "🛸 عودة عبر الصحن الطائر (UFO)",
-      "gen2DepartedDesc": "يأخذ الصحن الطائر المخلوق بشعاع ضوئي عائداً به إلى كوكبه الأم مع نجمة متلألئة."
+      "gen2DepartedDesc": "يأخذ الصحن الطائر المخلوق بشعاع ضوئي عائداً به إلى كوكبه الأم مع نجمة متلألئة.",
+      "creditsSupportLabel": "ادعم عبر Ko-fi"
     },
     "update": {
       "available": "✨ إصدار جديد متوفر الآن!",
       "action": "تحديث",
       "updating": "جارٍ التحديث..."
+    },
+    "support": {
+      "title": "☕ دعم DramaPuchi",
+      "desc": "مشروع DramaPuchi مجاني ومفتوح المصدر بدون إعلانات. دعمك الاختياري يساعد في استمرار المشروع!",
+      "tierCoffee": "☕ فنجان قهوة ($1)",
+      "tierSnack": "وجبة خفيفة (Snack) - $1 USD",
+      "tierCake": "🍰 3 فناجين ($3)",
+      "tierMeal": "وجبة (Meal) - $2 USD",
+      "tierFan": "💖 معجب مميز ($10)",
+      "cta": "ادعم عبر Ko-fi",
+      "close": "إغلاق",
+      "tierClean": "استحمام (Clean) - $3 USD",
+      "tierGame": "لعب (Play) - $5 USD",
+      "tierMedicine": "دواء (Medicine) - $10 USD",
+      "perkTitle": "✨ أي مساهمة تفتح الجيل الثاني (1997)!",
+      "perkUnlocked": "✨ تم فتح الجيل الثاني في حسابك!",
+      "donorCodeLabel": "رمز الداعم الخاص بك:",
+      "copyCode": "📋 نسخ",
+      "copied": "تم النسخ!",
+      "codeHint": "الصق هذا الرمز في رسالة الدعم على Ko-fi لتفعيل مكافأتك تلقائياً.",
+      "checkStatusBtn": "🔄 التحقق من حالة التبرع",
+      "receiptCollapsible": "هل تبرعت بدون الرمز؟ استرداد برقم الإيصال",
+      "receiptPlaceholder": "معرف المعاملة من إيصال Ko-fi",
+      "redeemBtn": "استرداد المعرف",
+      "verifying": "جار التحقق...",
+      "verifySuccess": "✨ تم تأكيد التبرع! تم فتح الجيل الثاني!",
+      "verifyNotFound": "لم يتم العثور على تبرع مطابق لهذا الرمز. يرجى الانتظار بضع ثوان.",
+      "alreadyClaimed": "تمت المطالبة بهذا التبرع مسبقاً من قبل حساب آخر."
     }
   },
   "hi": {
     "title": "ड्रामापुची PWA",
     "topControls": {
       "settings": "⚙️ सेटिंग्स",
-      "manual": "📖 निर्देशिका"
+      "manual": "📖 निर्देशिका",
+      "support": "☕ समर्थन"
     },
     "settings": {
       "title": "⚙️ सेटिंग्स",
@@ -1554,7 +1875,9 @@ export const TRANSLATIONS = {
       "cloudHeader": "☁️ क्लाउड सेव और सिंक",
       "cloudDisconnect": "डिस्कनेक्ट करें",
       "cloudDisconnected": "⚪ कनेक्ट नहीं है",
-      "cloudSynced": "🟢 सिंक हो गया"
+      "cloudSynced": "🟢 सिंक हो गया",
+      "supportHeader": "☕ DramaPuchi का समर्थन करें",
+      "supportBtn": "💖 सहयोग करें"
     },
     "icons": {
       "0": "भोजन",
@@ -1674,19 +1997,49 @@ export const TRANSLATIONS = {
       "evoOctoDesc": "5–6 गलतियां। संवेदनशील ऑक्टोपस जैसा साथी।",
       "evoFloraDesc": "≥ 7 गलतियां। नाजुक वनस्पति पात्र जिसे निरंतर देखभाल चाहिए।",
       "gen2DepartureTitle": "🛸 यूएफओ द्वारा वापसी",
-      "gen2DepartedDesc": "यूएफओ किरण चमकते तारे के साथ जीव को उसके गृह ग्रह पर वापस ले जाती है।"
+      "gen2DepartedDesc": "यूएफओ किरण चमकते तारे के साथ जीव को उसके गृह ग्रह पर वापस ले जाती है।",
+      "creditsSupportLabel": "Ko-fi पर समर्थन करें"
     },
     "update": {
       "available": "✨ नया संस्करण उपलब्ध है!",
       "action": "अपडेट करें",
       "updating": "अपडेट हो रहा है..."
+    },
+    "support": {
+      "title": "☕ DramaPuchi का समर्थन करें",
+      "desc": "DramaPuchi एक मुफ़्त और ओपन-सोर्स प्रोजेक्ट है जिसमें कोई विज्ञापन नहीं है। आपका समर्थन इसे बनाए रखने में मदद करता है!",
+      "tierCoffee": "☕ 1 कॉफ़ी ($1)",
+      "tierSnack": "स्नैक (Snack) - $1 USD",
+      "tierCake": "🍰 3 कॉफ़ी ($3)",
+      "tierMeal": "भोजन (Meal) - $2 USD",
+      "tierFan": "💖 सुपर फ़ैन ($10)",
+      "cta": "Ko-fi पर समर्थन करें",
+      "close": "बंद करें",
+      "tierClean": "नहलाना (Clean) - $3 USD",
+      "tierGame": "खेल (Play) - $5 USD",
+      "tierMedicine": "दवा (Medicine) - $10 USD",
+      "perkTitle": "✨ कोई भी सहयोग पीढ़ी 2 (1997) को अनलॉक करता है!",
+      "perkUnlocked": "✨ आपके खाते में पीढ़ी 2 अनलॉक हो गई है!",
+      "donorCodeLabel": "आपका अनूठा समर्थक कोड:",
+      "copyCode": "📋 कॉपी करें",
+      "copied": "कॉपी हो गया!",
+      "codeHint": "पुरस्कार को स्वचालित रूप से सक्रिय करने के लिए Ko-fi संदेश बॉक्स में यह कोड पेस्ट करें।",
+      "checkStatusBtn": "🔄 सहयोग स्थिति जांचें",
+      "receiptCollapsible": "बिना कोड के दान किया? रसीद आईडी से रिडीम करें",
+      "receiptPlaceholder": "Ko-fi रसीद से लेन-देन आईडी",
+      "redeemBtn": "आईडी रिडीम करें",
+      "verifying": "सत्यापित किया जा रहा है...",
+      "verifySuccess": "✨ सहयोग की पुष्टि हुई! पीढ़ी 2 अनलॉक हो गई!",
+      "verifyNotFound": "इस कोड या आईडी से मेल खाने वाला कोई सहयोग नहीं मिला। कृपया कुछ सेकंड प्रतीक्षा करें।",
+      "alreadyClaimed": "यह सहयोग पहले ही किसी अन्य खाते द्वारा दावा किया जा चुका है।"
     }
   },
   "bn": {
     "title": "ড্রামাপুচি PWA",
     "topControls": {
       "settings": "⚙️ সেটিংস",
-      "manual": "📖 নির্দেশিকা"
+      "manual": "📖 নির্দেশিকা",
+      "support": "☕ সাপোর্ট"
     },
     "settings": {
       "title": "⚙️ সেটিংস",
@@ -1707,7 +2060,9 @@ export const TRANSLATIONS = {
       "cloudHeader": "☁️ ক্লাউড সেভ ও সিঙ্ক",
       "cloudDisconnect": "বিচ্ছিন্ন করুন",
       "cloudDisconnected": "⚪ সংযুক্ত নয়",
-      "cloudSynced": "🟢 সিঙ্ক করা হয়েছে"
+      "cloudSynced": "🟢 সিঙ্ক করা হয়েছে",
+      "supportHeader": "☕ DramaPuchi সাপোর্ট করুন",
+      "supportBtn": "💖 অবদান রাখুন"
     },
     "icons": {
       "0": "খাবার",
@@ -1827,19 +2182,49 @@ export const TRANSLATIONS = {
       "evoOctoDesc": "৫–৬ ভুল। সংবেদনশীল অক্টোপাস পুচি।",
       "evoFloraDesc": "≥ ৭ ভুল। সূক্ষ্ম উদ্ভিজ্জ চরিত্র যার ধারাবাহিক যত্ন প্রয়োজন।",
       "gen2DepartureTitle": "🛸 ইউএফও প্রস্থান ও প্রত্যাবর্তন",
-      "gen2DepartedDesc": "একটি ভিনগ্রহী ইউএফও রশ্মি তারা ঝলমলে আকাশে চরিত্রটিকে তার নিজ গ্রহে ফিরিয়ে নিয়ে যায়।"
+      "gen2DepartedDesc": "একটি ভিনগ্রহী ইউএফও রশ্মি তারা ঝলমলে আকাশে চরিত্রটিকে তার নিজ গ্রহে ফিরিয়ে নিয়ে যায়।",
+      "creditsSupportLabel": "Ko-fi-তে সাপোর্ট করুন"
     },
     "update": {
       "available": "✨ নতুন সংস্করণ উপলব্ধ!",
       "action": "আপডেট করুন",
       "updating": "আপডেট হচ্ছে..."
+    },
+    "support": {
+      "title": "☕ DramaPuchi সাপোর্ট করুন",
+      "desc": "DramaPuchi বিজ্ঞাপনবিহীন একটি উন্মুক্ত ও বিনামূল্যের প্রকল্প। আপনার সাহায্য উন্নয়ন চালিয়ে যেতে সহায়তা করে!",
+      "tierCoffee": "☕ ১টি কফি ($1)",
+      "tierSnack": "স্ন্যাক (Snack) - $1 USD",
+      "tierCake": "🍰 ৩টি কফি ($3)",
+      "tierMeal": "খাবার (Meal) - $2 USD",
+      "tierFan": "💖 সুপার ফ্যান ($10)",
+      "cta": "Ko-fi-তে সাপোর্ট করুন",
+      "close": "বন্ধ করুন",
+      "tierClean": "গোসল (Clean) - $3 USD",
+      "tierGame": "খেলা (Play) - $5 USD",
+      "tierMedicine": "ওষুধ (Medicine) - $10 USD",
+      "perkTitle": "✨ যেকোনো অবদান প্রজন্ম ২ (১৯৯৭) আনলক করে!",
+      "perkUnlocked": "✨ আপনার অ্যাকাউন্টে প্রজন্ম ২ আনলক করা হয়েছে!",
+      "donorCodeLabel": "আপনার অনন্য দাতা কোড:",
+      "copyCode": "📋 কপি",
+      "copied": "কপি হয়েছে!",
+      "codeHint": "আপনার পুরষ্কারটি স্বয়ংক্রিয়ভাবে সক্রিয় করতে Ko-fi বার্তার ঘরে এই কোডটি পেস্ট করুন।",
+      "checkStatusBtn": "🔄 অবদানের স্থিতি পরীক্ষা করুন",
+      "receiptCollapsible": "কোড ছাড়া দান করেছেন? রসিদ আইডি দিয়ে রিডিম করুন",
+      "receiptPlaceholder": "Ko-fi রসিদ থেকে লেনদেন আইডি",
+      "redeemBtn": "আইডি রিডিম",
+      "verifying": "যাচাই করা হচ্ছে...",
+      "verifySuccess": "✨ অবদান নিশ্চিত হয়েছে! প্রজন্ম ২ আনলক হয়েছে!",
+      "verifyNotFound": "এই কোড বা আইডির সাথে কোনো অবদান পাওয়া যায়নি। অনুগ্রহ করে কয়েক সেকেন্ড অপেক্ষা করুন।",
+      "alreadyClaimed": "এই অবদানটি ইতিমধ্যে অন্য একটি অ্যাকাউন্ট দ্বারা দাবি করা হয়েছে।"
     }
   },
   "id": {
     "title": "DramaPuchi PWA",
     "topControls": {
       "settings": "⚙️ Pengaturan",
-      "manual": "📖 Panduan"
+      "manual": "📖 Panduan",
+      "support": "☕ Dukung"
     },
     "settings": {
       "title": "⚙️ Pengaturan",
@@ -1860,7 +2245,9 @@ export const TRANSLATIONS = {
       "cloudHeader": "☁️ Simpan Cloud & Sinkronisasi",
       "cloudDisconnect": "Putuskan",
       "cloudDisconnected": "⚪ Belum terhubung",
-      "cloudSynced": "🟢 Tersinkronisasi"
+      "cloudSynced": "🟢 Tersinkronisasi",
+      "supportHeader": "☕ Dukung DramaPuchi",
+      "supportBtn": "💖 Beri Dukungan"
     },
     "icons": {
       "0": "Makan",
@@ -1980,19 +2367,49 @@ export const TRANSLATIONS = {
       "evoOctoDesc": "5–6 kesalahan. Pengelana sensitif mirip gurita.",
       "evoFloraDesc": "≥ 7 kesalahan. Puchi tumbuhan rapuh yang butuh perhatian.",
       "gen2DepartureTitle": "🛸 Penculikan & Kepulangan Alien (UFO)",
-      "gen2DepartedDesc": "UFO alien menyinari puchi untuk membawanya pulang ke planet asal bersama bintang berkilau."
+      "gen2DepartedDesc": "UFO alien menyinari puchi untuk membawanya pulang ke planet asal bersama bintang berkilau.",
+      "creditsSupportLabel": "Dukung di Ko-fi"
     },
     "update": {
       "available": "✨ Versi baru tersedia!",
       "action": "Perbarui",
       "updating": "Memperbarui..."
+    },
+    "support": {
+      "title": "☕ Dukung DramaPuchi",
+      "desc": "DramaPuchi adalah proyek gratis dan sumber terbuka tanpa iklan. Dukungan sukarela Anda membantu proyek tetap berjalan!",
+      "tierCoffee": "☕ 1 Kopi ($1)",
+      "tierSnack": "Snack - $1 USD",
+      "tierCake": "🍰 3 Kopi ($3)",
+      "tierMeal": "Makanan (Meal) - $2 USD",
+      "tierFan": "💖 Penggemar Super ($10)",
+      "cta": "Dukung di Ko-fi",
+      "close": "Tutup",
+      "tierClean": "Mandikan (Clean) - $3 USD",
+      "tierGame": "Main (Play) - $5 USD",
+      "tierMedicine": "Obat (Medicine) - $10 USD",
+      "perkTitle": "✨ Donasi apa pun membuka Generasi 2 (1997)!",
+      "perkUnlocked": "✨ Generasi 2 telah terbuka di akun Anda!",
+      "donorCodeLabel": "Kode donatur unik Anda:",
+      "copyCode": "📋 Salin",
+      "copied": "Tersalin!",
+      "codeHint": "Tempel kode ini di kotak pesan Ko-fi untuk mengaktifkan hadiah Anda secara otomatis.",
+      "checkStatusBtn": "🔄 Periksa status donasi",
+      "receiptCollapsible": "Berdonasi tanpa kode? Klaim dengan ID tanda terima",
+      "receiptPlaceholder": "ID transaksi dari tanda terima Ko-fi",
+      "redeemBtn": "Klaim ID",
+      "verifying": "Memverifikasi...",
+      "verifySuccess": "✨ Donasi dikonfirmasi! Generasi 2 terbuka!",
+      "verifyNotFound": "Tidak ada donasi tertunda yang cocok dengan kode atau ID ini. Mohon tunggu beberapa detik.",
+      "alreadyClaimed": "Donasi ini sudah diklaim oleh akun lain."
     }
   },
   "th": {
     "title": "ดรามาปุจิ PWA",
     "topControls": {
       "settings": "⚙️ ตั้งค่า",
-      "manual": "📖 คู่มือ"
+      "manual": "📖 คู่มือ",
+      "support": "☕ สนับสนุน"
     },
     "settings": {
       "title": "⚙️ ตั้งค่า",
@@ -2013,7 +2430,9 @@ export const TRANSLATIONS = {
       "cloudHeader": "☁️ บันทึกบนคลาวด์และซิงค์",
       "cloudDisconnect": "ตัดการเชื่อมต่อ",
       "cloudDisconnected": "⚪ ยังไม่ได้เชื่อมต่อ",
-      "cloudSynced": "🟢 ซิงค์แล้ว"
+      "cloudSynced": "🟢 ซิงค์แล้ว",
+      "supportHeader": "☕ สนับสนุน DramaPuchi",
+      "supportBtn": "💖 ร่วมสนับสนุน"
     },
     "icons": {
       "0": "ให้อาหาร",
@@ -2133,12 +2552,41 @@ export const TRANSLATIONS = {
       "evoOctoDesc": "ผิดพลาด 5–6 ครั้ง นักเดินทางคล้ายปลาหมึกผู้อ่อนไหว",
       "evoFloraDesc": "ผิดพลาด ≥ 7 ครั้ง พืชบอบบางที่ต้องดูแลอย่างใกล้ชิด",
       "gen2DepartureTitle": "🛸 การพากลับโดยยูเอฟโอ",
-      "gen2DepartedDesc": "จานบินเอเลี่ยนฉายลำแสงพากลับดาวบ้านเกิดพร้อมดวงดาวระยิบระยับ"
+      "gen2DepartedDesc": "จานบินเอเลี่ยนฉายลำแสงพากลับดาวบ้านเกิดพร้อมดวงดาวระยิบระยับ",
+      "creditsSupportLabel": "สนับสนุนบน Ko-fi"
     },
     "update": {
       "available": "✨ มีเวอร์ชันใหม่!",
       "action": "อัปเดต",
       "updating": "กำลังอัปเดต..."
+    },
+    "support": {
+      "title": "☕ สนับสนุน DramaPuchi",
+      "desc": "DramaPuchi เป็นโปรเจกต์โอเพนซอร์สฟรีไม่มีโฆษณา การสนับสนุนของคุณช่วยให้โปรเจกต์ดำเนินต่อไปได้!",
+      "tierCoffee": "☕ กาแฟ 1 แก้ว ($1)",
+      "tierSnack": "ขนม (Snack) - $1 USD",
+      "tierCake": "🍰 กาแฟ 3 แก้ว ($3)",
+      "tierMeal": "อาหาร (Meal) - $2 USD",
+      "tierFan": "💖 ซูเปอร์แฟน ($10)",
+      "cta": "สนับสนุนบน Ko-fi",
+      "close": "ปิด",
+      "tierClean": "อาบน้ำ (Clean) - $3 USD",
+      "tierGame": "เล่นเกม (Play) - $5 USD",
+      "tierMedicine": "ยารักษา (Medicine) - $10 USD",
+      "perkTitle": "✨ การสนับสนุนใดๆ ปลดล็อกรุ่น 2 (1997) ทันที!",
+      "perkUnlocked": "✨ ปลดล็อกรุ่น 2 บนบัญชีของคุณแล้ว!",
+      "donorCodeLabel": "รหัสผู้สนับสนุนเฉพาะของคุณ:",
+      "copyCode": "📋 คัดลอก",
+      "copied": "คัดลอกแล้ว!",
+      "codeHint": "วางรหัสนี้ลงในช่องข้อความบน Ko-fi เพื่อเปิดใช้งานรางวัลโดยอัตโนมัติ",
+      "checkStatusBtn": "🔄 ตรวจสอบสถานะการสนับสนุน",
+      "receiptCollapsible": "สนับสนุนโดยไม่ได้ใส่รหัส? แลกรับด้วย ID ใบเสร็จ",
+      "receiptPlaceholder": "ID ธุรกรรมจากใบเสร็จ Ko-fi",
+      "redeemBtn": "แลกรับ ID",
+      "verifying": "กำลังตรวจสอบ...",
+      "verifySuccess": "✨ ยืนยันการสนับสนุนแล้ว! ปลดล็อกรุ่น 2 สำเร็จ!",
+      "verifyNotFound": "ไม่พบการสนับสนุนที่ตรงกับรหัสหรือ ID นี้ โปรดรอสักครู่หากเพิ่งทำรายการ",
+      "alreadyClaimed": "การสนับสนุนนี้ถูกรับสิทธิ์ไปแล้วโดยบัญชีอื่น"
     }
   }
 };

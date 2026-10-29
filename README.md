@@ -24,27 +24,33 @@ A faithful, 100% client-side retro virtual pet experience (**DramaPuchi**), engi
   * Automatic metabolic pause during nighttime sleep schedules.
 * **Piezoelectric Synthesizer (Web Audio API)**:
   * Generates pure square waves matching exact integer submultiples of a **32.768 kHz** quartz crystal oscillator (`1024 Hz`, `2048 Hz`, `3277 Hz`, `4096 Hz`), eliminating external MP3/WAV files.
-* **Complete Familia DramaPuchi Evolution Tree**:
-  * Egg hatching $\to$ Babypuchi $\to$ Rolli $\to$ Chirpy or Pouty $\to$ 6 adult species (Smarty, Pingu, Shadow, Chompy, Noodle, Divalips) $\to$ Peaceful departure to the home planet (*DEPARTED*).
+* **Dual Generations (1996 & 1997)**:
+  * **Generation 1 (Classic Red)**: Rice Bowl / Bread, Wrapped Candy, 5-round Left/Right directional game, and the classic Familia DramaPuchi evolution tree.
+  * **Generation 2 (Swirl Yellow)**: Burger, Layered Cream Cake, 5-round High-Low card guessing game, and 7 new Gen 2 species.
+* **Voluntary Ko-fi Supporter Unlock**:
+  * Any voluntary donation on Ko-fi instantly unlocks Generation 2 across devices, with webhook verification and anti-fraud protection.
+* **Google Cloud Sync (Cross-Device)**:
+  * Optional one-tap Google login to backup and synchronize your pet and unlocks across all devices using Cloudflare D1.
 * **Multi-Language Support (14 Languages)**:
   * Complete in-game translations for 14 major world languages with automatic browser language detection and full right-to-left (RTL) layout support for Arabic.
-* **5-Round Directional Mini-Game**:
-  * Guess which direction the pet will turn (Button A: Left / Button B: Right). Winning 3 or more rounds restores happiness and burns weight.
 * **Modern Quality of Life (QoL) Enhancements**:
-  * 👶 **In-Game Puchi Sitter Mode**: Built directly into the keychain buttons (Light menu option 3 or Status Meter page 5) to freeze biological degradation during work or school hours.
-  * ⚙️ **Quick Settings Modal**: Convenient top-left floating button for language switching, LED Backlight, acoustic audio mute, and JSON save export/import.
-  * 🌙 **LED Backlight Toggle**: Switch effortlessly between classic reflective STN LCD and illuminated night Indiglo mode.
-  * 💾 **Portable JSON Backup**: Export and import save files in a single click to migrate progress across devices.
+  * 👶 **In-Game Puchi Sitter Mode**: Built directly into the keychain buttons (Light menu option 3) or Settings modal to freeze degradation during work or school hours.
+  * ⚙️ **Quick Settings Modal**: Language switching, LED Backlight toggle, audio mute, cloud sync, and JSON save export/import.
+  * 💾 **Portable JSON Backup**: Export and import save files in a single click.
   * 📖 **In-App Manual**: Built-in modal dialog with comprehensive gameplay rules, button orientations, and evolution tips.
   * 📳 **Haptic Feedback**: Short tactile vibration bursts on supported mobile devices.
 
 ---
 
-## 🎮 Controls
+## 🎮 Controls & Gameplay Reference
+
+For comprehensive care instructions, metabolic decay rules, sleep schedules, and detailed species guides, read the dedicated manual:
+
+👉 [**📖 Read the Full GAMEPLAY.md Manual**](GAMEPLAY.md)
 
 ### Touch / Mouse (Mobile-First)
-* **Button A** (Left): Navigate / cycle through the 7 top and bottom icons / select Left in the mini-game.
-* **Button B** (Center): Confirm action / trigger happy jump in idle / select Right in the mini-game.
+* **Button A** (Left): Navigate / cycle through the 7 top and bottom icons / select Left or Low in mini-games.
+* **Button B** (Center): Confirm action / trigger happy jump in idle / select Right or High in mini-games.
 * **Button C** (Right): Cancel / return to idle / check the real-time 24h clock.
 
 ### Desktop Keyboard Shortcuts
@@ -54,36 +60,63 @@ A faithful, 100% client-side retro virtual pet experience (**DramaPuchi**), engi
 
 ---
 
-## 📟 The 8 Status Icons
+## 🧬 Evolutionary Branches
 
-| Icon | Name | Function & Effects |
-| :---: | :--- | :--- |
-| **🍴** | **Feed** | Submenu: **Meal** (+1 hunger, +1 lb) or **Snack** (+1 happy, +2 lb). *Caution: Feeding >4 snacks in a row causes a toothache/sickness!* |
-| **💡** | **Light** | Submenu options: **LIGHT ON**, **LIGHT OFF**, or **SITTER** (toggles built-in Puchi Sitter mode). Sleeping with lights on counts as a Care Mistake after 1 hour. |
-| **⚾** | **Game** | 5-round heading prediction mini-game. Winning $\ge 3$ rounds awards +1 happiness and burns 1 lb. |
-| **💉** | **Medicine** | Treats illness when the skull icon appears ☠️ (may require 1–2 doses). |
-| **🚿** | **Flush** | Cleans accumulated poop with a sweeping ocean wave animation. 4 poops left uncleaned causes disease. |
-| **⚖️** | **Meter** | 4 status pages: 1) Age & Weight, 2) Discipline Bar, 3) Hunger Hearts (4 max), 4) Happiness Hearts (4 max). |
-| **💢** | **Discipline** | Scolds the pet during false calls (when calling with full meters). Grants +25% discipline. |
-| **🔔** | **Attention** | Passive alert indicator; flashes and beeps when the pet requires immediate care. |
+DramaPuchi features two complete generational evolution trees governed by care mistakes and discipline. For full criteria, see [GAMEPLAY.md](GAMEPLAY.md).
+
+### Generation 1 (1996)
+```
+[Egg] ──(5m)──> [Babypuchi] ──(65m)──> [Rolli]
+                                         │
+                 ┌─── (<= 2 Mistakes) ───┴─── (>= 3 Mistakes) ───┐
+                 ▼                                               ▼
+             [Chirpy]                                         [Pouty]
+                 │                                               │
+   ┌─────────────┼─────────────┐                   ┌─────────────┼─────────────┐
+   ▼             ▼             ▼                   ▼             ▼             ▼
+[Smarty]      [Pingu]       [Shadow]            [Chompy]      [Noodle]     [Divalips]
+(<=1 err)     (<=3 err)     (4+ err)            (<=4 err)     (5-6 err)    (7+ err)
+                               │
+                       (Secret)▼
+                            [Oldy]
+```
+
+### Generation 2 (1997)
+```
+[Swirl Egg] ──(5m)──> [Snowpuchi] ──(65m)──> [Curly]
+                                               │
+                       ┌─── (<= 2 Mistakes) ───┴─── (>= 3 Mistakes) ───┐
+                       ▼                                               ▼
+                    [Spiky]                                         [Ducky]
+                       │                                               │
+         ┌─────────────┼─────────────┐                   ┌─────────────┼─────────────┐
+         ▼             ▼             ▼                   ▼             ▼             ▼
+      [Bunny]       [Barky]       [Beaky]             [Leggy]        [Octo]       [Flora]
+      (<=1 err)     (<=3 err)     (4+ err)            (<=4 err)      (5-6 err)    (7+ err)
+                                     │
+                             (Secret)▼
+                                  [Kitty]
+```
 
 ---
 
-## 🧬 Evolution Matrix (Familia DramaPuchi)
+## ☕ Supporter Pack & Instant Gen 2 Unlock (Ko-fi)
 
-```
-[Egg] ──(5 min)──> [Babypuchi] ──(65 min)──> [Rolli]
-                                               │
-                      ┌─── (0-2 Care Mistakes) ┴─── (3+ Care Mistakes) ───┐
-                      ▼                                                   ▼
-                  [Chirpy]                                             [Pouty]
-                      │                                                   │
-       ┌──────────────┼──────────────┐                     ┌──────────────┼──────────────┐
-       ▼              ▼              ▼                     ▼              ▼              ▼
-    [Smarty]       [Pingu]        [Shadow]              [Chompy]       [Noodle]      [Divalips]
-   (0-1 err,      (2-3 err,       (4+ err or            (0-2 err,       (3-4 err)     (5+ err)
-   >=90% disc)    >=75% disc)     <50% disc)            >=50% disc)
-```
+DramaPuchi is a 100% free, ad-free open-source project. You can support its hosting and development via voluntary contributions on [Ko-fi](https://ko-fi.com/qnelo).
+
+### In-Game Perk: Instant Generation 2
+While Generation 2 can normally be earned for free by raising a Gen 1 adult pet to a peaceful UFO departure after 14 days, **any Ko-fi contribution ($1 to $10 USD) instantly unlocks Generation 2**!
+
+| Tier | Item / Action | Price | Direct Ko-fi Link |
+| :---: | :--- | :---: | :--- |
+| 🍬 | **Supporter Snack** | **$1.00** | [ko-fi.com/s/d36d1b77d2](https://ko-fi.com/s/d36d1b77d2) |
+| 🍙 | **Supporter Meal** | **$2.00** | [ko-fi.com/s/9b741c9c18](https://ko-fi.com/s/9b741c9c18) |
+| 🛁 | **Supporter Bath** | **$3.00** | [ko-fi.com/s/5ecb5a3e4b](https://ko-fi.com/s/5ecb5a3e4b) |
+| ⚾ | **Supporter Play** | **$5.00** | [ko-fi.com/s/9c332e9183](https://ko-fi.com/s/9c332e9183) |
+| 💉 | **Supporter Care & Medicine** | **$10.00** | [ko-fi.com/s/1e6b405b48](https://ko-fi.com/s/1e6b405b48) |
+
+* **Single-Use Anti-Fraud Protection**: Every session receives a unique code (`#DP-XXXX`). Clicking any tier automatically copies your code to the clipboard and redirects to Ko-fi. When Ko-fi fires its webhook, your game immediately confirms the donation and unlocks Gen 2 with fanfare!
+* **Receipt Redemption**: If you donated without the code or from a different browser, you can paste the transaction ID from your Ko-fi email receipt to redeem instantly.
 
 ---
 
@@ -115,31 +148,124 @@ The game provides 100% native localization across all interface elements, care i
 ```
 DramaPuchi/
 ├── config/
-│   └── petConfig.js           # Biological stage durations, rates, and death thresholds
+│   └── petConfig.js           # Biological stage durations, rates, support tiers & item URLs
 ├── constants/
 │   ├── i18n.js                # Full dictionaries for 14 languages & auto-detection
 │   └── menu.js                # UI mode (UI_MODE) and icon index (ICONS) enums
 ├── engine/
 │   ├── timeEngine.js          # Deterministic minute-by-minute simulation engine
-│   └── evolutionResolver.js   # Gen 1 branching evolution tree logic
+│   └── evolutionResolver.js   # Gen 1 & Gen 2 branching evolution tree logic
 ├── ui/
 │   ├── LcdMatrix.js           # 32×16 LCD renderer with physical ghosting decay
-│   ├── sprites.js             # Pixel bitmaps for species, items, and 3×5 font
+│   ├── sprites.js             # Pixel bitmaps for Gen 1 & Gen 2 species, items, and font
 │   ├── StatusRenderer.js      # Status meter screens (scale) and real-time clock
-│   └── GameRenderer.js        # Scene compositor for animations, idle, and mini-game
+│   └── GameRenderer.js        # Scene compositor for animations, idle, and mini-games
 ├── audio/
 │   └── RetroAudio.js          # Piezoelectric square-wave acoustic synthesizer
 ├── controllers/
 │   ├── MenuController.js      # 3-button (A, B, C) finite state machine
-│   └── MiniGameController.js  # 5-round guessing game controller
+│   ├── MiniGameController.js  # Gen 1 Left/Right heading prediction game
+│   └── HighLowGameController.js # Gen 2 High-Low card guessing game
 ├── storage/
-│   └── SaveManager.js         # IndexedDB / localStorage persistence and JSON export/import
-├── index.html                 # Mobile-first shell, LCD screen, and instruction manual modal
+│   ├── SaveManager.js         # IndexedDB / localStorage persistence and JSON export/import
+│   └── CloudSyncManager.js    # Google Identity JWT auth, donor codes & Cloudflare D1 sync
+├── functions/api/             # Cloudflare Pages serverless endpoints
+│   ├── kofi-webhook.js        # Ko-fi payment notification handler & anti-fraud processor
+│   └── verify-donation.js     # Single-use donor code & receipt transaction verification
+├── schema.sql                 # Cloudflare D1 SQLite database schema (user_saves, donations)
+├── GAMEPLAY.md                # Detailed care manual & Gen 1/Gen 2 evolution guide
+├── index.html                 # Mobile-first shell, LCD screen, and modal dialogs
 ├── app.js                     # Main application bootstrap and 60 FPS animation loop
 ├── sw.js                      # Offline-first Service Worker cache
 └── test/
-    └── suite.js               # Automated unit test suite (13 test suites)
+    └── suite.js               # Comprehensive unit test suite (15 test suites)
 ```
+
+---
+
+## ⚙️ Configuration & Environment Variables
+
+DramaPuchi runs 100% offline-first in the browser without any backend required. When deployed to Cloudflare Pages, optional cloud features—**Google Cloud Sync**, **Ko-fi Webhook Verification**, and **D1 Database Persistence**—are enabled seamlessly via serverless Pages Functions (`functions/api/`).
+
+### 1. Local Environment Files (`.dev.vars` & `.env`)
+
+Secret tokens should **never** be committed to Git. Two template files are provided in the repository:
+
+* **`.dev.vars.example`** $\to$ **`.dev.vars`** (used by Cloudflare Wrangler / Pages Functions):
+  ```bash
+  cp .dev.vars.example .dev.vars
+  ```
+  Edit `.dev.vars` with your local development keys:
+  ```ini
+  # Ko-fi Webhook Verification Token (from https://ko-fi.com/manage/webhooks?src=sidemenu)
+  KOFI_VERIFICATION_TOKEN=your_kofi_verification_token_here
+
+  # Google OAuth Client ID for Cloud Sync (optional local override)
+  GOOGLE_CLIENT_ID=488546893397-sepvb33kiclnkn6afl0j4lpp9rrdte9k.apps.googleusercontent.com
+  ```
+
+* **`.env.example`** $\to$ **`.env`** (used by standalone Node.js scripts):
+  ```bash
+  cp .env.example .env
+  ```
+
+> [!NOTE]
+> `.dev.vars` and `.env` are strictly included in `.gitignore` to guarantee local credentials are never published to GitHub.
+
+---
+
+### 2. Production Secrets (Cloudflare Pages)
+
+In production, secrets are stored encrypted within Cloudflare's secure secret store and injected at runtime into `context.env`:
+
+To upload or update secrets securely from the command line:
+
+```bash
+# Set secret for the primary project
+npx wrangler pages secret put KOFI_VERIFICATION_TOKEN --project-name dramapuchi
+
+# Set secret for the mirror project
+npx wrangler pages secret put KOFI_VERIFICATION_TOKEN --project-name tama-pwa
+```
+
+*(Alternatively, configure them in the Cloudflare Dashboard under **Workers & Pages** $\to$ **dramapuchi** $\to$ **Settings** $\to$ **Variables and Secrets**).*
+
+---
+
+### 3. Cloudflare D1 Database Setup
+
+Cloud Sync and donation tracking use Cloudflare's serverless SQLite database (D1). The database configuration is declared in `wrangler.toml`:
+
+```toml
+[[d1_databases]]
+binding = "DB"
+database_name = "dramapuchi-db"
+database_id = "12441c55-5eed-4573-a104-ac8857384409"
+```
+
+To run or update database migrations defined in [`schema.sql`](file:///home/qnelo/develop/personal/Tamagotchi/schema.sql):
+
+```bash
+# Apply schema to local development database:
+npx wrangler d1 execute dramapuchi-db --local --file=schema.sql
+
+# Apply schema to production Cloudflare D1:
+npx wrangler d1 execute dramapuchi-db --remote --file=schema.sql
+```
+
+---
+
+### 4. Ko-fi Webhook & In-Game Rewards
+
+DramaPuchi allows supporters to unlock **Generation 2** immediately via voluntary Ko-fi donations.
+
+1. Navigate to [Ko-fi Webhooks](https://ko-fi.com/manage/webhooks?src=sidemenu).
+2. Set **Webhook URL** to:
+   ```text
+   https://dramapuchi.pages.dev/api/kofi-webhook
+   ```
+3. Copy the **Verification Token** shown on Ko-fi and upload it using `wrangler pages secret put KOFI_VERIFICATION_TOKEN`.
+4. Click **"Send Test"** on Ko-fi to verify that the endpoint returns `200 OK`.
 
 ---
 
