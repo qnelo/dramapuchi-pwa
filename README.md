@@ -100,26 +100,6 @@ DramaPuchi features two complete generational evolution trees governed by care m
 
 ---
 
-## ☕ Supporter Pack & Instant Gen 2 Unlock (Ko-fi)
-
-DramaPuchi is a 100% free, ad-free open-source project. You can support its hosting and development via voluntary contributions on [Ko-fi](https://ko-fi.com/qnelo).
-
-### In-Game Perk: Instant Generation 2
-While Generation 2 can normally be earned for free by raising a Gen 1 adult pet to a peaceful UFO departure after 14 days, **any Ko-fi contribution ($1 to $10 USD) instantly unlocks Generation 2**!
-
-| Tier | Item / Action | Price | Direct Ko-fi Link |
-| :---: | :--- | :---: | :--- |
-| 🍬 | **Supporter Snack** | **$1.00** | [ko-fi.com/s/d36d1b77d2](https://ko-fi.com/s/d36d1b77d2) |
-| 🍙 | **Supporter Meal** | **$2.00** | [ko-fi.com/s/9b741c9c18](https://ko-fi.com/s/9b741c9c18) |
-| 🛁 | **Supporter Bath** | **$3.00** | [ko-fi.com/s/5ecb5a3e4b](https://ko-fi.com/s/5ecb5a3e4b) |
-| ⚾ | **Supporter Play** | **$5.00** | [ko-fi.com/s/9c332e9183](https://ko-fi.com/s/9c332e9183) |
-| 💉 | **Supporter Care & Medicine** | **$10.00** | [ko-fi.com/s/1e6b405b48](https://ko-fi.com/s/1e6b405b48) |
-
-* **Single-Use Anti-Fraud Protection**: Every session receives a unique code (`#DP-XXXX`). Clicking any tier automatically copies your code to the clipboard and redirects to Ko-fi. When Ko-fi fires its webhook, your game immediately confirms the donation and unlocks Gen 2 with fanfare!
-* **Receipt Redemption**: If you donated without the code or from a different browser, you can paste the transaction ID from your Ko-fi email receipt to redeem instantly.
-
----
-
 ## 🌐 Supported Languages (14 Languages)
 
 The game provides 100% native localization across all interface elements, care icons, settings, full instruction manual, evolution guide, and PWA prompts:
@@ -143,51 +123,11 @@ The game provides 100% native localization across all interface elements, care i
 
 ---
 
-## 🛠️ Codebase Structure
-
-```
-DramaPuchi/
-├── config/
-│   └── petConfig.js           # Biological stage durations, rates, support tiers & item URLs
-├── constants/
-│   ├── i18n.js                # Full dictionaries for 14 languages & auto-detection
-│   └── menu.js                # UI mode (UI_MODE) and icon index (ICONS) enums
-├── engine/
-│   ├── timeEngine.js          # Deterministic minute-by-minute simulation engine
-│   └── evolutionResolver.js   # Gen 1 & Gen 2 branching evolution tree logic
-├── ui/
-│   ├── LcdMatrix.js           # 32×16 LCD renderer with physical ghosting decay
-│   ├── sprites.js             # Pixel bitmaps for Gen 1 & Gen 2 species, items, and font
-│   ├── StatusRenderer.js      # Status meter screens (scale) and real-time clock
-│   └── GameRenderer.js        # Scene compositor for animations, idle, and mini-games
-├── audio/
-│   └── RetroAudio.js          # Piezoelectric square-wave acoustic synthesizer
-├── controllers/
-│   ├── MenuController.js      # 3-button (A, B, C) finite state machine
-│   ├── MiniGameController.js  # Gen 1 Left/Right heading prediction game
-│   └── HighLowGameController.js # Gen 2 High-Low card guessing game
-├── storage/
-│   ├── SaveManager.js         # IndexedDB / localStorage persistence and JSON export/import
-│   └── CloudSyncManager.js    # Google Identity JWT auth, donor codes & Cloudflare D1 sync
-├── functions/api/             # Cloudflare Pages serverless endpoints
-│   ├── kofi-webhook.js        # Ko-fi payment notification handler & anti-fraud processor
-│   └── verify-donation.js     # Single-use donor code & receipt transaction verification
-├── schema.sql                 # Cloudflare D1 SQLite database schema (user_saves, donations)
-├── GAMEPLAY.md                # Detailed care manual & Gen 1/Gen 2 evolution guide
-├── index.html                 # Mobile-first shell, LCD screen, and modal dialogs
-├── app.js                     # Main application bootstrap and 60 FPS animation loop
-├── sw.js                      # Offline-first Service Worker cache
-└── test/
-    └── suite.js               # Comprehensive unit test suite (15 test suites)
-```
-
----
-
 ## ⚙️ Configuration & Environment Variables
 
 DramaPuchi runs 100% offline-first in the browser without any backend required. When deployed to Cloudflare Pages, optional cloud features—**Google Cloud Sync**, **Ko-fi Webhook Verification**, and **D1 Database Persistence**—are enabled seamlessly via serverless Pages Functions (`functions/api/`).
 
-### 1. Local Environment Files (`.dev.vars` & `.env`)
+### Local Environment Files (`.dev.vars` & `.env`)
 
 Secret tokens should **never** be committed to Git. Two template files are provided in the repository:
 
@@ -214,61 +154,6 @@ Secret tokens should **never** be committed to Git. Two template files are provi
 
 ---
 
-### 2. Production Secrets (Cloudflare Pages)
-
-In production, secrets are stored encrypted within Cloudflare's secure secret store and injected at runtime into `context.env`:
-
-To upload or update secrets securely from the command line:
-
-```bash
-# Set secret for the primary project
-npx wrangler pages secret put KOFI_VERIFICATION_TOKEN --project-name dramapuchi
-
-# Set secret for the mirror project
-npx wrangler pages secret put KOFI_VERIFICATION_TOKEN --project-name tama-pwa
-```
-
-*(Alternatively, configure them in the Cloudflare Dashboard under **Workers & Pages** $\to$ **dramapuchi** $\to$ **Settings** $\to$ **Variables and Secrets**).*
-
----
-
-### 3. Cloudflare D1 Database Setup
-
-Cloud Sync and donation tracking use Cloudflare's serverless SQLite database (D1). The database configuration is declared in `wrangler.toml`:
-
-```toml
-[[d1_databases]]
-binding = "DB"
-database_name = "dramapuchi-db"
-database_id = "12441c55-5eed-4573-a104-ac8857384409"
-```
-
-To run or update database migrations defined in [`schema.sql`](file:///home/qnelo/develop/personal/Tamagotchi/schema.sql):
-
-```bash
-# Apply schema to local development database:
-npx wrangler d1 execute dramapuchi-db --local --file=schema.sql
-
-# Apply schema to production Cloudflare D1:
-npx wrangler d1 execute dramapuchi-db --remote --file=schema.sql
-```
-
----
-
-### 4. Ko-fi Webhook & In-Game Rewards
-
-DramaPuchi allows supporters to unlock **Generation 2** immediately via voluntary Ko-fi donations.
-
-1. Navigate to [Ko-fi Webhooks](https://ko-fi.com/manage/webhooks?src=sidemenu).
-2. Set **Webhook URL** to:
-   ```text
-   https://dramapuchi.pages.dev/api/kofi-webhook
-   ```
-3. Copy the **Verification Token** shown on Ko-fi and upload it using `wrangler pages secret put KOFI_VERIFICATION_TOKEN`.
-4. Click **"Send Test"** on Ko-fi to verify that the endpoint returns `200 OK`.
-
----
-
 ## 🚀 Local Development & Testing
 
 No build step or bundling required. Everything runs natively as standard ES Modules:
@@ -286,34 +171,6 @@ No build step or bundling required. Everything runs natively as standard ES Modu
    ```bash
    npm test
    ```
-
----
-
-## ☁️ Deployment (Cloudflare Pages)
-
-The game is simultaneously published to two production Cloudflare Pages projects:
-1. **Primary Project**: `dramapuchi` ([https://dramapuchi.pages.dev](https://dramapuchi.pages.dev))
-2. **Legacy Mirror**: `tama-pwa` ([https://tama-pwa.pages.dev](https://tama-pwa.pages.dev))
-
-Deploy simultaneously to both domains with a single command:
-
-```bash
-npx wrangler login   # once per machine
-npm run deploy
-```
-
-`npm run deploy` exports the last commit with `git archive HEAD` into a temporary folder and uploads only that folder to both Cloudflare Pages projects. Files ignored by git, such as the private specs `er.txt` and `er.docx`, never leave your machine. Uncommitted changes are not deployed either, so commit first.
-
-**Never run `wrangler pages deploy .` from the repo root.** Pages reads no ignore file: neither `.gitignore` nor `.assetsignore` apply. It uploads every file except a fixed list (`node_modules`, `.git`, `.DS_Store`, `.wrangler`, `_worker.js`, `functions`).
-
-Every deployment also stays reachable at its own deployment URL. If a private file is ever published, deploy a clean commit and then delete old deployments:
-
-```bash
-npx wrangler pages deployment list --project-name dramapuchi
-npx wrangler pages deployment delete <id> --project-name dramapuchi
-```
-
-Before committing a content change, bump `CACHE_NAME` in `sw.js` so installed PWAs pick up the new version.
 
 ---
 
