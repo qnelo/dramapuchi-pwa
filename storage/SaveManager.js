@@ -83,6 +83,8 @@ export class SaveManager {
   static async save(state) {
     if (state?.gen2Unlocked) {
       this.setGen2Unlocked(true);
+    } else if (this.isGen2Unlocked() && state) {
+      state.gen2Unlocked = true;
     }
     if (typeof localStorage !== 'undefined') {
       localStorage.setItem(SAVE_KEY, JSON.stringify(state)); // Synchronous fallback

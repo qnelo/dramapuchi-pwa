@@ -425,6 +425,12 @@ export class CloudSyncManager {
           const localTime = Number(state.lastTickTimestamp) || 0;
           const cloudTime = Number(cloudState.lastTickTimestamp) || 0;
           if (localTime >= cloudTime) {
+            // Ensure any cloud unlocks (such as Gen 2 via Ko-fi webhook) are preserved
+            if (cloudState?.gen2Unlocked) {
+              SaveManager.setGen2Unlocked(true);
+              state.gen2Unlocked = true;
+              state.hasDonated = true;
+            }
             // Adopt cloud rev and force push local state
             this.setRev(cloudRev);
             this.isSyncing = false;

@@ -155,14 +155,37 @@ export async function onRequestPost(context) {
   const claimedBy = donation.claimed_by_sub;
 
   if (isClaimed) {
+    // 1. User is already the owner of this claimed donation via Google sub
     if (authUser && claimedBy && claimedBy === authUser.sub) {
-      // User is already the owner of this claimed donation
       return jsonResponse({
         success: true,
         verified: true,
         gen2Unlocked: true,
         amount: donation.amount,
+        currency: donation.currency || 'USD',
         alreadyClaimed: true
+      });
+    }
+
+    // 2. Secret Ko-fi Transaction ID redemption: whoever holds the secret receipt ID IS the legitimate buyer
+    if (rawTxId && donation.id.toLowerCase() === rawTxId.toLowerCase()) {
+      return jsonResponse({
+        success: true,
+        verified: true,
+        gen2Unlocked: true,
+        amount: donation.amount,
+        currency: donation.currency || 'USD'
+      });
+    }
+
+    // 3. Authenticated Google email matches the buyer's email on Ko-fi
+    if (authUser && authUser.email && donation.email && donation.email.toLowerCase() === authUser.email.toLowerCase()) {
+      return jsonResponse({
+        success: true,
+        verified: true,
+        gen2Unlocked: true,
+        amount: donation.amount,
+        currency: donation.currency || 'USD'
       });
     }
 

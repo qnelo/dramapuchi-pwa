@@ -428,7 +428,9 @@ function setupQolListeners() {
   if (btnSupportCheck) {
     btnSupportCheck.addEventListener('click', async () => {
       audio.playConfirm();
-      await checkDonationVerification({ donorCode });
+      const inputReceiptId = document.getElementById('input-receipt-id');
+      const txId = (inputReceiptId?.value || '').trim();
+      await checkDonationVerification({ donorCode, transactionId: txId });
     });
   }
 
