@@ -63,6 +63,31 @@ export class CloudSyncManager {
     } catch {}
   }
 
+  setRev(rev) {
+    this.currentRev = Number(rev) || 1;
+    try {
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem(REV_KEY, String(this.currentRev));
+      }
+    } catch {}
+  }
+
+  static isSamePet(stateA, stateB) {
+    if (!stateA || !stateB) return false;
+    return (
+      stateA.bornTimestamp === stateB.bornTimestamp &&
+      (Number(stateA.generation) || 1) === (Number(stateB.generation) || 1)
+    );
+  }
+
+  static isLocalAheadOrEqual(localState, cloudState) {
+    if (!localState || !cloudState) return false;
+    if (!CloudSyncManager.isSamePet(localState, cloudState)) return false;
+    const localTime = Number(localState.lastTickTimestamp) || 0;
+    const cloudTime = Number(cloudState.lastTickTimestamp) || 0;
+    return localTime >= cloudTime;
+  }
+
   static isFreshEgg(state) {
     if (!state) return true;
     return (
@@ -154,6 +179,7 @@ export class CloudSyncManager {
     this.token = null;
     this.user = null;
     this.isDirty = false;
+    this.currentRev = 1;
     if (this.debounceTimer) {
       clearTimeout(this.debounceTimer);
       this.debounceTimer = null;
@@ -228,9 +254,23 @@ export class CloudSyncManager {
         },
         body,
         keepalive: true
+      }).then(async (res) => {
+        if (res.ok) {
+          const data = await res.json().catch(() => null);
+          if (data?.rev) {
+            this.setRev(data.rev);
+            if (data.updatedAt) {
+              this.setLastSyncTime(data.updatedAt);
+            }
+          }
+        }
       }).catch(() => {});
       this.isDirty = false;
     } catch {}
+  }
+
+  async syncToCloud(state) {
+    return this.pushToCloud(state);
   }
 
   async pullAndReconcile(localState) {
@@ -261,62 +301,82 @@ export class CloudSyncManager {
 
       const cloudState = data.state;
       const cloudRev = Number(data.rev) || 1;
-      this.currentRev = cloudRev;
-      try {
-        if (typeof localStorage !== 'undefined') {
-          localStorage.setItem(REV_KEY, String(this.currentRev));
-        }
-      } catch {}
+      const localRev = this.currentRev;
 
       // If local device is just a fresh egg, adopt cloud state unconditionally
       if (CloudSyncManager.isFreshEgg(localState)) {
         SaveManager.setGen2Unlocked(Boolean(cloudState.gen2Unlocked));
         await SaveManager.save(cloudState);
+        this.setRev(cloudRev);
         this.setLastSyncTime(data.updatedAt || Date.now());
         this.isDirty = false;
         this.onStateLoaded(cloudState);
         return cloudState;
       }
 
-      // If both have active pets, check which one has the newer progress
-      const localTime = Number(localState.lastTickTimestamp) || 0;
-      const cloudTime = Number(data.updatedAt) || Number(cloudState.lastTickTimestamp) || 0;
-
-      if (cloudTime > localTime) {
-        if (this.onConflict) {
-          this.onConflict({
-            cloudState,
-            cloudRev,
-            cloudUpdatedAt: data.updatedAt,
-            localState,
-            resolve: async (choice) => {
-              if (choice === 'cloud') {
-                SaveManager.setGen2Unlocked(Boolean(cloudState.gen2Unlocked));
-                await SaveManager.save(cloudState);
-                this.currentRev = cloudRev;
-                this.isDirty = false;
-                this.setLastSyncTime(data.updatedAt);
-                this.onStateLoaded(cloudState);
-              } else {
-                // Keep local, overwrite cloud
-                await this.pushToCloud(localState, true);
-              }
-            }
-          });
-          return localState;
-        } else {
-          // Default: Cloud is newer
-          SaveManager.setGen2Unlocked(Boolean(cloudState.gen2Unlocked));
-          await SaveManager.save(cloudState);
-          this.setLastSyncTime(data.updatedAt || Date.now());
-          this.isDirty = false;
-          this.onStateLoaded(cloudState);
-          return cloudState;
+      // If cloud revision is less than or equal to local revision,
+      // no other device has committed newer changes -> ALWAYS prefer local device!
+      if (cloudRev <= localRev) {
+        this.setRev(Math.max(localRev, cloudRev));
+        this.setLastSyncTime(data.updatedAt || Date.now());
+        const localTime = Number(localState.lastTickTimestamp) || 0;
+        const cloudTime = Number(cloudState.lastTickTimestamp) || 0;
+        if (localTime > cloudTime || this.isDirty) {
+          await this.pushToCloud(localState, false);
         }
-      } else {
-        // Local is newer or equal, push to cloud
-        await this.pushToCloud(localState, false);
         return localState;
+      }
+
+      // Here cloudRev > localRev: Cloud has a higher revision number.
+      // Check if it's the same pet on the same device (e.g. keepalive push on minimize/refresh race)
+      if (CloudSyncManager.isSamePet(localState, cloudState)) {
+        const localTime = Number(localState.lastTickTimestamp) || 0;
+        const cloudTime = Number(cloudState.lastTickTimestamp) || 0;
+
+        if (localTime >= cloudTime) {
+          // Local has equal or newer simulation progress on the same pet.
+          // Synchronize revision and keep local without prompting conflict!
+          this.setRev(cloudRev);
+          this.setLastSyncTime(data.updatedAt || Date.now());
+          if (localTime > cloudTime || this.isDirty) {
+            await this.pushToCloud(localState, true);
+          }
+          return localState;
+        }
+      }
+
+      // At this point, either it is a different pet, or cloud is genuinely ahead (e.g. from another device)
+      if (this.onConflict) {
+        this.onConflict({
+          cloudState,
+          cloudRev,
+          cloudUpdatedAt: data.updatedAt,
+          localState,
+          resolve: async (choice) => {
+            if (choice === 'cloud') {
+              SaveManager.setGen2Unlocked(Boolean(cloudState.gen2Unlocked));
+              await SaveManager.save(cloudState);
+              this.setRev(cloudRev);
+              this.isDirty = false;
+              this.setLastSyncTime(data.updatedAt);
+              this.onStateLoaded(cloudState);
+            } else {
+              // Keep local, overwrite cloud
+              this.setRev(cloudRev);
+              await this.pushToCloud(localState, true);
+            }
+          }
+        });
+        return localState;
+      } else {
+        // Default: Cloud is newer
+        SaveManager.setGen2Unlocked(Boolean(cloudState.gen2Unlocked));
+        await SaveManager.save(cloudState);
+        this.setRev(cloudRev);
+        this.setLastSyncTime(data.updatedAt || Date.now());
+        this.isDirty = false;
+        this.onStateLoaded(cloudState);
+        return cloudState;
       }
     } catch (err) {
       console.warn('[CloudSync] Pull failed:', err);
@@ -347,17 +407,33 @@ export class CloudSyncManager {
         // Revision conflict
         const conflictData = await res.json();
         const cloudState = conflictData.cloudState;
-        const cloudRev = conflictData.cloudRev;
+        const cloudRev = Number(conflictData.cloudRev) || (this.currentRev + 1);
 
         if (CloudSyncManager.isFreshEgg(state)) {
           // Local is just a fresh egg -> adopt cloud state
           SaveManager.setGen2Unlocked(Boolean(cloudState?.gen2Unlocked));
           await SaveManager.save(cloudState);
-          this.currentRev = cloudRev;
+          this.setRev(cloudRev);
           this.isDirty = false;
           this.setLastSyncTime(conflictData.cloudUpdatedAt || Date.now());
           this.onStateLoaded(cloudState);
-        } else if (this.onConflict) {
+          return;
+        }
+
+        // If it is the same pet and local is ahead or equal (minimize-restore / keepalive race):
+        if (CloudSyncManager.isSamePet(state, cloudState)) {
+          const localTime = Number(state.lastTickTimestamp) || 0;
+          const cloudTime = Number(cloudState.lastTickTimestamp) || 0;
+          if (localTime >= cloudTime) {
+            // Adopt cloud rev and force push local state
+            this.setRev(cloudRev);
+            this.isSyncing = false;
+            await this.pushToCloud(state, true);
+            return;
+          }
+        }
+
+        if (this.onConflict) {
           this.onConflict({
             cloudState,
             cloudRev,
@@ -367,11 +443,12 @@ export class CloudSyncManager {
               if (choice === 'cloud') {
                 SaveManager.setGen2Unlocked(Boolean(cloudState.gen2Unlocked));
                 await SaveManager.save(cloudState);
-                this.currentRev = cloudRev;
+                this.setRev(cloudRev);
                 this.isDirty = false;
                 this.setLastSyncTime(conflictData.cloudUpdatedAt);
                 this.onStateLoaded(cloudState);
               } else {
+                this.setRev(cloudRev);
                 await this.pushToCloud(state, true);
               }
             }
@@ -387,12 +464,7 @@ export class CloudSyncManager {
 
       if (res.ok) {
         const data = await res.json();
-        this.currentRev = Number(data.rev) || (this.currentRev + 1);
-        try {
-          if (typeof localStorage !== 'undefined') {
-            localStorage.setItem(REV_KEY, String(this.currentRev));
-          }
-        } catch {}
+        this.setRev(Number(data.rev) || (this.currentRev + 1));
         this.setLastSyncTime(data.updatedAt || Date.now());
         this.isDirty = false;
         this.onStatusChange({

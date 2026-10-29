@@ -806,6 +806,143 @@ const sampleMsg = "Loved the retro pet! My code is #dp-9k8b, unlock gen 2!";
 const match = sampleMsg.match(regex);
 assert(match && match[0].toUpperCase() === '#DP-9K8B', 'Donor code regex must extract #DP-XXXX correctly');
 
+// Same pet & simulation timestamp precedence tests
+const petA1 = { bornTimestamp: 1000000, generation: 1, lastTickTimestamp: 1005000, stage: 'BABY' };
+const petA2 = { bornTimestamp: 1000000, generation: 1, lastTickTimestamp: 1006000, stage: 'BABY' };
+const petB = { bornTimestamp: 2000000, generation: 1, lastTickTimestamp: 2005000, stage: 'BABY' };
+const petGen2 = { bornTimestamp: 1000000, generation: 2, lastTickTimestamp: 1006000, stage: 'BABY' };
+
+assert(CloudSyncManager.isSamePet(petA1, petA2) === true, 'Same pet with matching bornTimestamp and generation must return true');
+assert(CloudSyncManager.isSamePet(petA1, petB) === false, 'Different bornTimestamp must return false');
+assert(CloudSyncManager.isSamePet(petA1, petGen2) === false, 'Different generation must return false');
+assert(CloudSyncManager.isSamePet(null, petA1) === false, 'Null state must return false');
+
+assert(CloudSyncManager.isLocalAheadOrEqual(petA2, petA1) === true, 'Local with newer timestamp must be ahead');
+assert(CloudSyncManager.isLocalAheadOrEqual(petA1, petA1) === true, 'Local with identical timestamp must be ahead or equal');
+assert(CloudSyncManager.isLocalAheadOrEqual(petA1, petA2) === false, 'Local with older timestamp must not be ahead');
+assert(CloudSyncManager.isLocalAheadOrEqual(petA1, petB) === false, 'Different pet must not be considered ahead');
+
+// Conflict reconciliation simulation tests
+let conflictCalled = false;
+const manager = new CloudSyncManager({
+  onConflict: () => { conflictCalled = true; }
+});
+manager.token = 'fake_token';
+manager.user = { email: 'test@example.com' };
+manager.setRev(5);
+
+const origFetch = globalThis.fetch;
+
+// Scenario 1: cloudRev === localRev (manual page refresh) -> never conflict, prefer local
+conflictCalled = false;
+globalThis.fetch = async () => ({
+  ok: true,
+  status: 200,
+  json: async () => ({
+    success: true,
+    exists: true,
+    rev: 5,
+    updatedAt: petA1.lastTickTimestamp + 500, // server wall clock slightly ahead
+    state: petA1
+  })
+});
+const resEqual = await manager.pullAndReconcile(petA1);
+assert(conflictCalled === false, 'Equal revision (cloudRev <= localRev) must NOT trigger conflict modal');
+assert(resEqual === petA1, 'Equal revision must retain local state');
+
+// Scenario 2: cloudRev > localRev on same pet with local ahead or equal (minimize / keepalive race)
+manager.setRev(5);
+conflictCalled = false;
+globalThis.fetch = async () => ({
+  ok: true,
+  status: 200,
+  json: async () => ({
+    success: true,
+    exists: true,
+    rev: 6,
+    updatedAt: petA2.lastTickTimestamp + 100,
+    state: petA1 // older cloud snapshot
+  })
+});
+const resRace = await manager.pullAndReconcile(petA2);
+assert(conflictCalled === false, 'Same pet with local >= cloud progress must NOT trigger conflict modal');
+assert(manager.currentRev === 6, 'Manager must adopt cloud revision');
+assert(resRace === petA2, 'Must retain local state');
+
+// Scenario 3: cloudRev > localRev with cloud genuinely ahead on same pet (multi-device progression)
+manager.setRev(5);
+conflictCalled = false;
+globalThis.fetch = async () => ({
+  ok: true,
+  status: 200,
+  json: async () => ({
+    success: true,
+    exists: true,
+    rev: 6,
+    updatedAt: petA2.lastTickTimestamp + 100,
+    state: petA2 // cloud has petA2 (newer)
+  })
+});
+await manager.pullAndReconcile(petA1); // local has older petA1
+assert(conflictCalled === true, 'Genuinely newer cloud state from another device MUST trigger conflict modal');
+
+// Scenario 4: cloudRev > localRev with completely different pet (multi-device new game)
+manager.setRev(5);
+conflictCalled = false;
+globalThis.fetch = async () => ({
+  ok: true,
+  status: 200,
+  json: async () => ({
+    success: true,
+    exists: true,
+    rev: 6,
+    updatedAt: petB.lastTickTimestamp + 100,
+    state: petB
+  })
+});
+await manager.pullAndReconcile(petA1);
+assert(conflictCalled === true, 'Different pet in cloud MUST trigger conflict modal');
+
+// Scenario 5: pushToCloud gets 409 Conflict when local is equal/newer progress on same pet (minimize race)
+manager.setRev(5);
+conflictCalled = false;
+let pushCalls = 0;
+globalThis.fetch = async (url, options = {}) => {
+  pushCalls++;
+  const body = JSON.parse(options.body || '{}');
+  if (pushCalls === 1) {
+    // First push fails with 409 because D1 was bumped to rev 6 by keepalive
+    return {
+      ok: false,
+      status: 409,
+      json: async () => ({
+        error: 'conflict',
+        cloudRev: 6,
+        cloudUpdatedAt: petA1.lastTickTimestamp + 100,
+        cloudState: petA1 // older state in cloud
+      })
+    };
+  }
+  // Retry push with force: true succeeds
+  assert(body.force === true, 'Retry push must specify force: true');
+  return {
+    ok: true,
+    status: 200,
+    json: async () => ({
+      success: true,
+      rev: 7,
+      updatedAt: Date.now()
+    })
+  };
+};
+
+await manager.pushToCloud(petA2);
+assert(conflictCalled === false, '409 on same pet with local ahead/equal progress must auto-reconcile without conflict modal');
+assert(manager.currentRev === 7, 'Manager must be at new rev after force push');
+assert(pushCalls === 2, 'Must have attempted initial push and automatic force retry');
+
+globalThis.fetch = origFetch;
+
 console.log('✓ CloudSyncManager verified.');
 
 console.log('\nALL 15 TEST SUITES PASSED SUCCESSFULLY! 🎯');

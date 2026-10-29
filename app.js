@@ -975,7 +975,8 @@ function showConflictModal(conflict) {
     return;
   }
 
-  const cloudDate = conflict.cloudUpdatedAt ? new Date(conflict.cloudUpdatedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
+  const cloudTs = conflict.cloudState?.lastTickTimestamp || conflict.cloudUpdatedAt;
+  const cloudDate = cloudTs ? new Date(cloudTs).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
   const localDate = conflict.localState?.lastTickTimestamp ? new Date(conflict.localState.lastTickTimestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
 
   if (lblCloudDetail) {
