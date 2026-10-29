@@ -106,19 +106,19 @@ The game provides 100% native localization across all interface elements, care i
 
 | Flag | Language | Native Name | Code | Layout |
 | :---: | :--- | :--- | :---: | :---: |
-| 🇬🇧 | **English** | English | `en` | LTR |
-| 🇪🇸 | **Spanish** | Español | `es` | LTR |
-| 🇨🇳 | **Chinese** | 中文 | `zh` | LTR |
-| 🇧🇷 | **Portuguese** | Português | `pt` | LTR |
-| 🇯🇵 | **Japanese** | 日本語 | `ja` | LTR |
-| 🇩🇪 | **German** | Deutsch | `de` | LTR |
-| 🇫🇷 | **French** | Français | `fr` | LTR |
-| 🇮🇹 | **Italian** | Italiano | `it` | LTR |
-| 🇷🇺 | **Russian** | Русский | `ru` | LTR |
-| 🇸🇦 | **Modern Standard Arabic** | العربية | `ar` | RTL |
-| 🇮🇳 | **Hindi** | हिन्दी | `hi` | LTR |
+| 🇸🇦 | **Arabic (Modern Standard)** | العربية | `ar` | RTL |
 | 🇧🇩 | **Bengali** | বাংলা | `bn` | LTR |
+| 🇨🇳 | **Chinese** | 中文 | `zh` | LTR |
+| 🇬🇧 | **English** | English | `en` | LTR |
+| 🇫🇷 | **French** | Français | `fr` | LTR |
+| 🇩🇪 | **German** | Deutsch | `de` | LTR |
+| 🇮🇳 | **Hindi** | हिन्दी | `hi` | LTR |
 | 🇮🇩 | **Indonesian** | Bahasa Indonesia | `id` | LTR |
+| 🇮🇹 | **Italian** | Italiano | `it` | LTR |
+| 🇯🇵 | **Japanese** | 日本語 | `ja` | LTR |
+| 🇧🇷 | **Portuguese** | Português | `pt` | LTR |
+| 🇷🇺 | **Russian** | Русский | `ru` | LTR |
+| 🇪🇸 | **Spanish** | Español | `es` | LTR |
 | 🇹🇭 | **Thai** | ไทย | `th` | LTR |
 
 ---

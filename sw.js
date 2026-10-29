@@ -1,4 +1,4 @@
-const CACHE_NAME = 'dramapuchi-pwa-v34';
+const CACHE_NAME = 'dramapuchi-pwa-v35';
 const ASSETS = [
   '/',
   '/index.html',
